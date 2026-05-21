@@ -84,7 +84,8 @@ ensure_env_file() {
   cat > .env <<EOF
 SECRET_KEY=${secret}
 DEBUG=True
-ALLOWED_HOSTS=127.0.0.1,localhost
+ALLOWED_HOSTS=127.0.0.1,localhost,fin.skyvl.com
+CSRF_TRUSTED_ORIGINS=https://fin.skyvl.com
 ADMIN_EMAIL=${ADMIN_EMAIL}
 ADMIN_PASSWORD=${admin_pass}
 EOF

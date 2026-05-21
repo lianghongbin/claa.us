@@ -10,7 +10,8 @@ services:
     environment:
       # Persist DB under ./data (override in .env if needed)
       SQLITE_PATH: /data/db.sqlite3
-      ALLOWED_HOSTS: ${ALLOWED_HOSTS:-127.0.0.1,localhost}
+      ALLOWED_HOSTS: ${ALLOWED_HOSTS:-127.0.0.1,localhost,fin.skyvl.com}
+      CSRF_TRUSTED_ORIGINS: ${CSRF_TRUSTED_ORIGINS:-https://fin.skyvl.com}
       ADMIN_EMAIL: ${ADMIN_EMAIL:-admin@localhost}
       ADMIN_PASSWORD: ${ADMIN_PASSWORD:-}
     healthcheck:

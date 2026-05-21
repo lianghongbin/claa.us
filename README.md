@@ -171,6 +171,8 @@ docker compose up -d --build
 
 **从本机 SQLite 迁到 Docker**：把现有 `db.sqlite3` 复制为 `data/db.sqlite3`，再执行 `docker compose up -d`。
 
+**Cloudflare Tunnel**：默认已允许 `fin.skyvl.com` 与 `CSRF_TRUSTED_ORIGINS=https://fin.skyvl.com`；换域名时改 `.env` 或 `config/settings/base.py` 中的 `_TUNNEL_HOSTS`。
+
 **局域网访问**：在 `.env` 的 `ALLOWED_HOSTS` 中加入本机 IP，例如 `127.0.0.1,localhost,192.168.1.20`。
 
 ### 复制到另一台 Mac

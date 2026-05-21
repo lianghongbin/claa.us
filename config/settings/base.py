@@ -17,11 +17,28 @@ SECRET_KEY = os.getenv(
 
 DEBUG = os.getenv("DEBUG", "True").lower() in ("1", "true", "yes")
 
+# Hosts always permitted (Cloudflare Tunnel public domain).
+_TUNNEL_HOSTS = ("fin.skyvl.com",)
+
 ALLOWED_HOSTS = [
     h.strip()
-    for h in os.getenv("ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
+    for h in os.getenv(
+        "ALLOWED_HOSTS",
+        "127.0.0.1,localhost,fin.skyvl.com",
+    ).split(",")
     if h.strip()
 ]
+for host in _TUNNEL_HOSTS:
+    if host not in ALLOWED_HOSTS:
+        ALLOWED_HOSTS.append(host)
+
+CSRF_TRUSTED_ORIGINS = [
+    o.strip()
+    for o in os.getenv("CSRF_TRUSTED_ORIGINS", "").split(",")
+    if o.strip()
+]
+if not CSRF_TRUSTED_ORIGINS:
+    CSRF_TRUSTED_ORIGINS = [f"https://{host}" for host in _TUNNEL_HOSTS]
 
 INSTALLED_APPS = [
     "simpleui",
