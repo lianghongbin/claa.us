@@ -138,7 +138,16 @@ chmod +x scripts/*.sh start.command   # 首次克隆后执行一次
 
 适合「不想本机装 Python / 希望开机自动跑服务」的场景。数据保存在项目目录的 `data/`、`media/`、`backups/`。
 
-**一键安装（推荐）**：
+**日常更新并启动（推荐）**：
+
+```bash
+chmod +x start.sh
+./start.sh
+```
+
+自动：`docker compose down` → 从 GitHub 拉最新代码 → 释放 8000 端口 → 构建并启动容器。
+
+**首次安装**：
 
 ```bash
 chmod +x scripts/docker-install.sh
@@ -225,7 +234,8 @@ docker compose up -d --build
 | `python manage.py setup_finance_groups` | 创建/更新「财务管理员」「普通财务」分组及权限绑定 |
 | `python manage.py backup_database` | 将 SQLite 备份到 `backups/`（与后台「一键备份」相同） |
 | `python manage.py restore_database --latest` | 从 `backups/` 最新文件还原 SQLite |
-| `./scripts/docker-install.sh` | Docker 一键安装并启动（自动生成 .env 与管理员） |
+| `./start.sh` | 更新代码 + 重启 Docker（日常一键） |
+| `./scripts/docker-install.sh` | Docker 首次安装（不拉 git） |
 | `docker compose up -d` | Docker 后台启动服务 |
 | `docker compose exec web python manage.py …` | 在容器内执行管理命令 |
 | `python manage.py test apps.finance` | 运行财务模块单元测试 |
