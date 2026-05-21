@@ -1,0 +1,28 @@
+{% load i18n %}
+<table class="finance-table finance-table--fixed-cols finance-table--3col-category-share">
+  <thead>
+    <tr>
+      <th>{% trans "科目" %}</th>
+      <th>{% trans "占比" %}</th>
+      <th class="num">{% trans "金额" %}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for row in rows %}
+    <tr>
+      <td>{{ row.category_name }}</td>
+      <td>
+        <div class="finance-bar-cell">
+          <div class="finance-bar-track" style="max-width: 200px; background: #f0f0f0;">
+            <div class="finance-bar-fill" style="background: {{ bar_color }}; width: {{ row.share_pct }}%; min-width: {% if row.total %}2px{% else %}0{% endif %};"></div>
+          </div>
+          <span style="min-width: 48px;">{{ row.share_pct }}%</span>
+        </div>
+      </td>
+      <td class="num">{{ row.total }}</td>
+    </tr>
+    {% empty %}
+    <tr class="finance-table__empty-row"><td colspan="3">{% trans "无数据" %}</td></tr>
+    {% endfor %}
+  </tbody>
+</table>

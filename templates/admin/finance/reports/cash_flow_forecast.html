@@ -1,0 +1,142 @@
+{% extends "admin/finance/base_page.html" %}
+{% load i18n %}
+{% block finance_breadcrumbs %}
+<div class="breadcrumbs finance-breadcrumbs">
+  <a href="{% url 'admin:index' %}">{% trans "首页" %}</a>
+  &rsaquo; <a href="{% url 'finance:reports_index' %}">{% trans "报表中心" %}</a>
+  &rsaquo; {% trans "现金流预测" %}
+</div>
+{% endblock %}
+{% block finance_content %}
+<h1>{% trans "现金流预测" %}</h1>
+<p class="help">
+  {% trans "基于未结清应收/应付账单的未收、未付余额，按约定收款日/付款日归类。三个分区各占一个 Tab，同一时间只显示一张表；账单明细行数不固定，在「账单明细」Tab 内打开完整分页列表。" %}
+</p>
+
+<form method="get" class="finance-filter">
+  <input type="hidden" name="tab" value="{{ active_tab }}">
+  <label>{% trans "预测起始" %}
+    <input type="date" name="date_from" value="{{ filter_date_from }}" required>
+  </label>
+  <label>{% trans "预测截止" %}
+    <input type="date" name="date_to" value="{{ filter_date_to }}" required>
+  </label>
+  <button type="submit" class="button">{% trans "查询" %}</button>
+</form>
+
+<div class="finance-summary">
+  <strong>{% trans "预测区间" %}：</strong>{{ report.date_from }} — {{ report.date_to }}
+  &nbsp;|&nbsp;
+  <strong>{% trans "预计收款合计" %}：</strong><span class="text-income">{{ report.total_expected_inflow }}</span>
+  &nbsp;|&nbsp;
+  <strong>{% trans "预计付款合计" %}：</strong><span class="text-expense">{{ report.total_expected_outflow }}</span>
+  &nbsp;|&nbsp;
+  <strong>{% trans "预计净现金流" %}：</strong><strong>{{ report.net_expected }}</strong>
+</div>
+
+<nav class="finance-tabs" aria-label="{% trans '报表分区' %}">
+  <a class="finance-tabs__tab{% if active_tab == 'period' %} is-active{% endif %}" href="?{{ tab_period_url }}"{% if active_tab == 'period' %} aria-current="page"{% endif %}>{% trans "区间内按到期日" %}</a>
+  <a class="finance-tabs__tab{% if active_tab == 'other' %} is-active{% endif %}" href="?{{ tab_other_url }}"{% if active_tab == 'other' %} aria-current="page"{% endif %}>{% trans "已逾期与其他" %}</a>
+  <a class="finance-tabs__tab{% if active_tab == 'details' %} is-active{% endif %}" href="?{{ tab_details_url }}"{% if active_tab == 'details' %} aria-current="page"{% endif %}>{% trans "账单明细" %}</a>
+</nav>
+
+{% if active_tab == "period" %}
+<table class="finance-table finance-table--fixed-cols finance-table--4col-due-cashflow">
+  <thead>
+    <tr>
+      <th>{% trans "到期日" %}</th>
+      <th class="num">{% trans "预计收款" %}</th>
+      <th class="num">{% trans "预计付款" %}</th>
+      <th class="num">{% trans "净额" %}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for row in period_page %}
+    <tr>
+      <td>{{ row.due_date }}</td>
+      <td class="num">{{ row.expected_inflow }}</td>
+      <td class="num">{{ row.expected_outflow }}</td>
+      <td class="num">{{ row.net }}</td>
+    </tr>
+    {% empty %}
+    {% trans "区间内无到期账单" as empty_period_msg %}
+    {% include "admin/finance/_table_empty_row.html" with colspan=4 message=empty_period_msg %}
+    {% endfor %}
+    {% if period_page.paginator.count %}
+    <tr class="total-row">
+      <td>{% trans "区间内小计" %}</td>
+      <td class="num">{{ report.in_period_inflow }}</td>
+      <td class="num">{{ report.in_period_outflow }}</td>
+      <td class="num">{{ report.in_period_net }}</td>
+    </tr>
+    {% endif %}
+  </tbody>
+</table>
+{% include "admin/finance/_report_pagination.html" with page_obj=period_page filter_query=filter_query page_param="period_page" %}
+
+{% elif active_tab == "other" %}
+<table class="finance-table finance-table--fixed-cols finance-table--3col-forecast-other">
+  <thead>
+    <tr>
+      <th>{% trans "分类" %}</th>
+      <th class="num">{% trans "预计收款" %}</th>
+      <th class="num">{% trans "预计付款" %}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% if report.overdue_inflow or report.overdue_outflow %}
+    <tr>
+      <td>{% trans "已逾期（到期日早于预测起始）" %}</td>
+      <td class="num text-income">{{ report.overdue_inflow }}</td>
+      <td class="num text-expense">{{ report.overdue_outflow }}</td>
+    </tr>
+    {% endif %}
+    {% if report.undated_inflow or report.undated_outflow %}
+    <tr>
+      <td>{% trans "未设到期日" %}</td>
+      <td class="num">{{ report.undated_inflow }}</td>
+      <td class="num">{{ report.undated_outflow }}</td>
+    </tr>
+    {% endif %}
+    {% if report.beyond_inflow or report.beyond_outflow %}
+    <tr>
+      <td>{% trans "到期日晚于预测截止" %}</td>
+      <td class="num">{{ report.beyond_inflow }}</td>
+      <td class="num">{{ report.beyond_outflow }}</td>
+    </tr>
+    {% endif %}
+    {% if not report.overdue_inflow and not report.overdue_outflow and not report.undated_inflow and not report.undated_outflow and not report.beyond_inflow and not report.beyond_outflow %}
+    {% trans "无已逾期或其他项。" as empty_other_msg %}
+    {% include "admin/finance/_table_empty_row.html" with colspan=3 message=empty_other_msg %}
+    {% endif %}
+  </tbody>
+</table>
+
+{% else %}
+<table class="finance-table finance-table--fixed-cols finance-table--5col-invoice-detail">
+  <thead>
+    <tr>
+      <th>{% trans "类型" %}</th>
+      <th>{% trans "单号" %}</th>
+      <th>{% trans "往来单位" %}</th>
+      <th>{% trans "到期日" %}</th>
+      <th class="num">{% trans "未结余额" %}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% if detail_count %}
+    <tr>
+      <td colspan="5" class="finance-table__action-cell">
+        <a class="button" href="{% url 'finance:cash_flow_forecast_details' %}?{{ detail_filter_query }}">{% trans "查看未结清账单明细" %}（{{ detail_count }}）→</a>
+      </td>
+    </tr>
+    {% else %}
+    {% trans "无未结清账单" as empty_detail_msg %}
+    {% include "admin/finance/_table_empty_row.html" with colspan=5 message=empty_detail_msg %}
+    {% endif %}
+  </tbody>
+</table>
+{% endif %}
+
+<p class="finance-footer-link"><a href="{% url 'finance:reports_index' %}">{% trans "返回报表列表" %}</a></p>
+{% endblock %}

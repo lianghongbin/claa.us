@@ -1,0 +1,629 @@
+/* 后台新增/修改页：统一紧凑布局（SimpleUI + Django Admin） */
+
+body.admin-compact-form {
+  --admin-form-label-width: 7rem;
+}
+
+body.admin-compact-form #content {
+  background: #f5f7fb;
+}
+
+body.admin-compact-form .page-header {
+  padding: 6px 10px 4px;
+  margin-bottom: 6px;
+}
+
+body.admin-compact-form .object-tools {
+  top: 10px;
+  right: 16px;
+}
+
+body.admin-compact-form form[id$="_form"] {
+  margin-top: 4px;
+}
+
+body.admin-compact-form form[id$="_form"] > div > fieldset.module {
+  margin: 0 0 12px;
+  padding: 0;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+  overflow: hidden;
+}
+
+body.admin-compact-form fieldset.module > h2 {
+  display: block !important;
+  height: auto !important;
+  width: auto !important;
+  min-height: 0 !important;
+  margin: 0;
+  padding: 10px 14px;
+  border-bottom: 1px solid #edf0f5;
+  background: #fafbfc;
+  color: #303133 !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  line-height: 1.4 !important;
+  text-indent: 0 !important;
+  text-transform: none !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  overflow: visible !important;
+  clip: auto !important;
+  clip-path: none !important;
+  position: static !important;
+}
+
+body.admin-compact-form fieldset.module .description {
+  margin: 0;
+  padding: 8px 14px;
+  border-bottom: 1px solid #f0f2f5;
+  font-size: 12px;
+  color: #606266;
+}
+
+/* 主表字段：默认两列，一行可排两个输入；宽控件独占整行 */
+body.admin-compact-form fieldset.module {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 28px;
+}
+
+body.admin-compact-form fieldset.module > h2,
+body.admin-compact-form fieldset.module > .description {
+  grid-column: 1 / -1;
+}
+
+body.admin-compact-form fieldset.module > .form-row {
+  box-sizing: border-box;
+  display: block;
+  min-width: 0;
+  padding: 8px 12px 8px 16px;
+  border-bottom: 1px solid #f0f2f5;
+  overflow: visible;
+  float: none;
+  width: auto;
+  clear: none;
+}
+
+/* 网格双列时（每字段单独一行）：列间距 + 右列竖线 */
+body.admin-compact-form fieldset.module > .form-row:nth-child(2n + 1 of .form-row):not(:has(.form-multiline)) {
+  padding-right: 24px !important;
+}
+
+body.admin-compact-form fieldset.module > .form-row:nth-child(2n of .form-row):not(:has(.form-multiline)) {
+  padding-left: 28px !important;
+  border-left: 1px solid #d5dbe3 !important;
+}
+
+body.admin-compact-form fieldset.module > .form-row.field-note,
+body.admin-compact-form fieldset.module > .form-row.field-tags,
+body.admin-compact-form fieldset.module > .form-row.field-remark,
+body.admin-compact-form fieldset.module > .form-row.field-description,
+body.admin-compact-form fieldset.module > .form-row.field-billing_address,
+body.admin-compact-form fieldset.module > .form-row:has(textarea),
+body.admin-compact-form fieldset.module > .form-row:has(.selector),
+body.admin-compact-form fieldset.module > .form-row:has(.selectfilter),
+body.admin-compact-form fieldset.module > .form-row:has(input[type="file"]),
+body.admin-compact-form fieldset.module > .form-row:has(.vLargeTextField),
+body.admin-compact-form fieldset.module > .form-row:has(.vXMLLargeTextField),
+body.admin-compact-form fieldset.module > .form-row:has(.form-multiline),
+body.admin-compact-form fieldset.module > .form-row.checkbox-row,
+body.admin-compact-form fieldset.module.wide > .form-row {
+  grid-column: 1 / -1;
+  border-left: none;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+body.admin-compact-form fieldset.module > .form-row > div {
+  margin: 0;
+  padding: 0;
+}
+
+/* label 与输入框同一行；整页 label 等宽（--admin-form-label-width 由 JS 计算） */
+body.admin-compact-form .aligned label {
+  float: none !important;
+}
+
+/* 取消 Django 默认 160px 左缩进，避免控件整体右移 */
+body.admin-compact-form form .aligned ul,
+body.admin-compact-form form .aligned p.help,
+body.admin-compact-form form .aligned div.help,
+body.admin-compact-form form .aligned input + p.help,
+body.admin-compact-form form .aligned textarea + p.help,
+body.admin-compact-form form .aligned select + p.help,
+body.admin-compact-form form .aligned input + div.help,
+body.admin-compact-form form .aligned textarea + div.help,
+body.admin-compact-form form .aligned select + div.help {
+  margin-left: 0 !important;
+}
+
+/* 同一行两个字段（如 日期|金额）：中间留白 + 竖线分隔 */
+body.admin-compact-form fieldset.module .form-row .flex-container.form-multiline {
+  display: flex !important;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+  gap: 0 !important;
+  width: 100%;
+  margin: 0 !important;
+  box-sizing: border-box;
+}
+
+body.admin-compact-form fieldset.module .form-row .flex-container.form-multiline > div {
+  flex: 1 1 0;
+  min-width: 0;
+  margin: 0;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+body.admin-compact-form fieldset.module .form-row .flex-container.form-multiline > div:first-child {
+  padding-left: 0;
+  padding-right: 28px;
+}
+
+body.admin-compact-form fieldset.module .form-row .flex-container.form-multiline > div + div {
+  padding-left: 28px;
+  padding-right: 0;
+  border-left: 1px solid #d5dbe3;
+}
+
+body.admin-compact-form fieldset.module .form-row .flex-container.form-multiline > div:only-child {
+  padding-left: 0;
+  padding-right: 0;
+  border-left: none;
+}
+
+body.admin-compact-form fieldset.module .form-row > div > .flex-container,
+body.admin-compact-form fieldset.module .form-row .flex-container.fieldBox,
+body.admin-compact-form fieldset.module .form-row .flex-container.checkbox-row,
+body.admin-compact-form fieldset.module > .form-row > div:not(.fieldBox):not(:has(> .flex-container)) {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+  gap: 10px 12px;
+  width: 100%;
+  margin: 0 !important;
+  float: none !important;
+  box-sizing: border-box;
+}
+
+body.admin-compact-form fieldset.module .form-row .flex-container > label,
+body.admin-compact-form fieldset.module > .form-row > div > label,
+body.admin-compact-form fieldset.module > .form-row > .fieldBox > label {
+  flex: 0 0 var(--admin-form-label-width) !important;
+  width: var(--admin-form-label-width) !important;
+  min-width: var(--admin-form-label-width) !important;
+  max-width: var(--admin-form-label-width) !important;
+  margin: 0 !important;
+  padding: 7px 0 0;
+  text-align: left;
+  color: #303133;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.4;
+  float: none !important;
+  display: block !important;
+}
+
+body.admin-compact-form fieldset.module .form-row .flex-container > label ~ *:not(.help),
+body.admin-compact-form fieldset.module > .form-row > div > label ~ *:not(.help),
+body.admin-compact-form fieldset.module > .form-row > .fieldBox > label ~ *:not(.help) {
+  flex: 1 1 0;
+  min-width: 0;
+  display: block;
+  float: none !important;
+  width: auto !important;
+  margin: 0 !important;
+}
+
+body.admin-compact-form form .aligned p.help,
+body.admin-compact-form form .aligned div.help,
+body.admin-compact-form fieldset.module .form-row .help {
+  flex: 1 1 100%;
+  margin-left: 0 !important;
+  padding-left: calc(var(--admin-form-label-width) + 12px);
+  box-sizing: border-box;
+}
+
+body.admin-compact-form fieldset.module > .form-row > div {
+  width: 100%;
+}
+
+body.admin-compact-form fieldset.module .form-row label.vCheckboxLabel {
+  flex: 1 1 auto;
+  width: auto !important;
+  text-align: left;
+  padding: 0;
+}
+
+body.admin-compact-form fieldset.module .form-row label:not(.vCheckboxLabel)::after {
+  display: none;
+}
+
+body.admin-compact-form fieldset .fieldBox {
+  margin-right: 0;
+}
+
+body.admin-compact-form .flex-container.checkbox-row {
+  align-items: center;
+}
+
+body.admin-compact-form fieldset.module .form-row input[type="text"],
+body.admin-compact-form fieldset.module .form-row input[type="email"],
+body.admin-compact-form fieldset.module .form-row input[type="url"],
+body.admin-compact-form fieldset.module .form-row input[type="number"],
+body.admin-compact-form fieldset.module .form-row input[type="date"],
+body.admin-compact-form fieldset.module .form-row input[type="datetime-local"],
+body.admin-compact-form fieldset.module .form-row input[type="password"],
+body.admin-compact-form fieldset.module .form-row select,
+body.admin-compact-form fieldset.module .form-row .vTextField {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  min-height: 32px;
+  border: 1px solid #dcdfe6;
+  border-radius: 6px;
+  padding: 5px 10px;
+}
+
+body.admin-compact-form fieldset.module .form-row textarea {
+  box-sizing: border-box;
+  width: 100%;
+  height: 3.2em;
+  min-height: 3.2em;
+  max-height: 3.2em;
+  overflow-y: auto;
+  resize: none;
+  border: 1px solid #dcdfe6;
+  border-radius: 6px;
+  padding: 5px 10px;
+  line-height: 1.45;
+}
+
+body.admin-compact-form fieldset.module .form-row input::placeholder,
+body.admin-compact-form fieldset.module .form-row textarea::placeholder {
+  color: #a8abb2;
+  font-size: 13px;
+}
+
+body.admin-compact-form fieldset.module .form-row .readonly {
+  display: inline-block;
+  padding: 5px 0;
+  color: #606266;
+}
+
+body.admin-compact-form fieldset.module .form-row .help,
+body.admin-compact-form fieldset.module .form-row p.help {
+  margin: 4px 0 0 !important;
+  padding: 0 !important;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #909399;
+}
+
+body.admin-compact-form fieldset.module > .form-row.checkbox-row {
+  align-items: center;
+}
+
+body.admin-compact-form fieldset.module .form-row.checkbox-row > div {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 10px;
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+body.admin-compact-form fieldset.module .form-row.checkbox-row input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+}
+
+body.admin-compact-form fieldset.module > .form-row:has(.selector) > label {
+  padding-top: 10px;
+}
+
+body.admin-compact-form fieldset.module > .form-row.field-note > label {
+  padding-top: 8px;
+}
+
+/* 权限/分组双栏选择器 */
+body.admin-compact-form .selector {
+  display: grid !important;
+  grid-template-columns: minmax(200px, 1fr) 40px minmax(200px, 1fr);
+  gap: 10px;
+  width: 100% !important;
+  max-width: 100%;
+  margin: 0 !important;
+}
+
+body.admin-compact-form .selector .selector-available,
+body.admin-compact-form .selector .selector-chosen {
+  float: none !important;
+  width: auto !important;
+  min-width: 0 !important;
+  border: 1px solid #dfe4ea;
+  border-radius: 6px;
+  background: #fff;
+  overflow: hidden;
+}
+
+body.admin-compact-form .selector .selector-available {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+body.admin-compact-form .selector .selector-chooser {
+  grid-column: 2;
+  grid-row: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  margin: 0;
+  padding: 0;
+}
+
+body.admin-compact-form .selector .selector-chosen {
+  grid-column: 3;
+  grid-row: 1;
+}
+
+body.admin-compact-form .selector h2 {
+  display: block !important;
+  visibility: visible !important;
+  height: auto !important;
+  width: auto !important;
+  margin: 0;
+  padding: 8px 10px;
+  overflow: visible !important;
+  clip: auto !important;
+  clip-path: none !important;
+  text-indent: 0 !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  line-height: 1.4;
+  color: #303133 !important;
+  background: #f5f7fa !important;
+}
+
+body.admin-compact-form .selector .selector-chosen h2 {
+  background: #eef6ff !important;
+  color: #303133 !important;
+  border-bottom: 1px solid #dce6f0;
+}
+
+body.admin-compact-form .selector .selector-filter {
+  margin: 0;
+  padding: 8px 10px;
+  border-top: 1px solid #edf0f5;
+  border-bottom: 1px solid #edf0f5;
+}
+
+body.admin-compact-form .selector .selector-filter input {
+  width: calc(100% - 24px);
+  height: 28px;
+  border-radius: 4px;
+}
+
+body.admin-compact-form .selector select {
+  width: 100%;
+  min-height: 112px;
+  max-height: 180px;
+  border: 0;
+}
+
+body.admin-compact-form .selector .selector-chooser li {
+  margin: 3px 0;
+}
+
+body.admin-compact-form .selector .selector-help {
+  display: none;
+}
+
+body.admin-compact-form .related-widget-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 8px;
+  float: none !important;
+  width: 100% !important;
+  max-width: 100%;
+  margin-left: 0 !important;
+}
+
+body.admin-compact-form .related-widget-wrapper select,
+body.admin-compact-form .related-widget-wrapper .select2-container {
+  flex: 1 1 120px;
+  min-width: 0;
+  max-width: 100%;
+}
+
+body.admin-compact-form .related-widget-wrapper .related-widget-wrapper-link {
+  flex: 0 0 auto;
+  line-height: 1;
+}
+
+/* 日期：图标在输入框内，点击输入框或图标弹出日历；不显示「今天」 */
+body.admin-compact-form p.date,
+body.admin-compact-form p.date.finance-date-field {
+  position: relative;
+  display: block;
+  width: 100%;
+  margin: 0 !important;
+  padding: 0 !important;
+  font-weight: normal;
+  line-height: normal;
+  color: inherit;
+}
+
+body.admin-compact-form p.date input.vDateField {
+  width: 100% !important;
+  max-width: 100%;
+  min-height: 32px;
+  padding-right: 36px !important;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+body.admin-compact-form p.date .datetimeshortcuts {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  margin: 0 !important;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font-size: 0;
+  line-height: 0;
+  white-space: nowrap;
+}
+
+body.admin-compact-form p.date .datetimeshortcuts a.calendarlink,
+body.admin-compact-form p.date .datetimeshortcuts a[id^="calendarlink"] {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+  pointer-events: auto;
+  vertical-align: middle;
+}
+
+body.admin-compact-form p.date .datetimeshortcuts .date-icon {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  opacity: 0.85;
+}
+
+body.admin-compact-form p.date .datetimeshortcuts a:not(.calendarlink):not([id^="calendarlink"]) {
+  display: none !important;
+}
+
+/* 日历弹层：视口居中（避免 iframe / 内嵌图标导致坐标飞出页面） */
+body.admin-compact-form .calendarbox.module {
+  position: fixed !important;
+  z-index: 10050 !important;
+  margin: 0 !important;
+  box-shadow: 0 12px 40px rgba(15, 23, 42, 0.18);
+  border-radius: 8px;
+}
+
+/* 浏览器与系统时区不一致时的滞后提示不展示 */
+body.admin-compact-form .timezonewarning,
+body.admin-compact-form .form-row.field-date .timezonewarning {
+  display: none !important;
+}
+
+/* 内联表格（应收/应付明细等） */
+body.admin-compact-form .inline-group {
+  margin: 0 0 12px;
+  padding: 0;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #fff;
+  overflow: hidden;
+}
+
+body.admin-compact-form .inline-group h2 {
+  margin: 0;
+  padding: 10px 14px;
+  border-bottom: 1px solid #edf0f5;
+  background: #fafbfc;
+  color: #303133 !important;
+  font-size: 14px !important;
+}
+
+body.admin-compact-form .inline-group .tabular {
+  overflow-x: auto;
+}
+
+body.admin-compact-form .inline-group .tabular thead th {
+  padding: 8px 10px;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+body.admin-compact-form .inline-group .tabular td {
+  padding: 6px 8px;
+  vertical-align: middle;
+}
+
+body.admin-compact-form .inline-group .tabular td input,
+body.admin-compact-form .inline-group .tabular td select {
+  width: 100%;
+  min-width: 80px;
+  min-height: 30px;
+  box-sizing: border-box;
+}
+
+body.admin-compact-form .inline-group .tabular tr.add-row td,
+body.admin-compact-form .inline-group div.add-row {
+  padding: 8px 14px;
+}
+
+body.admin-compact-form .inline-group .aligned label {
+  width: auto;
+  min-width: 0;
+  padding-right: 8px;
+}
+
+/* 底部按钮区 */
+body.admin-compact-form .submit-row {
+  margin: 12px 0 0;
+  padding: 10px 14px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+}
+
+body.admin-compact-form .submit-row input[type="submit"],
+body.admin-compact-form .submit-row .deletelink-box {
+  margin: 0;
+}
+
+body.admin-compact-form .submit-row input[type="submit"] {
+  padding: 8px 16px !important;
+}
+
+body.admin-compact-form #alert {
+  margin-bottom: 10px;
+}
+
+@media (max-width: 900px) {
+  body.admin-compact-form fieldset.module {
+    grid-template-columns: 1fr;
+  }
+
+  body.admin-compact-form fieldset.module > .form-row {
+    border-right: 0;
+  }
+
+  body.admin-compact-form .selector {
+    grid-template-columns: 1fr;
+  }
+
+  body.admin-compact-form .selector .selector-chooser {
+    grid-column: 1;
+    grid-row: 2;
+    flex-direction: row;
+  }
+
+  body.admin-compact-form .selector .selector-chosen {
+    grid-column: 1;
+    grid-row: 3;
+  }
+}

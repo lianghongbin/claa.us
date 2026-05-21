@@ -1,0 +1,28 @@
+/* 侧边栏当前菜单高亮（SimpleUI + Element UI） */
+
+#main .el-menu .el-menu-item.is-active,
+#main .el-menu .el-menu-item.is-active i.menu-icon {
+  color: #409eff !important;
+  background-color: rgba(64, 158, 255, 0.14) !important;
+}
+
+#main .el-menu .el-menu-item.is-active {
+  position: relative;
+  font-weight: 600;
+}
+
+#main .el-menu .el-menu-item.is-active::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: #409eff;
+  border-radius: 0 2px 2px 0;
+}
+
+#main .el-menu .el-submenu.is-active > .el-submenu__title,
+#main .el-menu .el-submenu.is-active > .el-submenu__title i {
+  color: #409eff !important;
+}

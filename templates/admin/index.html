@@ -1,0 +1,8 @@
+{% extends "admin/simpleui_index_source.html" %}
+{% load static simpletags %}
+
+{% block index_js %}
+    <script type="text/javascript" src="{% static 'admin/simpleui-x/js/menu.js' %}?finance=8"></script>
+    <script type="text/javascript" src="{% static 'admin/simpleui-x/js/index.js' %}?_={% get_version %}"></script>
+    <script type="text/javascript" src="{% static 'admin/finance/simpleui_menu.js' %}?finance=8"></script>
+{% endblock %}

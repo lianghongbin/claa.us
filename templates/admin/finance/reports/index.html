@@ -1,0 +1,44 @@
+{% extends "admin/finance/base_page.html" %}
+{% load i18n %}
+{% block finance_breadcrumbs %}
+<div class="breadcrumbs finance-breadcrumbs">
+  <a href="{% url 'admin:index' %}">{% trans "首页" %}</a>
+  &rsaquo; {% trans "报表中心" %}
+</div>
+{% endblock %}
+{% block finance_content %}
+<h1>{% trans "报表中心" %}</h1>
+<p class="help">{% trans "选择下方报表进入查询；也可在左侧「财务报表」菜单中直接打开。" %}</p>
+
+<div class="finance-report-cards">
+  <a class="finance-report-card" href="{% url 'finance:profit_loss' %}">
+    <div class="finance-report-card__icon"><i class="fas fa-chart-line"></i></div>
+    <h2 class="finance-report-card__title">{% trans "损益表" %}</h2>
+    <p class="finance-report-card__desc">{% trans "按期间、科目与项目汇总收入与支出，查看净利润。" %}</p>
+    <span class="finance-report-card__action">{% trans "打开报表" %} →</span>
+  </a>
+  <a class="finance-report-card" href="{% url 'finance:cash_flow' %}">
+    <div class="finance-report-card__icon"><i class="fas fa-exchange-alt"></i></div>
+    <h2 class="finance-report-card__title">{% trans "现金流量表" %}</h2>
+    <p class="finance-report-card__desc">{% trans "期间经营现金流入、流出及净额，按账户名称分列。" %}</p>
+    <span class="finance-report-card__action">{% trans "打开报表" %} →</span>
+  </a>
+  <a class="finance-report-card" href="{% url 'finance:balance_sheet' %}">
+    <div class="finance-report-card__icon"><i class="fas fa-balance-scale"></i></div>
+    <h2 class="finance-report-card__title">{% trans "资产负债表" %}</h2>
+    <p class="finance-report-card__desc">{% trans "货币资金、应收、应付与累计盈余（轻量口径）。" %}</p>
+    <span class="finance-report-card__action">{% trans "打开报表" %} →</span>
+  </a>
+  <a class="finance-report-card" href="{% url 'finance:cash_flow_forecast' %}">
+    <div class="finance-report-card__icon"><i class="fas fa-calendar-check"></i></div>
+    <h2 class="finance-report-card__title">{% trans "现金流预测" %}</h2>
+    <p class="finance-report-card__desc">{% trans "按应收/应付约定到期日汇总预计收付款。" %}</p>
+    <span class="finance-report-card__action">{% trans "打开报表" %} →</span>
+  </a>
+</div>
+
+<p class="finance-footer-link" style="border-top: none; padding-top: 8px;">
+  <a href="{% url 'finance:dashboard' %}">{% trans "财务看板" %}</a>
+  — {% trans "收支趋势与分类占比" %}
+</p>
+{% endblock %}

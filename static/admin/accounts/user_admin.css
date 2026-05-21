@@ -1,0 +1,177 @@
+/* 用户新增/编辑：与全局紧凑表单配合 */
+
+body.accounts-user-change .accounts-add-hint {
+  margin: 0 0 12px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: #f0f7ff;
+  border: 1px solid #d6e8ff;
+  color: #606266;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+body.accounts-user-change form#user_form > div > fieldset.module.accounts-card {
+  margin-bottom: 12px;
+}
+
+/* 新增用户：2 行 × 2 列 — 邮箱|状态、名字|姓氏，与其它字段同一套 label+控件 */
+body.accounts-user-change fieldset.accounts-add-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 28px;
+}
+
+body.accounts-user-change fieldset.accounts-add-grid > .form-row {
+  border-right: 0;
+  min-width: 0;
+}
+
+body.accounts-user-change fieldset.accounts-add-grid > .form-row.field-email {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+body.accounts-user-change fieldset.accounts-add-grid > .form-row.accounts-status-group {
+  grid-column: 2;
+  grid-row: 1;
+  padding-left: 28px !important;
+  border-left: 1px solid #d5dbe3 !important;
+}
+
+body.accounts-user-change fieldset.accounts-add-grid > .form-row.field-first_name {
+  grid-column: 1;
+  grid-row: 2;
+  padding-right: 28px !important;
+  border-right: 1px solid #d5dbe3 !important;
+}
+
+body.accounts-user-change fieldset.accounts-add-grid > .form-row.field-last_name {
+  grid-column: 2;
+  grid-row: 2;
+  padding-left: 28px !important;
+  border-left: 1px solid #d5dbe3 !important;
+}
+
+body.accounts-user-change fieldset.accounts-add-grid .accounts-status-checkboxes {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+body.accounts-user-change fieldset.accounts-add-grid .accounts-status-checkboxes .flex-container.checkbox-row {
+  display: inline-flex !important;
+  flex-direction: row !important;
+  align-items: center;
+  gap: 6px 8px;
+  width: auto !important;
+  margin: 0;
+  white-space: nowrap;
+}
+
+body.accounts-user-change fieldset.accounts-add-grid .accounts-status-checkboxes input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+}
+
+body.accounts-user-change fieldset.accounts-add-grid .accounts-status-checkboxes label.vCheckboxLabel {
+  width: auto !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  padding: 0;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+body.accounts-user-change fieldset.accounts-add-grid .form-row .help {
+  display: none !important;
+}
+
+/* 编辑页：邮箱 / 密码 各占半列 */
+body.accounts-user-change fieldset.accounts-two-cols {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 28px;
+}
+
+body.accounts-user-change fieldset.accounts-two-cols > h2,
+body.accounts-user-change fieldset.accounts-two-cols > .description {
+  grid-column: 1 / -1;
+}
+
+body.accounts-user-change fieldset.accounts-two-cols > .form-row {
+  border-right: 0;
+}
+
+body.accounts-user-change fieldset.accounts-two-cols > .form-row:nth-child(2n of .form-row):not(:has(.form-multiline)) {
+  padding-left: 28px !important;
+  border-left: 1px solid #d5dbe3 !important;
+}
+
+/* 编辑页状态区 */
+body.accounts-user-change fieldset.accounts-status-card {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 28px;
+}
+
+body.accounts-user-change fieldset.accounts-status-card > h2 {
+  grid-column: 1 / -1;
+}
+
+body.accounts-user-change fieldset.accounts-status-card > .form-row {
+  grid-column: span 1;
+  border-left: none !important;
+  padding: 8px 12px !important;
+}
+
+body.accounts-user-change fieldset.accounts-status-card .flex-container.checkbox-row {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center;
+  gap: 8px 10px;
+}
+
+body.accounts-user-change fieldset.accounts-status-card .form-row .help {
+  display: none !important;
+}
+
+body.accounts-user-change fieldset.accounts-permission-card > .form-row {
+  grid-column: 1 / -1;
+  border-left: none !important;
+}
+
+body.accounts-user-change .accounts-password-button {
+  display: inline-flex;
+  align-items: center;
+  height: 32px;
+  padding: 0 14px !important;
+  border-radius: 6px !important;
+  text-decoration: none;
+}
+
+body.accounts-user-change fieldset.accounts-permission-card .form-row > div > label {
+  margin: 0 0 8px;
+}
+
+@media (max-width: 900px) {
+  body.accounts-user-change fieldset.accounts-add-grid,
+  body.accounts-user-change fieldset.accounts-two-cols,
+  body.accounts-user-change fieldset.accounts-status-card {
+    grid-template-columns: 1fr;
+  }
+
+  body.accounts-user-change fieldset.accounts-add-grid > .form-row {
+    grid-column: 1 / -1 !important;
+    grid-row: auto !important;
+    border-left: none !important;
+    border-right: none !important;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+}

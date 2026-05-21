@@ -1,0 +1,99 @@
+/* SimpleUI 列表顶栏：日期筛选用紧凑按钮，点击后在弹层里选择范围 */
+
+#changelist #toolbar {
+  overflow: visible;
+}
+
+#changelist #toolbar .simpleui-form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  row-gap: 10px;
+  gap: 8px;
+  overflow: visible;
+  padding-bottom: 2px;
+}
+
+#changelist #toolbar .simpleui-form-item {
+  display: block;
+  flex: 0 0 auto;
+  width: auto !important;
+  margin-right: 0 !important;
+  vertical-align: middle;
+}
+
+#changelist #toolbar .el-input.simpleui-form-item {
+  width: 220px !important;
+  min-width: 180px;
+}
+
+#changelist #toolbar .el-select.simpleui-form-item {
+  width: 150px !important;
+}
+
+#changelist #toolbar .finance-date-trigger {
+  width: 132px !important;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
+}
+
+#changelist #toolbar .finance-date-trigger.is-active {
+  background: #ecf5ff;
+  border-color: #b3d8ff;
+  color: #409eff;
+}
+
+#changelist #toolbar .finance-date-trigger span {
+  vertical-align: middle;
+}
+
+#changelist #toolbar .el-button {
+  flex: 0 0 auto;
+}
+
+#changelist #toolbar .small.quiet {
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+
+.finance-date-popper {
+  padding: 12px;
+}
+
+.finance-date-panel-title {
+  color: #303133;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.finance-date-panel-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.finance-date-panel-label {
+  color: #606266;
+  flex: 0 0 88px;
+  font-size: 13px;
+  text-align: right;
+}
+
+.finance-date-panel-input.el-date-editor {
+  width: 132px;
+}
+
+.finance-date-separator {
+  color: #606266;
+  flex: 0 0 auto;
+  font-size: 13px;
+}
+
+.finance-date-panel-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 8px;
+}

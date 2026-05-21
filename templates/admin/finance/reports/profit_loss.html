@@ -1,0 +1,156 @@
+{% extends "admin/finance/base_page.html" %}
+{% load i18n %}
+{% block finance_breadcrumbs %}
+<div class="breadcrumbs finance-breadcrumbs">
+  <a href="{% url 'admin:index' %}">{% trans "首页" %}</a>
+  &rsaquo; <a href="{% url 'finance:reports_index' %}">{% trans "报表中心" %}</a>
+  &rsaquo; {% trans "损益表" %}
+</div>
+{% endblock %}
+{% block finance_content %}
+<h1>{% trans "损益表" %}</h1>
+<p class="help">
+  {% trans "收支流水口径的管理损益表。科目与分项目行数不固定，收入/支出/分项目各占一个 Tab，同一时间只显示一张表并分页。" %}
+</p>
+
+<form method="get" class="finance-filter">
+  <input type="hidden" name="tab" value="{{ active_tab }}">
+  <label>{% trans "起始日期" %}
+    <input type="date" name="date_from" value="{{ filter_date_from }}" required>
+  </label>
+  <label>{% trans "截止日期" %}
+    <input type="date" name="date_to" value="{{ filter_date_to }}" required>
+  </label>
+  <label>{% trans "项目" %}
+    <select name="project">
+      <option value="">{% trans "全部（含分项目汇总）" %}</option>
+      {% for p in projects %}
+      <option value="{{ p.pk }}" {% if selected_project_id == p.pk %}selected{% endif %}>
+        {{ p.code }} · {{ p.name }}
+      </option>
+      {% empty %}
+      <option value="" disabled>{% trans "暂无项目基础资料" %}</option>
+      {% endfor %}
+    </select>
+  </label>
+  {% if not projects %}
+  <button type="submit" class="button">{% trans "查询" %}</button>
+  <div class="finance-filter-help">
+    {% trans "项目在" %}<a href="{% url 'admin:finance_project_changelist' %}">{% trans "基础资料 → 项目" %}</a>{% trans "中维护；未建项目时仅按全部口径出报表。" %}
+  </div>
+  {% else %}
+  <button type="submit" class="button">{% trans "查询" %}</button>
+  {% endif %}
+</form>
+
+<div class="finance-summary">
+  <strong>{% trans "期间" %}：</strong>{{ report.date_from }} — {{ report.date_to }}
+  &nbsp;|&nbsp;
+  <strong>{% trans "总收入" %}：</strong><span class="text-income">{{ report.total_income }}</span>
+  &nbsp;|&nbsp;
+  <strong>{% trans "总支出" %}：</strong><span class="text-expense">{{ report.total_expense }}</span>
+  &nbsp;|&nbsp;
+  <strong>{% trans "净利润" %}：</strong><strong>{{ report.net_profit }}</strong>
+</div>
+
+<nav class="finance-tabs" aria-label="{% trans '科目与项目明细' %}">
+  <a class="finance-tabs__tab{% if active_tab == 'income' %} is-active{% endif %}" href="?{{ tab_income_url }}"{% if active_tab == 'income' %} aria-current="page"{% endif %}>{% trans "收入（按科目）" %}</a>
+  <a class="finance-tabs__tab{% if active_tab == 'expense' %} is-active{% endif %}" href="?{{ tab_expense_url }}"{% if active_tab == 'expense' %} aria-current="page"{% endif %}>{% trans "支出（按科目）" %}</a>
+  {% if show_projects_tab %}
+  <a class="finance-tabs__tab{% if active_tab == 'projects' %} is-active{% endif %}" href="?{{ tab_projects_url }}"{% if active_tab == 'projects' %} aria-current="page"{% endif %}>{% trans "分项目汇总" %}</a>
+  {% endif %}
+</nav>
+
+{% trans "无数据" as empty_income_msg %}
+{% trans "无数据" as empty_expense_msg %}
+{% trans "无数据" as empty_project_msg %}
+
+{% if active_tab == "income" %}
+<div class="finance-summary">
+  <strong>{% trans "合计" %}：</strong><span class="text-income">{{ report.total_income }}</span>
+</div>
+<table class="finance-table finance-table--fixed-cols finance-table--2col-label-amount">
+  {% include "admin/finance/_colgroup_2_label_amount.html" %}
+  <thead>
+    <tr>
+      <th>{% trans "科目" %}</th>
+      <th class="num">{% trans "金额" %}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for row in income_page %}
+    <tr>
+      <td>{{ row.category_name }}</td>
+      <td class="num">{{ row.total }}</td>
+    </tr>
+    {% empty %}
+    {% include "admin/finance/_table_empty_row.html" with colspan=2 message=empty_income_msg %}
+    {% endfor %}
+    {% if income_page.paginator.count %}
+    <tr class="total-row">
+      <td>{% trans "合计" %}</td>
+      <td class="num">{{ report.total_income }}</td>
+    </tr>
+    {% endif %}
+  </tbody>
+</table>
+{% include "admin/finance/_report_pagination.html" with page_obj=income_page filter_query=filter_query page_param="income_page" %}
+{% elif active_tab == "expense" %}
+<div class="finance-summary">
+  <strong>{% trans "合计" %}：</strong><span class="text-expense">{{ report.total_expense }}</span>
+</div>
+<table class="finance-table finance-table--fixed-cols finance-table--2col-label-amount">
+  {% include "admin/finance/_colgroup_2_label_amount.html" %}
+  <thead>
+    <tr>
+      <th>{% trans "科目" %}</th>
+      <th class="num">{% trans "金额" %}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for row in expense_page %}
+    <tr>
+      <td>{{ row.category_name }}</td>
+      <td class="num">{{ row.total }}</td>
+    </tr>
+    {% empty %}
+    {% include "admin/finance/_table_empty_row.html" with colspan=2 message=empty_expense_msg %}
+    {% endfor %}
+    {% if expense_page.paginator.count %}
+    <tr class="total-row">
+      <td>{% trans "合计" %}</td>
+      <td class="num">{{ report.total_expense }}</td>
+    </tr>
+    {% endif %}
+  </tbody>
+</table>
+{% include "admin/finance/_report_pagination.html" with page_obj=expense_page filter_query=filter_query page_param="expense_page" %}
+{% elif active_tab == "projects" and project_page %}
+<table class="finance-table finance-table--fixed-cols finance-table--4col-project-net">
+  {% include "admin/finance/_colgroup_4_project_net.html" %}
+  <thead>
+    <tr>
+      <th>{% trans "项目" %}</th>
+      <th class="num">{% trans "收入" %}</th>
+      <th class="num">{% trans "支出" %}</th>
+      <th class="num">{% trans "净利润" %}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for row in project_page %}
+    <tr>
+      <td>{{ row.project_code }} · {{ row.project_name }}</td>
+      <td class="num">{{ row.income }}</td>
+      <td class="num">{{ row.expense }}</td>
+      <td class="num">{{ row.net }}</td>
+    </tr>
+    {% empty %}
+    {% include "admin/finance/_table_empty_row.html" with colspan=4 message=empty_project_msg %}
+    {% endfor %}
+  </tbody>
+</table>
+{% include "admin/finance/_report_pagination.html" with page_obj=project_page filter_query=filter_query page_param="project_page" %}
+{% endif %}
+
+<p class="finance-footer-link"><a href="{% url 'finance:reports_index' %}">{% trans "返回报表列表" %}</a></p>
+{% endblock %}

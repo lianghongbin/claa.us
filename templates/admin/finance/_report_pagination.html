@@ -1,0 +1,18 @@
+{% load i18n %}
+{% if page_obj.paginator.num_pages > 1 %}
+{% with param=page_param|default:"page" %}
+<nav class="finance-pagination" aria-label="{% trans '分页' %}">
+  {% if page_obj.has_previous %}
+  <a class="button" href="?{% if filter_query %}{{ filter_query }}&{% endif %}{{ param }}={{ page_obj.previous_page_number }}">{% trans "上一页" %}</a>
+  {% endif %}
+  <span class="finance-pagination__info">
+    {% blocktrans with page=page_obj.number total=page_obj.paginator.num_pages count=page_obj.paginator.count %}
+    第 {{ page }} / {{ total }} 页，共 {{ count }} 条
+    {% endblocktrans %}
+  </span>
+  {% if page_obj.has_next %}
+  <a class="button" href="?{% if filter_query %}{{ filter_query }}&{% endif %}{{ param }}={{ page_obj.next_page_number }}">{% trans "下一页" %}</a>
+  {% endif %}
+</nav>
+{% endwith %}
+{% endif %}

@@ -1,0 +1,32 @@
+services:
+  web:
+    build: .
+    container_name: claa-finance
+    ports:
+      - "${FINANCE_PORT:-8000}:8000"
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      # Persist DB under ./data (override in .env if needed)
+      SQLITE_PATH: /data/db.sqlite3
+      ALLOWED_HOSTS: ${ALLOWED_HOSTS:-127.0.0.1,localhost}
+      ADMIN_EMAIL: ${ADMIN_EMAIL:-admin@localhost}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-}
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/admin/login/', timeout=3)",
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+      start_period: 40s
+    volumes:
+      - ./data:/data
+      - ./media:/app/media
+      - ./backups:/app/backups
+    restart: unless-stopped

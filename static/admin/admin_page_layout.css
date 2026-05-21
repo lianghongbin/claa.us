@@ -1,0 +1,19 @@
+/* 后台主内容区宽度：列表页、新增/编辑、报表等统一占满可用宽度 */
+
+#content {
+  max-width: none !important;
+}
+
+#content-main,
+#content-main.form-main,
+.colM #content-main {
+  box-sizing: border-box;
+  max-width: none !important;
+  width: 100% !important;
+  float: none;
+}
+
+.colM {
+  max-width: none !important;
+  width: auto;
+}

@@ -1,0 +1,336 @@
+{% load i18n static %}
+{% load simpletags %}
+{% if cl.search_fields or cl.has_filters %}
+    <script type="text/javascript">
+        function preSubmit() {
+            $('#changelist-search').find("input[name!='']").each(function () {
+                if ($(this).val() == '') {
+                    $(this).removeAttr('name');
+                }
+            });
+        }
+        function financeParseDate(str) {
+            if (!str) {
+                return null;
+            }
+            var parts = String(str).substring(0, 10).split('-');
+            if (parts.length !== 3) {
+                return null;
+            }
+            return new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10));
+        }
+        function financeInclusiveEndFromLt(untilStr, isDate) {
+            var d = financeParseDate(untilStr);
+            if (!d || !isDate) {
+                return untilStr;
+            }
+            d.setDate(d.getDate() - 1);
+            return d.format('yyyy-MM-dd');
+        }
+        function financeLtFromInclusiveEnd(end, isDate) {
+            if (!end) {
+                return '';
+            }
+            if (!isDate) {
+                return String(end);
+            }
+            var d = (end instanceof Date) ? new Date(end.getTime()) : financeParseDate(end);
+            if (!d) {
+                return String(end);
+            }
+            d.setDate(d.getDate() + 1);
+            return d.format('yyyy-MM-dd');
+        }
+    </script>
+    {% autoescape off %}
+        {% load_dates %}
+    {% endautoescape %}
+    <div id="toolbar">
+        <form id="changelist-search" method="get" onsubmit="preSubmit(this)">
+            <input type="hidden" name="p" value=""/>
+            <div class="simpleui-form">
+
+                {% if cl.search_fields %}
+                    <el-input size="small" class="simpleui-form-item"
+                              clearable
+                              name="{{ search_var }}"
+                              :placeholder="placeholder"
+                              prefix-icon="el-icon-search"
+                              v-model="searchInput" @keyup.enter.native="formSubmit()">
+                    </el-input>
+                {% endif %}
+
+                {% if cl.has_filters %}
+                    {% for spec in cl.filter_specs %}
+                        {% if spec|get_date_type == 'date' or spec|get_date_type == 'datetime' %}
+                            <el-popover placement="bottom-start"
+                                    width="360"
+                                    trigger="click"
+                                    popper-class="finance-date-popper">
+                                <div class="finance-date-panel">
+                                    <div class="finance-date-panel-title">{{ spec.title }}</div>
+                                    <div class="finance-date-panel-row">
+                                        <el-date-picker class="finance-date-panel-input"
+                                                size="small"
+                                                v-model="{{ spec.lookup_kwarg_since }}"
+                                                type="date"
+                                                format="yyyy-MM-dd"
+                                                value-format="yyyy-MM-dd"
+                                                placeholder="开始日期">
+                                        </el-date-picker>
+                                        <span class="finance-date-separator">至</span>
+                                        <el-date-picker class="finance-date-panel-input"
+                                                size="small"
+                                                v-model="{{ spec.field_path }}_until_display"
+                                                type="date"
+                                                format="yyyy-MM-dd"
+                                                value-format="yyyy-MM-dd"
+                                                placeholder="结束日期">
+                                        </el-date-picker>
+                                    </div>
+                                    <div class="finance-date-panel-actions">
+                                        <el-button size="mini" type="text"
+                                                @click="clearDateFilter('{{ spec.lookup_kwarg_since }}', '{{ spec.lookup_kwarg_until }}', '{{ spec.field_path }}_until_display')">
+                                            清空
+                                        </el-button>
+                                    </div>
+                                </div>
+                                <el-button slot="reference"
+                                        size="small"
+                                        class="simpleui-form-item finance-date-trigger"
+                                        plain
+                                        :class="{'is-active': hasDateFilter('{{ spec.lookup_kwarg_since }}', '{{ spec.field_path }}_until_display')}">
+                                    <i class="el-icon-date"></i>
+                                    <span v-text="dateFilterLabel('{{ spec.title }}', '{{ spec.lookup_kwarg_since }}', '{{ spec.field_path }}_until_display')"></span>
+                                </el-button>
+                            </el-popover>
+
+                            <input type="hidden" v-model="{{ spec.lookup_kwarg_since }}"
+                                   name="{{ spec.lookup_kwarg_since }}"/>
+                            <input type="hidden" v-model="{{ spec.lookup_kwarg_until }}"
+                                   name="{{ spec.lookup_kwarg_until }}"/>
+                        {% elif spec|has_filter %}
+                            <input type="hidden" v-model="{{ spec.parameter_name }}" name="{{ spec.parameter_name }}"/>
+                            <el-select size="small" class="simpleui-form-item" filterable v-model="{{ spec.parameter_name }}" clearable placeholder="{{ spec.title }}">
+                                {% for option in spec.lookup_choices %}
+                                    <el-option label="{{ option.1 }}" value="{{ option.0 }}"></el-option>
+                                {% endfor %}
+                            </el-select>
+
+                        {% else %}
+
+                            <input type="hidden" v-model="{{ spec.lookup_kwarg }}" name="{{ spec.lookup_kwarg }}"/>
+                            <el-select size="small" class="simpleui-form-item" filterable v-model="{{ spec.lookup_kwarg }}" clearable
+                                       placeholder="{{ spec.title }}">
+                                {% if spec|get_date_type == 'time' %}
+                                    {% for option in spec.lookup_choices %}
+                                        <el-option label="{{ option }}" value="{{ option|to_str }}"></el-option>
+                                    {% endfor %}
+                                {% elif spec.lookup_choices %}
+                                    {% if spec.lookup_choices.query %}
+                                        {% for option in spec.lookup_choices %}
+                                            <el-option label="{{ option }}" value="{{ option }}"></el-option>
+                                        {% endfor %}
+                                    {% else %}
+                                        {% for option in spec.lookup_choices %}
+                                            <el-option label="{{ option.1 }}" value="{{ option.0 }}"></el-option>
+                                        {% endfor %}
+                                    {% endif %}
+                                {% elif spec.field.choices %}
+                                    {% for option in spec.field.choices %}
+                                        <el-option label="{{ option.1 }}" value="{{ option.0 }}"></el-option>
+                                    {% endfor %}
+                                {% else %}
+                                    {% get_boolean_choices as choices %}
+                                    {% for c in choices %}
+                                        <el-option label="{{ c.1 }}" value="{{ c.0 }}"></el-option>
+                                    {% endfor %}
+                                {% endif %}
+                            </el-select>
+
+                        {% endif %}
+
+                    {% endfor %}
+                {% endif %}
+                <el-button size="small" type="primary" icon="el-icon-search" @click="formSubmit()">{% trans 'Search' %}</el-button>
+
+            {% if show_result_count %}
+                <span class="small quiet">{% blocktrans count counter=cl.result_count %}{{ counter }} result{% plural %}{{ counter }} results{% endblocktrans %} (<a href="?{% if cl.is_popup %}_popup=1{% endif %}">{% if cl.show_full_result_count %}{% blocktrans with full_result_count=cl.full_result_count %}{{ full_result_count }} total{% endblocktrans %}{% else %}{% trans "Show all" %}{% endif %}</a>)</span>
+            {% endif %}
+
+                {% for pair in cl.params.items %}
+                    {% if pair.0 != search_var %}
+                        {% if pair.0.0 == '_' or pair.0 == 'o'%}
+                            <input type="hidden" name="{{ pair.0 }}" value="{{ pair.1 }}"/>
+                        {% else %}
+                            <input type="hidden" class="form-params" data-name="{{ pair.0 }}" value="{{ pair.1 }}"/>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </form>
+    </div>
+
+    <script type="text/javascript">
+        Date.prototype.format = function (fmt) {
+            var o = {
+                "M+": this.getMonth() + 1,
+                "d+": this.getDate(),
+                "h+": this.getHours(),
+                "m+": this.getMinutes(),
+                "s+": this.getSeconds(),
+                "q+": Math.floor((this.getMonth() + 3) / 3),
+                "S": this.getMilliseconds()
+            };
+            if (/(y+)/.test(fmt))
+                fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+            for (var k in o)
+                if (new RegExp("(" + k + ")").test(fmt))
+                    fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+            return fmt;
+        }
+        var searchApp = new Vue({
+            el: '#toolbar',
+            data: {
+                placeholder: '{% trans 'Search' %}{% autoescape off %}{% search_placeholder %}'{% endautoescape %},
+                searchInput: '{{ cl.query | safe }}',
+                financeDateFilters: [
+                    {% if cl.has_filters %}
+                    {% for spec in cl.filter_specs %}
+                    {% if spec|get_date_type == 'date' or spec|get_date_type == 'datetime' %}
+                    {
+                        since: '{{ spec.lookup_kwarg_since }}',
+                        until: '{{ spec.lookup_kwarg_until }}',
+                        displayUntil: '{{ spec.field_path }}_until_display',
+                        title: '{{ spec.title }}',
+                        type: '{{ spec|get_date_type }}'
+                    },
+                    {% endif %}
+                    {% endfor %}
+                    {% endif %}
+                ],
+                {% if cl.has_filters %}
+                    {% for spec in cl.filter_specs %}
+                        {% if spec|get_date_type == 'date' or spec|get_date_type == 'datetime' %}
+                            '{{ spec.lookup_kwarg_since }}': '',
+                            '{{ spec.lookup_kwarg_until }}': '',
+                            '{{ spec.field_path }}_until_display': '',
+                        {% elif spec|has_filter %}
+                            '{{ spec.parameter_name }}': '',
+                        {% else %}
+                            '{{ spec.lookup_kwarg }}': '',
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            },
+            created: function () {
+                var self = this;
+                $('.form-params').each(function () {
+                    var key = $(this).attr('data-name');
+                    var value = $(this).val();
+                    self[key] = value;
+                });
+                (self.financeDateFilters || []).forEach(function (cfg) {
+                    var end = self[cfg.until];
+                    if (end && cfg.until.indexOf('__lt') !== -1) {
+                        self[cfg.displayUntil] = financeInclusiveEndFromLt(end, true).substring(0, 10);
+                    }
+                });
+            },
+            watch: {
+                {% if cl.has_filters %}
+                    {% for spec in cl.filter_specs %}
+                        {% if spec|get_date_type == 'date' or spec|get_date_type == 'datetime' %}
+                            '{{ spec.field_path }}_until_display': function (newValue) {
+                                var untilKey = '{{ spec.lookup_kwarg_until }}';
+                                if (!newValue) {
+                                    this[untilKey] = '';
+                                    return;
+                                }
+                                var endDay = typeof newValue === 'string' ? newValue.substring(0, 10) : newValue.format('yyyy-MM-dd');
+                                this[untilKey] = financeLtFromInclusiveEnd(endDay, true);
+                            },
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            },
+            methods: {
+                shortDate: function (value) {
+                    if (!value) {
+                        return '';
+                    }
+                    return String(value).substring(5, 10).replace('-', '/');
+                },
+                shortDateRange: function (start, end) {
+                    var shortStart = this.shortDate(start);
+                    var shortEnd = this.shortDate(end);
+                    if (shortStart.substring(0, 2) === shortEnd.substring(0, 2)) {
+                        return shortStart + '-' + shortEnd.substring(3, 5);
+                    }
+                    return shortStart + '-' + shortEnd;
+                },
+                hasDateFilter: function (sinceKey, displayUntilKey) {
+                    return Boolean(this[sinceKey] || this[displayUntilKey]);
+                },
+                hasAnyDateFilter: function () {
+                    var self = this;
+                    return (self.financeDateFilters || []).some(function (cfg) {
+                        return self.hasDateFilter(cfg.since, cfg.displayUntil);
+                    });
+                },
+                dateFilterSummary: function () {
+                    var self = this;
+                    var active = (self.financeDateFilters || []).filter(function (cfg) {
+                        return self.hasDateFilter(cfg.since, cfg.displayUntil);
+                    });
+                    if (!active.length) {
+                        return '日期';
+                    }
+                    if (active.length > 1) {
+                        return '日期 ' + active.length + '项';
+                    }
+                    return self.dateFilterLabel(active[0].title, active[0].since, active[0].displayUntil);
+                },
+                dateFilterLabel: function (title, sinceKey, displayUntilKey) {
+                    var shortTitle = this.shortDateTitle(title);
+                    var start = this[sinceKey];
+                    var end = this[displayUntilKey];
+                    if (start && end) {
+                        return shortTitle + ' ' + this.shortDateRange(start, end);
+                    }
+                    if (start) {
+                        return shortTitle + ' 自 ' + this.shortDate(start);
+                    }
+                    if (end) {
+                        return shortTitle + ' 至 ' + this.shortDate(end);
+                    }
+                    return shortTitle;
+                },
+                shortDateTitle: function (title) {
+                    if (String(title) === '日期') {
+                        return '日期';
+                    }
+                    return String(title)
+                        .replace('立账/开票日期', '立账')
+                        .replace('约定付款日', '付款')
+                        .replace('约定收款日', '收款')
+                        .replace('日期', '')
+                        .replace('时间', '时间');
+                },
+                clearDateFilter: function (sinceKey, untilKey, displayUntilKey) {
+                    this[sinceKey] = '';
+                    this[untilKey] = '';
+                    this[displayUntilKey] = '';
+                },
+                formSubmit: function () {
+                    preSubmit();
+                    document.getElementById('changelist-search').submit();
+                }
+            }
+        })
+    </script>
+{% else %}
+    <form id="changelist-search" method="get">
+        <input type="hidden" name="p" value=""/>
+    </form>
+{% endif %}

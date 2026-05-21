@@ -1,0 +1,92 @@
+{% extends "admin/finance/base_page.html" %}
+{% load i18n %}
+{% block finance_breadcrumbs %}
+<div class="breadcrumbs finance-breadcrumbs">
+  <a href="{% url 'admin:index' %}">{% trans "首页" %}</a>
+  &rsaquo; {% trans "财务看板" %}
+</div>
+{% endblock %}
+{% block finance_content %}
+<h1>{% trans "财务看板" %}</h1>
+<p class="help">{% trans "按可见流水范围汇总；默认展示近 6 个月。" %}</p>
+
+<form method="get" class="finance-filter">
+  <label>{% trans "起始日期" %}
+    <input type="date" name="date_from" value="{{ filter_date_from }}" required>
+  </label>
+  <label>{% trans "截止日期" %}
+    <input type="date" name="date_to" value="{{ filter_date_to }}" required>
+  </label>
+  <label>{% trans "项目" %}
+    <select name="project">
+      <option value="">{% trans "全部" %}</option>
+      {% for p in projects %}
+      <option value="{{ p.pk }}" {% if selected_project_id == p.pk %}selected{% endif %}>
+        {{ p.code }} · {{ p.name }}
+      </option>
+      {% endfor %}
+    </select>
+  </label>
+  <button type="submit" class="button">{% trans "查询" %}</button>
+  <a href="{% url 'finance:reports_index' %}">{% trans "报表中心" %}</a>
+</form>
+
+<div class="finance-summary">
+  <strong>{% trans "期间" %}：</strong>{{ dashboard.date_from }} — {{ dashboard.date_to }}
+  &nbsp;|&nbsp;
+  <strong>{% trans "收入" %}：</strong><span class="text-income">{{ dashboard.total_income }}</span>
+  &nbsp;|&nbsp;
+  <strong>{% trans "支出" %}：</strong><span class="text-expense">{{ dashboard.total_expense }}</span>
+  &nbsp;|&nbsp;
+  <strong>{% trans "结余" %}：</strong><strong>{{ dashboard.net_profit }}</strong>
+</div>
+
+<h2>{% trans "收支趋势（按月）" %}</h2>
+<table class="finance-table finance-table--fixed-cols finance-table--4col-cash-account">
+  <thead>
+    <tr>
+      <th style="width: 100px;">{% trans "月份" %}</th>
+      <th>{% trans "收入" %}</th>
+      <th>{% trans "支出" %}</th>
+      <th class="num" style="width: 100px;">{% trans "结余" %}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for row in dashboard.monthly_trends %}
+    <tr>
+      <td>{{ row.label }}</td>
+      <td>
+        <div class="finance-bar-cell">
+          <div class="finance-bar-track finance-bar-track--income">
+            <div class="finance-bar-fill finance-bar-fill--income" style="width: {% widthratio row.income max_monthly 100 %}%; min-width: {% if row.income %}2px{% else %}0{% endif %};"></div>
+          </div>
+          <span class="finance-bar-value text-income">{{ row.income }}</span>
+        </div>
+      </td>
+      <td>
+        <div class="finance-bar-cell">
+          <div class="finance-bar-track finance-bar-track--expense">
+            <div class="finance-bar-fill finance-bar-fill--expense" style="width: {% widthratio row.expense max_monthly 100 %}%; min-width: {% if row.expense %}2px{% else %}0{% endif %};"></div>
+          </div>
+          <span class="finance-bar-value text-expense">{{ row.expense }}</span>
+        </div>
+      </td>
+      <td class="num">{{ row.net }}</td>
+    </tr>
+    {% empty %}
+    <tr class="finance-table__empty-row"><td colspan="4">{% trans "无数据" %}</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<div class="finance-columns">
+  <section>
+    <h2>{% trans "收入分类占比" %}</h2>
+    {% include "admin/finance/_category_share_table.html" with rows=dashboard.income_by_category bar_color="#2da44e" %}
+  </section>
+  <section>
+    <h2>{% trans "支出分类占比" %}</h2>
+    {% include "admin/finance/_category_share_table.html" with rows=dashboard.expense_by_category bar_color="#cf222e" %}
+  </section>
+</div>
+{% endblock %}

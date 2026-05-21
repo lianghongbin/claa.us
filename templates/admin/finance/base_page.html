@@ -1,0 +1,17 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+{% block bodyclass %}{{ block.super }} finance-page{% endblock %}
+{% block extrastyle %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'admin/admin_page_layout.css' %}?v=20260520-1">
+<link rel="stylesheet" href="{% static 'admin/finance/finance_pages.css' %}?v=20260520-17">
+{% endblock %}
+{% block breadcrumbs %}{% endblock %}
+{% block content %}
+<div id="content-main" class="finance-page-main">
+  {% block finance_breadcrumbs %}{% endblock %}
+  <div class="finance-page-body">
+    {% block finance_content %}{% endblock %}
+  </div>
+</div>
+{% endblock %}

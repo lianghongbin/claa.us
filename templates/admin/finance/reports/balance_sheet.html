@@ -1,0 +1,153 @@
+{% extends "admin/finance/base_page.html" %}
+{% load i18n %}
+{% block finance_breadcrumbs %}
+<div class="breadcrumbs finance-breadcrumbs">
+  <a href="{% url 'admin:index' %}">{% trans "首页" %}</a>
+  &rsaquo; <a href="{% url 'finance:reports_index' %}">{% trans "报表中心" %}</a>
+  &rsaquo; {% trans "资产负债表" %}
+</div>
+{% endblock %}
+{% block finance_content %}
+<h1>{% trans "资产负债表" %}</h1>
+<p class="help">
+  {% trans "轻量管理口径：货币资金为流水「账户名称」截至当日的累计净流入；应收账款/应付账款为未结清账单余额；权益为流水累计净利。资产、负债、权益各占一个 Tab，同一时间只显示一张表。" %}
+</p>
+
+<form method="get" class="finance-filter">
+  <input type="hidden" name="tab" value="{{ active_tab }}">
+  <label>{% trans "截至日期" %}
+    <input type="date" name="as_of_date" value="{{ filter_as_of_date }}" required>
+  </label>
+  <label>{% trans "项目" %}
+    <select name="project">
+      <option value="">{% trans "全部" %}</option>
+      {% for p in projects %}
+      <option value="{{ p.pk }}" {% if selected_project_id == p.pk %}selected{% endif %}>
+        {{ p.code }} · {{ p.name }}
+      </option>
+      {% empty %}
+      <option value="" disabled>{% trans "暂无项目基础资料" %}</option>
+      {% endfor %}
+    </select>
+  </label>
+  <button type="submit" class="button">{% trans "查询" %}</button>
+  <div class="finance-filter-help">
+    {% if not projects %}
+    {% trans "项目在" %}<a href="{% url 'admin:finance_project_changelist' %}">{% trans "基础资料 → 项目" %}</a>{% trans "中维护。" %}
+    {% endif %}
+    {% trans "项目筛选仅作用于流水侧的货币资金与累计净利；应收/应付账单当前未按项目拆分。" %}
+  </div>
+</form>
+
+<div class="finance-summary">
+  <strong>{% trans "截至" %}：</strong>{{ report.as_of_date }}
+  &nbsp;|&nbsp;
+  <strong>{% trans "资产合计" %}：</strong>{{ report.total_assets }}
+  &nbsp;|&nbsp;
+  <strong>{% trans "负债合计" %}：</strong>{{ report.total_liabilities }}
+  &nbsp;|&nbsp;
+  <strong>{% trans "权益合计" %}：</strong>{{ report.total_equity }}
+  {% if report.balance_gap != 0 %}
+  &nbsp;|&nbsp;
+  <strong style="color: #9a6700;">{% trans "平衡差额" %}：</strong>{{ report.balance_gap }}
+  {% endif %}
+</div>
+
+<nav class="finance-tabs" aria-label="{% trans '报表分区' %}">
+  <a class="finance-tabs__tab{% if active_tab == 'assets' %} is-active{% endif %}" href="?{{ tab_assets_url }}"{% if active_tab == 'assets' %} aria-current="page"{% endif %}>{% trans "资产" %}</a>
+  <a class="finance-tabs__tab{% if active_tab == 'liabilities' %} is-active{% endif %}" href="?{{ tab_liabilities_url }}"{% if active_tab == 'liabilities' %} aria-current="page"{% endif %}>{% trans "负债" %}</a>
+  <a class="finance-tabs__tab{% if active_tab == 'equity' %} is-active{% endif %}" href="?{{ tab_equity_url }}"{% if active_tab == 'equity' %} aria-current="page"{% endif %}>{% trans "权益" %}</a>
+</nav>
+
+<p class="help finance-table-help">
+  {% trans "本表为汇总行（行数固定）。列说明：「科目」为资产/负债/权益科目；「明细」为可下钻的多行清单（仅货币资金有按账户拆分）；「金额」为余额。" %}
+</p>
+
+{% if active_tab == "assets" %}
+<table class="finance-table finance-table--fixed-cols finance-table--3col-item-detail-amount">
+  {% include "admin/finance/_colgroup_3_item_detail_amount.html" %}
+  <thead>
+    <tr>
+      <th>{% trans "科目" %}</th>
+      <th>{% trans "明细" %}</th>
+      <th class="num">{% trans "金额" %}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>{% trans "货币资金" %}</td>
+      <td>
+        {% if cash_account_count %}
+        <a href="{% url 'finance:balance_sheet_cash' %}?{{ cash_filter_query }}">{% trans "查看账户明细" %}（{{ cash_account_count }}）→</a>
+        {% else %}
+        {% trans "无账户明细" %}
+        {% endif %}
+      </td>
+      <td class="num">{{ report.total_cash }}</td>
+    </tr>
+    <tr>
+      <td>{% trans "应收账款（未收）" %}</td>
+      <td></td>
+      <td class="num">{{ report.accounts_receivable }}</td>
+    </tr>
+    <tr class="total-row">
+      <td>{% trans "资产合计" %}</td>
+      <td></td>
+      <td class="num">{{ report.total_assets }}</td>
+    </tr>
+  </tbody>
+</table>
+
+{% elif active_tab == "liabilities" %}
+<table class="finance-table finance-table--fixed-cols finance-table--3col-item-detail-amount">
+  {% include "admin/finance/_colgroup_3_item_detail_amount.html" %}
+  <thead>
+    <tr>
+      <th>{% trans "科目" %}</th>
+      <th>{% trans "明细" %}</th>
+      <th class="num">{% trans "金额" %}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>{% trans "应付账款（未付）" %}</td>
+      <td></td>
+      <td class="num">{{ report.accounts_payable }}</td>
+    </tr>
+    <tr class="total-row">
+      <td>{% trans "负债合计" %}</td>
+      <td></td>
+      <td class="num">{{ report.total_liabilities }}</td>
+    </tr>
+  </tbody>
+</table>
+
+{% else %}
+<table class="finance-table finance-table--fixed-cols finance-table--3col-item-detail-amount">
+  {% include "admin/finance/_colgroup_3_item_detail_amount.html" %}
+  <thead>
+    <tr>
+      <th>{% trans "科目" %}</th>
+      <th>{% trans "明细" %}</th>
+      <th class="num">{% trans "金额" %}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>{% trans "留存收益（流水累计净利）" %}</td>
+      <td></td>
+      <td class="num">{{ report.retained_earnings }}</td>
+    </tr>
+    <tr class="total-row">
+      <td>{% trans "权益合计" %}</td>
+      <td></td>
+      <td class="num">{{ report.total_equity }}</td>
+    </tr>
+  </tbody>
+</table>
+{% endif %}
+
+<p class="finance-footer-link">
+  <a href="{% url 'finance:reports_index' %}">{% trans "返回报表列表" %}</a>
+</p>
+{% endblock %}

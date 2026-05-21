@@ -1,0 +1,43 @@
+{% extends "admin/finance/base_page.html" %}
+{% load i18n %}
+{% block finance_breadcrumbs %}
+<div class="breadcrumbs finance-breadcrumbs">
+  <a href="{% url 'admin:index' %}">{% trans "首页" %}</a>
+  &rsaquo; <a href="{% url 'finance:reports_index' %}">{% trans "报表中心" %}</a>
+  &rsaquo; <a href="{% url 'finance:profit_loss' %}?{{ filter_query }}">{% trans "损益表" %}</a>
+  &rsaquo; {% trans "分项目汇总" %}
+</div>
+{% endblock %}
+{% block finance_content %}
+<h1>{% trans "分项目汇总" %}</h1>
+<p class="help">{% blocktrans with date_from=report.date_from date_to=report.date_to %}期间 {{ date_from }} — {{ date_to }}；项目行数不固定，故单独分页展示。{% endblocktrans %}</p>
+
+<table class="finance-table finance-table--fixed-cols finance-table--4col-project-net">
+  <thead>
+    <tr>
+      <th>{% trans "项目" %}</th>
+      <th class="num">{% trans "收入" %}</th>
+      <th class="num">{% trans "支出" %}</th>
+      <th class="num">{% trans "净利润" %}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for row in page_obj %}
+    <tr>
+      <td>{{ row.project_code }} · {{ row.project_name }}</td>
+      <td class="num">{{ row.income }}</td>
+      <td class="num">{{ row.expense }}</td>
+      <td class="num">{{ row.net }}</td>
+    </tr>
+    {% empty %}
+    <tr class="finance-table__empty-row"><td colspan="4">{% trans "无数据" %}</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% include "admin/finance/_report_pagination.html" with page_obj=page_obj filter_query=filter_query %}
+
+<p class="finance-footer-link">
+  <a href="{% url 'finance:profit_loss' %}?{{ filter_query }}">{% trans "返回损益表" %}</a>
+</p>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends "admin/change_form.html" %}
+{% load static %}
+
+{% block extrastyle %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'admin/accounts/user_admin.css' %}?v=20260520-4">
+{% endblock %}
+
+{% block admin_change_form_document_ready %}
+{{ block.super }}
+{% if add %}
+<script src="{% static 'admin/accounts/user_add_layout.js' %}?v=20260520-1"></script>
+{% endif %}
+{% endblock %}
+
+{% block bodyclass %}{{ block.super }} accounts-user-change{% endblock %}

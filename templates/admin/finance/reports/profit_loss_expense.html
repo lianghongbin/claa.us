@@ -1,0 +1,50 @@
+{% extends "admin/finance/base_page.html" %}
+{% load i18n %}
+{% block finance_breadcrumbs %}
+<div class="breadcrumbs finance-breadcrumbs">
+  <a href="{% url 'admin:index' %}">{% trans "首页" %}</a>
+  &rsaquo; <a href="{% url 'finance:reports_index' %}">{% trans "报表中心" %}</a>
+  &rsaquo; <a href="{% url 'finance:profit_loss' %}?{{ filter_query }}">{% trans "损益表" %}</a>
+  &rsaquo; {% trans "支出明细" %}
+</div>
+{% endblock %}
+{% block finance_content %}
+<h1>{% trans "支出（按科目）" %}</h1>
+<p class="help">{% blocktrans with date_from=report.date_from date_to=report.date_to %}期间 {{ date_from }} — {{ date_to }}；科目行数不固定，故单独分页展示。{% endblocktrans %}</p>
+
+<div class="finance-summary">
+  <strong>{% trans "合计" %}：</strong><span class="text-expense">{{ report.total_expense }}</span>
+</div>
+
+<table class="finance-table finance-table--fixed-cols finance-table--2col-label-amount">
+  {% include "admin/finance/_colgroup_2_label_amount.html" %}
+  <thead>
+    <tr>
+      <th>{% trans "科目" %}</th>
+      <th class="num">{% trans "金额" %}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for row in page_obj %}
+    <tr>
+      <td>{{ row.category_name }}</td>
+      <td class="num">{{ row.total }}</td>
+    </tr>
+    {% empty %}
+    <tr class="finance-table__empty-row"><td colspan="2">{% trans "无数据" %}</td></tr>
+    {% endfor %}
+    {% if page_obj.paginator.count %}
+    <tr class="total-row">
+      <td>{% trans "合计" %}</td>
+      <td class="num">{{ report.total_expense }}</td>
+    </tr>
+    {% endif %}
+  </tbody>
+</table>
+
+{% include "admin/finance/_report_pagination.html" with page_obj=page_obj filter_query=filter_query %}
+
+<p class="finance-footer-link">
+  <a href="{% url 'finance:profit_loss' %}?{{ filter_query }}">{% trans "返回损益表" %}</a>
+</p>
+{% endblock %}
