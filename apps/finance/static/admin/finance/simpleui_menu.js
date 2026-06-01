@@ -1,15 +1,103 @@
 /**
  * SimpleUI 后台补丁（财务 claa.us）
- * - 修复 openTab 未正确更新 menuActive
- * - 关闭「非当前」标签时不改写菜单高亮与 hash（SimpleUI 原逻辑缺陷）
- * - 除首页外最多 5 个业务标签，淘汰最早打开的
+ * - 修复 openTab / menuActive
+ * - 标签关闭：统一 tab id 为字符串 + 委托点击 × + 修复 handleTabsEdit
+ * - 除首页外最多 5 个业务标签
  */
 (function () {
   "use strict";
 
   var STORAGE_KEY = "finance_menu_storage";
-  var STORAGE_VERSION = "finance-menu-v5";
+  var STORAGE_VERSION = "finance-menu-v6";
   var MAX_CONTENT_TABS = 5;
+
+  function tabIdEquals(a, b) {
+    return String(a) === String(b);
+  }
+
+  function isHomeTabId(id) {
+    return tabIdEquals(id, 0) || tabIdEquals(id, "0");
+  }
+
+  function syncHashFromTab(tab) {
+    if (tab && tab.url && tab.url.indexOf("http") !== 0) {
+      location.hash = "#" + (tab.url || "/");
+    }
+  }
+
+  function normalizeTabsState(app) {
+    if (!app || !app.tabs) {
+      return;
+    }
+    for (var i = 0; i < app.tabs.length; i++) {
+      app.tabs[i].id = String(app.tabs[i].id);
+      if (app.tabs[i].eid != null) {
+        app.tabs[i].eid = String(app.tabs[i].eid);
+      }
+    }
+    if (app.tabModel != null && app.tabModel !== "") {
+      app.tabModel = String(app.tabModel);
+    }
+  }
+
+  function removeTabById(app, targetName) {
+    targetName = String(targetName);
+    if (isHomeTabId(targetName)) {
+      return false;
+    }
+    normalizeTabsState(app);
+    var before = app.tabs.length;
+    app.tabs = app.tabs.filter(function (tab) {
+      return !tabIdEquals(tab.id, targetName);
+    });
+    if (app.tabs.length < before) {
+      if (typeof app.syncTabs === "function") {
+        app.syncTabs();
+      }
+      if (app.$nextTick) {
+        app.$nextTick(function () {
+          app.$forceUpdate();
+        });
+      } else {
+        app.$forceUpdate();
+      }
+      return true;
+    }
+    return false;
+  }
+
+  function closeTab(app, targetName) {
+    if (!app || !app.tabs) {
+      return;
+    }
+    targetName = String(targetName);
+    normalizeTabsState(app);
+
+    var closingActive = tabIdEquals(app.tabModel, targetName);
+    if (!closingActive) {
+      removeTabById(app, targetName);
+      return;
+    }
+
+    var next = "0";
+    var nextTab = null;
+    for (var i = 0; i < app.tabs.length; i++) {
+      if (tabIdEquals(app.tabs[i].id, targetName)) {
+        nextTab = app.tabs[i + 1] || app.tabs[i - 1];
+        if (nextTab) {
+          next = String(nextTab.id);
+          setMenuActive(app, nextTab.index != null ? nextTab.index : nextTab.eid);
+          app.breadcrumbs = nextTab.breadcrumbs;
+          syncHashFromTab(nextTab);
+        }
+        break;
+      }
+    }
+    app.tabModel = next;
+    removeTabById(app, targetName);
+    syncMenuFromActiveTab(app);
+    resetLoadingState(app);
+  }
 
   function setMenuActive(app, eid) {
     if (eid == null || eid === "") {
@@ -23,7 +111,7 @@
       return null;
     }
     for (var i = 0; i < app.tabs.length; i++) {
-      if (String(app.tabs[i].id) === String(app.tabModel)) {
+      if (tabIdEquals(app.tabs[i].id, app.tabModel)) {
         return app.tabs[i];
       }
     }
@@ -44,13 +132,13 @@
     }
     var ok = false;
     for (var i = 0; i < app.tabs.length; i++) {
-      if (String(app.tabs[i].id) === String(app.tabModel)) {
+      if (tabIdEquals(app.tabs[i].id, app.tabModel)) {
         ok = true;
         break;
       }
     }
     if (!ok) {
-      app.tabModel = app.tabs[0].id;
+      app.tabModel = String(app.tabs[0].id);
       syncMenuFromActiveTab(app);
     }
   }
@@ -68,7 +156,6 @@
     }
   }
 
-  /** 仅剔除多余标签，不改当前选中的 tab / 菜单 / hash */
   function enforceTabLimit(app) {
     if (!app || !app.tabs || app.tabs.length <= 1 + MAX_CONTENT_TABS) {
       return;
@@ -105,6 +192,45 @@
     }
   }
 
+  function paneNameFromCloseClick(event) {
+    var closeEl = event.target;
+    if (!closeEl || !closeEl.classList || !closeEl.classList.contains("el-icon-close")) {
+      return null;
+    }
+    var tabItem = closeEl.closest(".el-tabs__item");
+    if (!tabItem || !tabItem.closest(".el-tabs__header")) {
+      return null;
+    }
+    var idAttr = tabItem.getAttribute("id") || "";
+    if (idAttr.indexOf("tab-") !== 0) {
+      return null;
+    }
+    return idAttr.slice(4);
+  }
+
+  function installTabCloseDelegation() {
+    if (window._financeTabCloseDelegation) {
+      return;
+    }
+    document.addEventListener(
+      "click",
+      function (event) {
+        if (!window.app || window.self !== window.top) {
+          return;
+        }
+        var paneName = paneNameFromCloseClick(event);
+        if (paneName == null) {
+          return;
+        }
+        event.stopPropagation();
+        event.preventDefault();
+        closeTab(window.app, paneName);
+      },
+      true
+    );
+    window._financeTabCloseDelegation = true;
+  }
+
   function patchOpenTab(app) {
     if (app._financeOpenTabPatch) {
       return;
@@ -115,10 +241,11 @@
         index = data.eid;
       }
       var result = orig.call(this, data, index, selected, loading);
+      normalizeTabsState(this);
       if (index != null && index !== "") {
         setMenuActive(this, index);
         for (var i = 0; i < this.tabs.length; i++) {
-          if (this.tabs[i].eid === data.eid) {
+          if (tabIdEquals(this.tabs[i].eid, data.eid)) {
             this.tabs[i].index = index;
             break;
           }
@@ -137,24 +264,15 @@
     if (app._financeTabsEditPatch) {
       return;
     }
-    var orig = app.handleTabsEdit;
     app.handleTabsEdit = function (targetName, action) {
       if (action !== "remove") {
-        return orig.call(this, targetName, action);
-      }
-      if (String(this.tabModel) !== String(targetName)) {
-        this.tabs = this.tabs.filter(function (tab) {
-          return tab.id !== targetName;
-        });
-        if (typeof this.syncTabs === "function") {
-          this.syncTabs();
-        }
         return;
       }
-      orig.call(this, targetName, action);
-      syncMenuFromActiveTab(this);
-      resetLoadingState(this);
+      closeTab(this, targetName);
     };
+    if (app.$options && app.$options.methods) {
+      app.$options.methods.handleTabsEdit = app.handleTabsEdit;
+    }
     app._financeTabsEditPatch = true;
   }
 
@@ -183,51 +301,68 @@
   }
 
   function bootstrap(app) {
+    app.__financeCloseTab = function (targetName) {
+      closeTab(app, targetName);
+    };
     patchOpenTab(app);
     patchHandleTabsEdit(app);
     patchTabClick(app);
     patchIframeLoad(app);
+    normalizeTabsState(app);
     ensureValidTabModel(app);
     enforceTabLimit(app);
     syncMenuFromActiveTab(app);
     resetLoadingState(app);
   }
 
-  function boot() {
+  function boot(app) {
     if (window.self !== window.top) {
       return;
     }
     clearStaleTabs();
-    function run() {
-      if (!window.app) {
-        return;
-      }
-      if (window.app.$nextTick) {
-        window.app.$nextTick(function () {
-          bootstrap(window.app);
-        });
-      } else {
-        bootstrap(window.app);
-      }
+    installTabCloseDelegation();
+    var target = app || window.app;
+    if (!target) {
+      return;
     }
-    if (window.app) {
-      run();
+    if (target.$nextTick) {
+      target.$nextTick(function () {
+        bootstrap(target);
+      });
     } else {
-      var n = 0;
-      var timer = setInterval(function () {
-        if (window.app) {
-          clearInterval(timer);
-          run();
-        } else if (++n > 120) {
-          clearInterval(timer);
-        }
-      }, 50);
+      bootstrap(target);
     }
   }
 
+  var prevRenderCallback = window.renderCallback;
+  window.renderCallback = function (app) {
+    if (typeof prevRenderCallback === "function") {
+      prevRenderCallback(app);
+    }
+    boot(app);
+  };
+
+  function waitForApp() {
+    if (window.app) {
+      boot(window.app);
+      return;
+    }
+    var n = 0;
+    var timer = setInterval(function () {
+      if (window.app) {
+        clearInterval(timer);
+        boot(window.app);
+      } else if (++n > 120) {
+        clearInterval(timer);
+      }
+    }, 50);
+  }
+
+  installTabCloseDelegation();
+
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", boot);
+    document.addEventListener("DOMContentLoaded", waitForApp);
   } else {
-    boot();
+    waitForApp();
   }
 })();

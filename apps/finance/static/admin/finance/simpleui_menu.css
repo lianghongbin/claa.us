@@ -26,3 +26,16 @@
 #main .el-menu .el-submenu.is-active > .el-submenu__title i {
   color: #409eff !important;
 }
+
+/* 标签页 ×：保证可点击（避免被自定义 label 区域挡住） */
+#main .el-tabs__header .el-tabs__item .el-icon-close {
+  position: relative;
+  z-index: 3;
+  pointer-events: auto !important;
+  cursor: pointer;
+}
+
+#main .el-tabs__header .el-tabs__item.is-closable span[slot="label"],
+#main .el-tabs__header .el-tabs__item.is-closable > span:not(.el-icon-close) {
+  pointer-events: none;
+}

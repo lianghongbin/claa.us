@@ -58,6 +58,7 @@ AUTH_USER_MODEL = "accounts.User"
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "config.middleware.AdminFinanceStaticNoCacheMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -80,6 +81,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "config.context_processors.finance_asset_version",
             ],
         },
     },
@@ -157,6 +159,20 @@ IMPORT_EXPORT_EXPORT_PERMISSION_CODE = "view"
 
 LOGIN_REDIRECT_URL = "/admin/"
 LOGIN_URL = "/admin/login/"
+
+# 会话：连续 1 小时无请求则需重新登录（有请求时会刷新计时）
+SESSION_COOKIE_AGE = int(os.getenv("SESSION_COOKIE_AGE", "3600"))
+SESSION_SAVE_EVERY_REQUEST = True
+SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_SAMESITE = "Lax"
+# HTTPS（Cloudflare Tunnel）下应设为 True，可在 .env 中覆盖
+_session_secure = os.getenv("SESSION_COOKIE_SECURE", "").strip().lower()
+if _session_secure in ("1", "true", "yes"):
+    SESSION_COOKIE_SECURE = True
+elif _session_secure in ("0", "false", "no"):
+    SESSION_COOKIE_SECURE = False
+else:
+    SESSION_COOKIE_SECURE = not DEBUG
 
 # django-simpleui：统一后台入口；菜单顺序；首页标题
 from config.simpleui_menus import SIMPLEUI_MENU_DISPLAY, get_simpleui_menus

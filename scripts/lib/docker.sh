@@ -194,8 +194,28 @@ print_success() {
   log ""
   log "  Stop:     docker compose down"
   log "  Logs:     docker compose logs -f web"
-  log "  Update:   ./start.sh"
+  log "  Update:   ./update.sh  or  ./start.sh"
   log "=========================================="
+}
+
+docker_pull_and_restart() {
+  require_command docker || die "Docker CLI not found."
+  require_command git || die "git not found."
+  ensure_docker
+  load_env_port
+
+  update_code_from_github
+
+  compose_down
+  free_host_port "${FINANCE_PORT}"
+
+  log "Rebuilding and starting containers…"
+  compose up -d --build --wait
+  wait_for_app
+
+  log ""
+  log "Update complete → ${BASE_URL}"
+  log "Logs: docker compose logs -f web"
 }
 
 docker_install_and_start() {

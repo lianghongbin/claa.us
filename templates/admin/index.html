@@ -2,7 +2,108 @@
 {% load static simpletags %}
 
 {% block index_js %}
-    <script type="text/javascript" src="{% static 'admin/simpleui-x/js/menu.js' %}?finance=8"></script>
+    {# 在 SimpleUI 读取 tabs 之前清掉旧缓存，避免异常 tab 状态导致无法关闭 #}
+    <script type="text/javascript">
+    (function () {
+      try {
+        sessionStorage.removeItem("tabs");
+      } catch (e) { /* ignore */ }
+      var rawSet = Storage.prototype.setItem;
+      Storage.prototype.setItem = function (key, value) {
+        if (this === sessionStorage && key === "tabs") {
+          return;
+        }
+        return rawSet.apply(this, arguments);
+      };
+    })();
+    </script>
+    <script type="text/javascript" src="{% static 'admin/simpleui-x/js/menu.js' %}?v={{ FINANCE_ASSET_VERSION }}"></script>
     <script type="text/javascript" src="{% static 'admin/simpleui-x/js/index.js' %}?_={% get_version %}"></script>
-    <script type="text/javascript" src="{% static 'admin/finance/simpleui_menu.js' %}?finance=8"></script>
+    <script type="text/javascript" src="{% static 'admin/finance/simpleui_menu.js' %}?v={{ FINANCE_ASSET_VERSION }}"></script>
+    {# 内联兜底：不经过静态文件/CDN 缓存，直接处理标签 × 关闭 #}
+    <script type="text/javascript">
+    (function () {
+      "use strict";
+
+      function closeTabByPaneId(paneId) {
+        var app = window.app;
+        if (!app || !app.tabs) {
+          return;
+        }
+        paneId = String(paneId);
+        if (paneId === "0") {
+          return;
+        }
+        for (var i = 0; i < app.tabs.length; i++) {
+          app.tabs[i].id = String(app.tabs[i].id);
+        }
+        var isActive = String(app.tabModel) === paneId;
+        if (!isActive) {
+          app.tabs = app.tabs.filter(function (t) {
+            return String(t.id) !== paneId;
+          });
+          if (typeof app.syncTabs === "function") {
+            app.syncTabs();
+          }
+          if (app.$forceUpdate) {
+            app.$forceUpdate();
+          }
+          return;
+        }
+        var next = "0";
+        var nextTab = null;
+        for (var j = 0; j < app.tabs.length; j++) {
+          if (String(app.tabs[j].id) === paneId) {
+            nextTab = app.tabs[j + 1] || app.tabs[j - 1];
+            if (nextTab) {
+              next = String(nextTab.id);
+              app.menuActive = String(
+                nextTab.index != null ? nextTab.index : nextTab.eid
+              );
+              app.breadcrumbs = nextTab.breadcrumbs;
+              if (nextTab.url && nextTab.url.indexOf("http") !== 0) {
+                location.hash = "#" + (nextTab.url || "/");
+              }
+            }
+            break;
+          }
+        }
+        app.tabModel = next;
+        app.tabs = app.tabs.filter(function (t) {
+          return String(t.id) !== paneId;
+        });
+        if (typeof app.syncTabs === "function") {
+          app.syncTabs();
+        }
+        if (app.$forceUpdate) {
+          app.$forceUpdate();
+        }
+      }
+
+      function onTabClosePointer(ev) {
+        if (!window.app) {
+          return;
+        }
+        var target = ev.target;
+        if (!target || !target.closest) {
+          return;
+        }
+        var closeEl = target.closest(".el-tabs__header .el-icon-close");
+        if (!closeEl) {
+          return;
+        }
+        var tabItem = closeEl.closest(".el-tabs__item");
+        if (!tabItem || !tabItem.id || tabItem.id.indexOf("tab-") !== 0) {
+          return;
+        }
+        ev.preventDefault();
+        ev.stopPropagation();
+        ev.stopImmediatePropagation();
+        closeTabByPaneId(tabItem.id.slice(4));
+      }
+
+      document.addEventListener("mousedown", onTabClosePointer, true);
+      document.addEventListener("click", onTabClosePointer, true);
+    })();
+    </script>
 {% endblock %}

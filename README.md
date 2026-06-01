@@ -147,6 +147,14 @@ chmod +x start.sh
 
 自动：`docker compose down` → 从 GitHub 拉最新代码 → 释放 8000 端口 → 构建并启动容器。
 
+**另一台机器仅更新部署**（已 `git clone` 过）：
+
+```bash
+cd /path/to/claa.us
+chmod +x update.sh
+./update.sh
+```
+
 **首次安装**：
 
 ```bash
@@ -234,7 +242,8 @@ docker compose up -d --build
 | `python manage.py setup_finance_groups` | 创建/更新「财务管理员」「普通财务」分组及权限绑定 |
 | `python manage.py backup_database` | 将 SQLite 备份到 `backups/`（与后台「一键备份」相同） |
 | `python manage.py restore_database --latest` | 从 `backups/` 最新文件还原 SQLite |
-| `./start.sh` | 更新代码 + 重启 Docker（日常一键） |
+| `./update.sh` | **另一台机器**：拉取最新代码并重启 Docker（不打开浏览器） |
+| `./start.sh` | 更新代码 + 重启 Docker（本机，可打开浏览器） |
 | `./scripts/docker-install.sh` | Docker 首次安装（不拉 git） |
 | `docker compose up -d` | Docker 后台启动服务 |
 | `docker compose exec web python manage.py …` | 在容器内执行管理命令 |
@@ -254,6 +263,13 @@ docker compose up -d --build
 | `SQLITE_PATH` | 可选，自定义 SQLite 路径 |
 | `MEDIA_ROOT` / 上传 | 流水凭证附件；开发环境 DEBUG 下由 Django 提供媒体文件 |
 | `EMAIL_*` | 新建用户初始密码邮件；未配置时默认控制台输出 |
+| `SESSION_COOKIE_AGE` | 会话秒数，默认 `3600`（1 小时无操作后需重新登录） |
+| `SESSION_COOKIE_SECURE` | HTTPS 访问设为 `True`（Cloudflare Tunnel） |
+| `FINANCE_ASSET_VERSION` | 后台 JS/CSS 版本号，改后强刷或清 CDN 缓存 |
+
+**会话**：默认 1 小时无请求自动退出；只要在后台有操作（翻页、保存等）会重新计时。
+
+**标签页关不掉 / 脚本像没更新**：先 `./start.sh`，浏览器 **Cmd+Shift+R**；用 Cloudflare 时到控制台 **Purge Cache**，或把 `.env` 里 `FINANCE_ASSET_VERSION` 改成新值后重启。
 
 从旧版 `auth.User` 迁移后若遇冲突，可删除本地 `db.sqlite3` 后重新 `migrate` 与 `createsuperuser`。
 
