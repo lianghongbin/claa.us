@@ -19,6 +19,7 @@ class ForcePasswordChangeMiddleware(MiddlewareMixin):
         "/admin/password_change/",
         "/admin/password_change/done/",
         "/admin/jsi18n/",
+        "/i18n/setlang/",
     )
 
     def process_request(self, request):
@@ -47,6 +48,7 @@ class SessionInactivityMiddleware(MiddlewareMixin):
     SKIP_PREFIXES = (
         "/admin/login/",
         "/admin/logout/",
+        "/i18n/setlang/",
         "/static/",
         "/media/",
     )

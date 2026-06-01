@@ -2,62 +2,62 @@
 {% load i18n %}
 {% block finance_breadcrumbs %}
 <div class="breadcrumbs finance-breadcrumbs">
-  <a href="{% url 'admin:index' %}">{% trans "首页" %}</a>
-  &rsaquo; <a href="{% url 'finance:reports_index' %}">{% trans "报表中心" %}</a>
-  &rsaquo; {% trans "现金流量表" %}
+  <a href="{% url 'admin:index' %}">{% trans "Home" %}</a>
+  &rsaquo; <a href="{% url 'finance:reports_index' %}">{% trans "Report center" %}</a>
+  &rsaquo; {% trans "Cash flow statement" %}
 </div>
 {% endblock %}
 {% block finance_content %}
-<h1>{% trans "现金流量表" %}</h1>
-<p class="help">{% trans "轻量口径：将收入/支出流水视为经营活动现金收付；不含投资、筹资分类。" %}</p>
+<h1>{% trans "Cash flow statement" %}</h1>
+<p class="help">{% trans "Lightweight: income/expense entries treated as operating cash; no investing/financing split." %}</p>
 
 <form method="get" class="finance-filter">
-  <label>{% trans "起始日期" %}
+  <label>{% trans "Start date" %}
     <input type="date" name="date_from" value="{{ filter_date_from }}" required>
   </label>
-  <label>{% trans "截止日期" %}
+  <label>{% trans "End date" %}
     <input type="date" name="date_to" value="{{ filter_date_to }}" required>
   </label>
-  <label>{% trans "项目" %}
+  <label>{% trans "Project" %}
     <select name="project">
-      <option value="">{% trans "全部" %}</option>
+      <option value="">{% trans "All" %}</option>
       {% for p in projects %}
       <option value="{{ p.pk }}" {% if selected_project_id == p.pk %}selected{% endif %}>
         {{ p.code }} · {{ p.name }}
       </option>
       {% empty %}
-      <option value="" disabled>{% trans "暂无项目基础资料" %}</option>
+      <option value="" disabled>{% trans "No projects defined yet" %}</option>
       {% endfor %}
     </select>
   </label>
   {% if not projects %}
-  <button type="submit" class="button">{% trans "查询" %}</button>
+  <button type="submit" class="button">{% trans "Apply" %}</button>
   <div class="finance-filter-help">
-    {% trans "项目在" %}<a href="{% url 'admin:finance_project_changelist' %}">{% trans "基础资料 → 项目" %}</a>{% trans "中维护；未建项目时仅按全部口径出报表。" %}
+    {% trans "Projects are maintained under" %}<a href="{% url 'admin:finance_project_changelist' %}">{% trans "Master data → Projects" %}</a>{% trans "; without projects, reports use the all-projects scope." %}
   </div>
   {% else %}
-  <button type="submit" class="button">{% trans "查询" %}</button>
+  <button type="submit" class="button">{% trans "Apply" %}</button>
   {% endif %}
 </form>
 
 <div class="finance-summary">
-  <strong>{% trans "期间" %}：</strong>{{ report.date_from }} — {{ report.date_to }}
+  <strong>{% trans "Period" %}：</strong>{{ report.date_from }} — {{ report.date_to }}
   &nbsp;|&nbsp;
-  <strong>{% trans "现金流入" %}：</strong><span class="text-income">{{ report.total_inflow }}</span>
+  <strong>{% trans "Cash inflow" %}：</strong><span class="text-income">{{ report.total_inflow }}</span>
   &nbsp;|&nbsp;
-  <strong>{% trans "现金流出" %}：</strong><span class="text-expense">{{ report.total_outflow }}</span>
+  <strong>{% trans "Cash outflow" %}：</strong><span class="text-expense">{{ report.total_outflow }}</span>
   &nbsp;|&nbsp;
-  <strong>{% trans "经营活动净现金流" %}：</strong><strong>{{ report.net_cash_flow }}</strong>
+  <strong>{% trans "Net operating cash flow" %}：</strong><strong>{{ report.net_cash_flow }}</strong>
 </div>
 
-<h2>{% trans "按账户（账户名称）" %}</h2>
+<h2>{% trans "By account (account name)" %}</h2>
 <table class="finance-table finance-table--fixed-cols finance-table--4col-cash-account">
   <thead>
     <tr>
-      <th>{% trans "账户" %}</th>
-      <th class="num">{% trans "流入" %}</th>
-      <th class="num">{% trans "流出" %}</th>
-      <th class="num">{% trans "净额" %}</th>
+      <th>{% trans "Account" %}</th>
+      <th class="num">{% trans "Inflow" %}</th>
+      <th class="num">{% trans "Outflow" %}</th>
+      <th class="num">{% trans "Net" %}</th>
     </tr>
   </thead>
   <tbody>
@@ -69,11 +69,11 @@
       <td class="num">{{ row.net }}</td>
     </tr>
     {% empty %}
-    <tr class="finance-table__empty-row"><td colspan="4">{% trans "无数据" %}</td></tr>
+    <tr class="finance-table__empty-row"><td colspan="4">{% trans "No data" %}</td></tr>
     {% endfor %}
     {% if page_obj.paginator.count or report.total_inflow or report.total_outflow %}
     <tr class="total-row">
-      <td>{% trans "合计" %}</td>
+      <td>{% trans "Total" %}</td>
       <td class="num">{{ report.total_inflow }}</td>
       <td class="num">{{ report.total_outflow }}</td>
       <td class="num">{{ report.net_cash_flow }}</td>
@@ -84,5 +84,5 @@
 
 {% include "admin/finance/_report_pagination.html" with page_obj=page_obj filter_query=filter_query %}
 
-<p class="finance-footer-link"><a href="{% url 'finance:reports_index' %}">{% trans "返回报表列表" %}</a></p>
+<p class="finance-footer-link"><a href="{% url 'finance:reports_index' %}">{% trans "Back to report list" %}</a></p>
 {% endblock %}

@@ -18,14 +18,18 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
+from django.utils.translation import gettext_lazy as _
 from django.views.generic import RedirectView
+from django.views.i18n import set_language
 
 from apps.accounts.views import staff_password_change, staff_password_change_done
 
-admin.site.site_header = "轻量财务管理系统"
-admin.site.site_title = "财务管理"
+admin.site.site_header = _("Claa Finance")
+admin.site.site_title = _("Finance Admin")
+admin.site.index_title = _("Dashboard")
 
 urlpatterns = [
+    path("i18n/setlang/", set_language, name="set_language"),
     path("", RedirectView.as_view(url="/admin/", permanent=False), name="home"),
     path(
         "admin/password_change/",

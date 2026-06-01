@@ -2,24 +2,24 @@
 {% load i18n %}
 {% block finance_breadcrumbs %}
 <div class="breadcrumbs finance-breadcrumbs">
-  <a href="{% url 'admin:index' %}">{% trans "首页" %}</a>
-  &rsaquo; {% trans "财务看板" %}
+  <a href="{% url 'admin:index' %}">{% trans "Home" %}</a>
+  &rsaquo; {% trans "Finance dashboard" %}
 </div>
 {% endblock %}
 {% block finance_content %}
-<h1>{% trans "财务看板" %}</h1>
-<p class="help">{% trans "按可见流水范围汇总；默认展示近 6 个月。" %}</p>
+<h1>{% trans "Finance dashboard" %}</h1>
+<p class="help">{% trans "Summary over visible transactions; default last 6 months." %}</p>
 
 <form method="get" class="finance-filter">
-  <label>{% trans "起始日期" %}
+  <label>{% trans "Start date" %}
     <input type="date" name="date_from" value="{{ filter_date_from }}" required>
   </label>
-  <label>{% trans "截止日期" %}
+  <label>{% trans "End date" %}
     <input type="date" name="date_to" value="{{ filter_date_to }}" required>
   </label>
-  <label>{% trans "项目" %}
+  <label>{% trans "Project" %}
     <select name="project">
-      <option value="">{% trans "全部" %}</option>
+      <option value="">{% trans "All" %}</option>
       {% for p in projects %}
       <option value="{{ p.pk }}" {% if selected_project_id == p.pk %}selected{% endif %}>
         {{ p.code }} · {{ p.name }}
@@ -27,28 +27,28 @@
       {% endfor %}
     </select>
   </label>
-  <button type="submit" class="button">{% trans "查询" %}</button>
-  <a href="{% url 'finance:reports_index' %}">{% trans "报表中心" %}</a>
+  <button type="submit" class="button">{% trans "Apply" %}</button>
+  <a href="{% url 'finance:reports_index' %}">{% trans "Report center" %}</a>
 </form>
 
 <div class="finance-summary">
-  <strong>{% trans "期间" %}：</strong>{{ dashboard.date_from }} — {{ dashboard.date_to }}
+  <strong>{% trans "Period" %}：</strong>{{ dashboard.date_from }} — {{ dashboard.date_to }}
   &nbsp;|&nbsp;
-  <strong>{% trans "收入" %}：</strong><span class="text-income">{{ dashboard.total_income }}</span>
+  <strong>{% trans "Income" %}：</strong><span class="text-income">{{ dashboard.total_income }}</span>
   &nbsp;|&nbsp;
-  <strong>{% trans "支出" %}：</strong><span class="text-expense">{{ dashboard.total_expense }}</span>
+  <strong>{% trans "Expense" %}：</strong><span class="text-expense">{{ dashboard.total_expense }}</span>
   &nbsp;|&nbsp;
-  <strong>{% trans "结余" %}：</strong><strong>{{ dashboard.net_profit }}</strong>
+  <strong>{% trans "Balance" %}：</strong><strong>{{ dashboard.net_profit }}</strong>
 </div>
 
-<h2>{% trans "收支趋势（按月）" %}</h2>
+<h2>{% trans "Income & expense trend (monthly)" %}</h2>
 <table class="finance-table finance-table--fixed-cols finance-table--4col-cash-account">
   <thead>
     <tr>
-      <th style="width: 100px;">{% trans "月份" %}</th>
-      <th>{% trans "收入" %}</th>
-      <th>{% trans "支出" %}</th>
-      <th class="num" style="width: 100px;">{% trans "结余" %}</th>
+      <th style="width: 100px;">{% trans "Month" %}</th>
+      <th>{% trans "Income" %}</th>
+      <th>{% trans "Expense" %}</th>
+      <th class="num" style="width: 100px;">{% trans "Balance" %}</th>
     </tr>
   </thead>
   <tbody>
@@ -74,18 +74,18 @@
       <td class="num">{{ row.net }}</td>
     </tr>
     {% empty %}
-    <tr class="finance-table__empty-row"><td colspan="4">{% trans "无数据" %}</td></tr>
+    <tr class="finance-table__empty-row"><td colspan="4">{% trans "No data" %}</td></tr>
     {% endfor %}
   </tbody>
 </table>
 
 <div class="finance-columns">
   <section>
-    <h2>{% trans "收入分类占比" %}</h2>
+    <h2>{% trans "Income by category" %}</h2>
     {% include "admin/finance/_category_share_table.html" with rows=dashboard.income_by_category bar_color="#2da44e" %}
   </section>
   <section>
-    <h2>{% trans "支出分类占比" %}</h2>
+    <h2>{% trans "Expense by category" %}</h2>
     {% include "admin/finance/_category_share_table.html" with rows=dashboard.expense_by_category bar_color="#cf222e" %}
   </section>
 </div>

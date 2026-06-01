@@ -1,0 +1,27 @@
+.finance-lang-form {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
+.finance-lang-form__label {
+  font-size: 12px;
+  color: #606266;
+  margin: 0;
+}
+
+.finance-lang-form__select {
+  font-size: 12px;
+  padding: 4px 8px;
+  border: 1px solid #dcdfe6;
+  border-radius: 4px;
+  background: #fff;
+  color: #606266;
+  cursor: pointer;
+}
+
+.finance-lang-form__select:hover {
+  border-color: #409eff;
+}

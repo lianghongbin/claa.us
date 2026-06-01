@@ -3,13 +3,13 @@
 
 {% block finance_breadcrumbs %}
 <div class="breadcrumbs finance-breadcrumbs">
-  <a href="{% url 'admin:index' %}">{% trans "首页" %}</a>
-  &rsaquo; {% trans "系统设置" %}
+  <a href="{% url 'admin:index' %}">{% trans "Home" %}</a>
+  &rsaquo; {% trans "System settings" %}
 </div>
 {% endblock %}
 
 {% block finance_content %}
-<h1>{% trans "系统设置" %}</h1>
+<h1>{% trans "System settings" %}</h1>
 
 {% if messages %}
 <ul class="messagelist finance-system-messages">
@@ -20,63 +20,63 @@
 {% endif %}
 
 <section class="finance-system-panel">
-  <h2>{% trans "数据库" %}</h2>
+  <h2>{% trans "Database" %}</h2>
   {% if sqlite_enabled %}
   <p class="help">
-    {% blocktrans with db=database_name %}当前数据库文件：<code>{{ db }}</code>。备份保存在项目 <code>backups/</code> 目录。还原将覆盖当前全部数据，操作前请先备份。{% endblocktrans %}
+    {% blocktrans with db=database_name %}Database file: <code>{{ db }}</code>. Backups are stored under <code>backups/</code>. Restore replaces all data — back up first.{% endblocktrans %}
   </p>
 
   <div class="finance-system-actions">
     <form method="post" class="finance-system-form">
       {% csrf_token %}
       <input type="hidden" name="action" value="backup">
-      <button type="submit" class="button default">{% trans "一键备份数据库" %}</button>
+      <button type="submit" class="button default">{% trans "Back up database now" %}</button>
     </form>
   </div>
 
-  <h3>{% trans "还原数据库" %}</h3>
+  <h3>{% trans "Restore database" %}</h3>
   <form method="post" enctype="multipart/form-data" class="finance-system-restore-form">
     {% csrf_token %}
     <input type="hidden" name="action" value="restore">
 
     {% if backups %}
     <div class="finance-system-field">
-      <label for="id_backup_name">{% trans "从已有备份还原" %}</label>
+      <label for="id_backup_name">{% trans "Restore from backup" %}</label>
       <select name="backup_name" id="id_backup_name">
-        <option value="">{% trans "— 请选择 —" %}</option>
+        <option value="">{% trans "— Select —" %}</option>
         {% for item in backups %}
         <option value="{{ item.name }}">{{ item.label }} ({{ item.name }}, {{ item.size_kb }} KB)</option>
         {% endfor %}
       </select>
     </div>
-    <p class="help">{% trans "或上传本机/other Mac 拷贝的 .sqlite3 备份文件：" %}</p>
+    <p class="help">{% trans "Or upload a .sqlite3 backup copied from another machine:" %}</p>
     {% else %}
-    <p class="help">{% trans "尚无本地备份，请上传 .sqlite3 文件：" %}</p>
+    <p class="help">{% trans "No local backups yet. Upload a .sqlite3 file:" %}</p>
     {% endif %}
 
     <div class="finance-system-field">
-      <label for="id_backup_file">{% trans "上传备份文件" %}</label>
+      <label for="id_backup_file">{% trans "Upload backup file" %}</label>
       <input type="file" name="backup_file" id="id_backup_file" accept=".sqlite3,application/x-sqlite3">
     </div>
 
     <div class="finance-system-field finance-system-confirm">
       <label>
         <input type="checkbox" name="confirm" value="yes" required>
-        {% trans "我确认：还原将覆盖当前数据库中的全部数据" %}
+        {% trans "I confirm restore will replace all data in the current database" %}
       </label>
     </div>
 
-    <button type="submit" class="button">{% trans "一键还原数据库" %}</button>
+    <button type="submit" class="button">{% trans "Restore database now" %}</button>
   </form>
 
   {% if backups %}
-  <h3>{% trans "备份文件" %}</h3>
+  <h3>{% trans "Backup files" %}</h3>
   <table class="finance-table finance-system-backup-table">
     <thead>
       <tr>
-        <th>{% trans "时间" %}</th>
-        <th>{% trans "文件名" %}</th>
-        <th>{% trans "大小" %}</th>
+        <th>{% trans "Time" %}</th>
+        <th>{% trans "File name" %}</th>
+        <th>{% trans "Size" %}</th>
         <th></th>
       </tr>
     </thead>
@@ -87,7 +87,7 @@
         <td><code>{{ item.name }}</code></td>
         <td>{{ item.size_kb }} KB</td>
         <td>
-          <a href="?download={{ item.name|urlencode }}">{% trans "下载" %}</a>
+          <a href="?download={{ item.name|urlencode }}">{% trans "Download" %}</a>
         </td>
       </tr>
       {% endfor %}
@@ -97,7 +97,7 @@
 
   {% else %}
   <p class="help">
-    {% trans "当前环境使用 PostgreSQL，后台暂不支持一键备份/还原。请使用 pg_dump、pg_restore 或云数据库控制台。" %}
+    {% trans "PostgreSQL is in use. Use pg_dump, pg_restore, or your cloud console for backup/restore." %}
   </p>
   {% endif %}
 </section>

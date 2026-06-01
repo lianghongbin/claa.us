@@ -5,7 +5,7 @@ class AccountsConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
     name = "apps.accounts"
     label = "accounts"
-    verbose_name = "用户与账号"
+    verbose_name = "Accounts"
 
     def ready(self):
         from django.contrib import admin

@@ -1,5 +1,7 @@
-"""银行/渠道账单 CSV 解析与导入。"""
+"""Bank / channel statement CSV parsing and import."""
 from __future__ import annotations
+
+from django.utils.translation import gettext_lazy as _
 
 import csv
 import io
@@ -155,7 +157,7 @@ def parse_csv_rows(
             except UnicodeDecodeError:
                 continue
         if text is None:
-            return [], ["无法识别文件编码，请使用 UTF-8 或 GBK 保存 CSV。"]
+            return [], [str(_("Unrecognized file encoding. Save CSV as UTF-8 or GBK."))]
     else:
         text = content
 
@@ -163,17 +165,17 @@ def parse_csv_rows(
     try:
         headers = next(reader)
     except StopIteration:
-        return [], ["CSV 文件为空。"]
+        return [], [str(_("CSV file is empty."))]
 
     col_map = _resolve_columns(headers)
     if "date" not in col_map:
         return [], [
-            "未识别到日期列，请确保表头包含「交易日期」「日期」等字段。"
+            str(_("No date column found. Headers should include date fields (e.g. 交易日期 / Date)."))
         ]
     has_amount = "amount" in col_map or "income" in col_map or "expense" in col_map
     if not has_amount:
         return [], [
-            "未识别到金额列，请确保表头包含「金额」「收入」「支出」等字段。"
+            str(_("No amount column found. Headers should include amount / income / expense."))
         ]
 
     lines: list[ParsedBankLine] = []
@@ -183,7 +185,9 @@ def parse_csv_rows(
         raw_date = _cell(row, col_map, "date")
         line_date = _parse_line_date(raw_date)
         if not line_date:
-            errors.append(f"第 {row_number} 行: 日期无效「{raw_date}」")
+            errors.append(
+                str(_("Row %(row)s: invalid date “%(raw)s”") % {"row": row_number, "raw": raw_date})
+            )
             continue
 
         amount: Decimal | None = None
@@ -200,7 +204,9 @@ def parse_csv_rows(
         else:
             raw_amt = _parse_decimal(_cell(row, col_map, "amount"))
             if raw_amt is None:
-                errors.append(f"第 {row_number} 行: 金额无效或为空")
+                errors.append(
+                    str(_("Row %(row)s: amount missing or invalid") % {"row": row_number})
+                )
                 continue
             direction = _cell(row, col_map, "direction")
             if direction:
@@ -214,11 +220,15 @@ def parse_csv_rows(
                 )
                 amount = abs(raw_amt)
             else:
-                errors.append(f"第 {row_number} 行: 金额为 0，已跳过")
+                errors.append(
+                    str(_("Row %(row)s: zero amount, skipped") % {"row": row_number})
+                )
                 continue
 
         if tx_type is None or amount is None or amount <= 0:
-            errors.append(f"第 {row_number} 行: 无法判断收支方向")
+            errors.append(
+                str(_("Row %(row)s: cannot determine income vs expense") % {"row": row_number})
+            )
             continue
 
         lines.append(

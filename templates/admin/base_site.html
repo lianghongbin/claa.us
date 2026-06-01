@@ -6,10 +6,13 @@
 {% block extrastyle %}
 {{ block.super }}
 <link rel="stylesheet" type="text/css" href="{% static 'admin/admin_page_layout.css' %}?v=20260520-1">
+<link rel="stylesheet" type="text/css" href="{% static 'admin/language_switcher.css' %}?v=20260520-1">
 {% endblock %}
 
 {% block branding %}
 <h1 id="site-name"><a href="{% url 'admin:index' %}">{{ site_header|default:_('Django administration') }}</a></h1>
 {% endblock %}
 
-{% block nav-global %}{% endblock %}
+{% block nav-global %}
+{% include "admin/includes/language_switcher.html" %}
+{% endblock %}

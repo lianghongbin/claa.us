@@ -1,5 +1,10 @@
 {% extends "admin/simpleui_index_source.html" %}
-{% load static simpletags %}
+{% load i18n static simpletags %}
+
+{% block head %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'admin/language_switcher.css' %}?v={{ FINANCE_ASSET_VERSION }}">
+{% endblock %}
 
 {% block index_js %}
     {# 禁止 SimpleUI 把 tabs 写入 sessionStorage（会导致关不掉、状态错乱） #}

@@ -2,23 +2,23 @@
 {% load i18n %}
 {% block finance_breadcrumbs %}
 <div class="breadcrumbs finance-breadcrumbs">
-  <a href="{% url 'admin:index' %}">{% trans "首页" %}</a>
-  &rsaquo; <a href="{% url 'finance:reports_index' %}">{% trans "报表中心" %}</a>
-  &rsaquo; <a href="{% url 'finance:profit_loss' %}?{{ filter_query }}">{% trans "损益表" %}</a>
-  &rsaquo; {% trans "分项目汇总" %}
+  <a href="{% url 'admin:index' %}">{% trans "Home" %}</a>
+  &rsaquo; <a href="{% url 'finance:reports_index' %}">{% trans "Report center" %}</a>
+  &rsaquo; <a href="{% url 'finance:profit_loss' %}?{{ filter_query }}">{% trans "Profit & loss" %}</a>
+  &rsaquo; {% trans "By project" %}
 </div>
 {% endblock %}
 {% block finance_content %}
-<h1>{% trans "分项目汇总" %}</h1>
-<p class="help">{% blocktrans with date_from=report.date_from date_to=report.date_to %}期间 {{ date_from }} — {{ date_to }}；项目行数不固定，故单独分页展示。{% endblocktrans %}</p>
+<h1>{% trans "By project" %}</h1>
+<p class="help">{% blocktrans with date_from=report.date_from date_to=report.date_to %}Period {{ date_from }} — {{ date_to }}; paginated because project row count varies.{% endblocktrans %}</p>
 
 <table class="finance-table finance-table--fixed-cols finance-table--4col-project-net">
   <thead>
     <tr>
-      <th>{% trans "项目" %}</th>
-      <th class="num">{% trans "收入" %}</th>
-      <th class="num">{% trans "支出" %}</th>
-      <th class="num">{% trans "净利润" %}</th>
+      <th>{% trans "Project" %}</th>
+      <th class="num">{% trans "Income" %}</th>
+      <th class="num">{% trans "Expense" %}</th>
+      <th class="num">{% trans "Net profit" %}</th>
     </tr>
   </thead>
   <tbody>
@@ -30,7 +30,7 @@
       <td class="num">{{ row.net }}</td>
     </tr>
     {% empty %}
-    <tr class="finance-table__empty-row"><td colspan="4">{% trans "无数据" %}</td></tr>
+    <tr class="finance-table__empty-row"><td colspan="4">{% trans "No data" %}</td></tr>
     {% endfor %}
   </tbody>
 </table>
@@ -38,6 +38,6 @@
 {% include "admin/finance/_report_pagination.html" with page_obj=page_obj filter_query=filter_query %}
 
 <p class="finance-footer-link">
-  <a href="{% url 'finance:profit_loss' %}?{{ filter_query }}">{% trans "返回损益表" %}</a>
+  <a href="{% url 'finance:profit_loss' %}?{{ filter_query }}">{% trans "Back to profit & loss" %}</a>
 </p>
 {% endblock %}

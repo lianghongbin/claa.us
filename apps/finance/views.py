@@ -77,7 +77,7 @@ def _validate_sqlite_upload(uploaded: UploadedFile) -> None:
     header = uploaded.read(16)
     uploaded.seek(0)
     if header != b"SQLite format 3\x00":
-        raise ValueError(_("上传的文件不是有效的 SQLite 数据库。"))
+        raise ValueError(_("The uploaded file is not a valid SQLite database."))
 
 
 def _parse_project_filter(request, projects):
@@ -96,7 +96,7 @@ def reports_index(request):
         "admin/finance/reports/index.html",
         {
             **admin.site.each_context(request),
-            "title": "报表中心",
+            "title": _("Report center"),
         },
     )
 
@@ -147,7 +147,7 @@ def profit_loss_report(request):
         "admin/finance/reports/profit_loss.html",
         {
             **admin.site.each_context(request),
-            "title": _("损益表"),
+            "title": _("Profit & loss"),
             "report": report,
             "projects": projects,
             "selected_project_id": project_id,
@@ -232,7 +232,7 @@ def cash_flow_report(request):
         "admin/finance/reports/cash_flow.html",
         {
             **admin.site.each_context(request),
-            "title": _("现金流量表"),
+            "title": _("Cash flow statement"),
             "report": report,
             "page_obj": page_obj,
             "projects": projects,
@@ -266,7 +266,7 @@ def balance_sheet_report(request):
         "admin/finance/reports/balance_sheet.html",
         {
             **admin.site.each_context(request),
-            "title": _("资产负债表"),
+            "title": _("Balance sheet"),
             "report": report,
             "projects": projects,
             "selected_project_id": project_id,
@@ -305,7 +305,7 @@ def balance_sheet_cash_report(request):
         "admin/finance/reports/balance_sheet_cash.html",
         {
             **admin.site.each_context(request),
-            "title": _("资产负债表 · 货币资金明细"),
+            "title": _("Balance sheet · cash detail"),
             "report": report,
             "page_obj": page_obj,
             "filter_as_of_date": as_of_date.isoformat(),
@@ -341,7 +341,7 @@ def cash_flow_forecast_report(request):
         "admin/finance/reports/cash_flow_forecast.html",
         {
             **admin.site.each_context(request),
-            "title": _("现金流预测"),
+            "title": _("Cash flow forecast"),
             "report": report,
             "period_page": period_page,
             "filter_date_from": date_from.isoformat(),
@@ -379,7 +379,7 @@ def cash_flow_forecast_details_report(request):
         "admin/finance/reports/cash_flow_forecast_details.html",
         {
             **admin.site.each_context(request),
-            "title": _("现金流预测 · 账单明细"),
+            "title": _("Cash flow forecast · invoice details"),
             "report": report,
             "page_obj": page_obj,
             "filter_date_from": date_from.isoformat(),
@@ -412,7 +412,7 @@ def finance_dashboard(request):
         "admin/finance/dashboard.html",
         {
             **admin.site.each_context(request),
-            "title": "财务看板",
+            "title": _("Finance dashboard"),
             "dashboard": dashboard,
             "max_monthly": max_monthly,
             "projects": projects,
@@ -459,7 +459,7 @@ def system_settings(request):
         if not sqlite_enabled:
             messages.error(
                 request,
-                _("当前使用 PostgreSQL，请在服务器上使用 pg_dump / pg_restore 管理备份。"),
+                _("PostgreSQL is in use. Use pg_dump/pg_restore on the server for backups."),
             )
             return redirect(settings_url)
 
@@ -472,13 +472,13 @@ def system_settings(request):
             else:
                 messages.success(
                     request,
-                    _("数据库已备份：%(name)s") % {"name": path.name},
+                    _("Database backed up: %(name)s") % {"name": path.name},
                 )
             return redirect(settings_url)
 
         if action == "restore":
             if request.POST.get("confirm") != "yes":
-                messages.error(request, _("请勾选确认后再还原数据库。"))
+                messages.error(request, _("Check the confirmation box before restoring the database."))
                 return redirect(settings_url)
 
             backup_path = None
@@ -497,7 +497,7 @@ def system_settings(request):
                 elif selected:
                     backup_path = db_backup.resolve_backup_name(selected)
                 else:
-                    messages.error(request, _("请选择备份文件或上传 .sqlite3 文件。"))
+                    messages.error(request, _("Select a backup file or upload a .sqlite3 file."))
                     return redirect(settings_url)
 
                 db_backup.restore_from_path(backup_path)
@@ -508,11 +508,11 @@ def system_settings(request):
             else:
                 messages.success(
                     request,
-                    _("数据库已还原。若页面数据未更新，请刷新或重启服务。"),
+                    _("Database restored. Refresh the page or restart the service if data looks stale."),
                 )
             return redirect(settings_url)
 
-        messages.error(request, _("未知操作。"))
+        messages.error(request, _("Unknown action."))
         return redirect(settings_url)
 
     return render(
@@ -520,7 +520,7 @@ def system_settings(request):
         "admin/finance/system_settings.html",
         {
             **admin.site.each_context(request),
-            "title": _("系统设置"),
+            "title": _("System settings"),
             "sqlite_enabled": sqlite_enabled,
             "database_name": db_backup.database_path().name if sqlite_enabled else "",
             "backups": backups,

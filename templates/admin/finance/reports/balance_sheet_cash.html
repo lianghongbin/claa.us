@@ -2,28 +2,28 @@
 {% load i18n %}
 {% block finance_breadcrumbs %}
 <div class="breadcrumbs finance-breadcrumbs">
-  <a href="{% url 'admin:index' %}">{% trans "首页" %}</a>
-  &rsaquo; <a href="{% url 'finance:reports_index' %}">{% trans "报表中心" %}</a>
-  &rsaquo; <a href="{% url 'finance:balance_sheet' %}?{{ filter_query }}">{% trans "资产负债表" %}</a>
-  &rsaquo; {% trans "货币资金明细" %}
+  <a href="{% url 'admin:index' %}">{% trans "Home" %}</a>
+  &rsaquo; <a href="{% url 'finance:reports_index' %}">{% trans "Report center" %}</a>
+  &rsaquo; <a href="{% url 'finance:balance_sheet' %}?{{ filter_query }}">{% trans "Balance sheet" %}</a>
+  &rsaquo; {% trans "Cash detail" %}
 </div>
 {% endblock %}
 {% block finance_content %}
-<h1>{% trans "货币资金明细" %}</h1>
-<p class="help">{% blocktrans with as_of=report.as_of_date %}按流水「账户名称」汇总截至 {{ as_of }} 的累计净流入；行数随账户数量变化，故单独分页展示。{% endblocktrans %}</p>
+<h1>{% trans "Cash detail" %}</h1>
+<p class="help">{% blocktrans with as_of=report.as_of_date %}Cumulative net inflow per account name as of {{ as_of }}; paginated because row count varies.{% endblocktrans %}</p>
 
 <div class="finance-summary">
-  <strong>{% trans "截至" %}：</strong>{{ report.as_of_date }}
+  <strong>{% trans "As of" %}：</strong>{{ report.as_of_date }}
   &nbsp;|&nbsp;
-  <strong>{% trans "货币资金合计" %}：</strong>{{ report.total_cash }}
+  <strong>{% trans "Total cash" %}：</strong>{{ report.total_cash }}
 </div>
 
 <table class="finance-table finance-table--fixed-cols finance-table--2col-label-amount">
   {% include "admin/finance/_colgroup_2_label_amount.html" %}
   <thead>
     <tr>
-      <th>{% trans "账户名称" %}</th>
-      <th class="num">{% trans "余额" %}</th>
+      <th>{% trans "Account name" %}</th>
+      <th class="num">{% trans "Balance" %}</th>
     </tr>
   </thead>
   <tbody>
@@ -33,11 +33,11 @@
       <td class="num">{{ row.balance }}</td>
     </tr>
     {% empty %}
-    <tr class="finance-table__empty-row"><td colspan="2">{% trans "无数据" %}</td></tr>
+    <tr class="finance-table__empty-row"><td colspan="2">{% trans "No data" %}</td></tr>
     {% endfor %}
     {% if page_obj %}
     <tr class="total-row">
-      <td>{% trans "合计" %}</td>
+      <td>{% trans "Total" %}</td>
       <td class="num">{{ report.total_cash }}</td>
     </tr>
     {% endif %}
@@ -47,6 +47,6 @@
 {% include "admin/finance/_report_pagination.html" with page_obj=page_obj filter_query=filter_query %}
 
 <p class="finance-footer-link">
-  <a href="{% url 'finance:balance_sheet' %}?{{ filter_query }}">{% trans "返回资产负债表" %}</a>
+  <a href="{% url 'finance:balance_sheet' %}?{{ filter_query }}">{% trans "Back to balance sheet" %}</a>
 </p>
 {% endblock %}

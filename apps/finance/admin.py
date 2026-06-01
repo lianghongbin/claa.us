@@ -81,8 +81,8 @@ class ARPaymentAllocationByInvoiceInline(admin.TabularInline):
     model = ARPaymentAllocation
     fk_name = "ar_invoice"
     extra = 0
-    verbose_name = _("收款核销")
-    verbose_name_plural = _("收款核销（关联收入流水）")
+    verbose_name = _("Receipt allocation")
+    verbose_name_plural = _("Receipt allocations (linked income entries)")
     fields = ("transaction", "amount", "note", "created_at", "created_by")
     readonly_fields = ("created_at", "created_by")
 
@@ -105,8 +105,8 @@ class APPaymentAllocationByInvoiceInline(admin.TabularInline):
     model = APPaymentAllocation
     fk_name = "ap_invoice"
     extra = 0
-    verbose_name = _("付款核销")
-    verbose_name_plural = _("付款核销（关联支出流水）")
+    verbose_name = _("Payment allocation")
+    verbose_name_plural = _("Payment allocations (linked expense entries)")
     fields = ("transaction", "amount", "note", "created_at", "created_by")
     readonly_fields = ("created_at", "created_by")
 
@@ -154,7 +154,7 @@ class CounterpartyAdmin(CompactHelpTextMixin, admin.ModelAdmin):
     fieldsets = (
         (None, {"fields": (("code", "name"), ("kind", "is_active"))}),
         (
-            _("联系与开票"),
+            _("Contact & billing"),
             {
                 "fields": (
                     ("tax_id", "contact_name"),
@@ -163,8 +163,8 @@ class CounterpartyAdmin(CompactHelpTextMixin, admin.ModelAdmin):
                 )
             },
         ),
-        (_("备注"), {"fields": ("remark",)}),
-        (_("可见范围"), {"fields": ("visibility_groups",)}),
+        (_("Notes"), {"fields": ("remark",)}),
+        (_("Visibility"), {"fields": ("visibility_groups",)}),
     )
 
     def get_queryset(self, request):
@@ -195,7 +195,7 @@ class ProjectAdmin(CompactHelpTextMixin, admin.ModelAdmin):
     filter_horizontal = ("visibility_groups",)
     fieldsets = (
         (None, {"fields": (("code", "name"), ("is_active", "remark"))}),
-        (_("可见范围"), {"fields": ("visibility_groups",)}),
+        (_("Visibility"), {"fields": ("visibility_groups",)}),
     )
 
     def get_queryset(self, request):
@@ -254,12 +254,12 @@ class ARInvoiceAdmin(CompactHelpTextMixin, admin.ModelAdmin):
         main = (None, {"fields": (("number", "counterparty"), ("title", "status"))})
         if obj is None:
             amount = (
-                _("金额与日期"),
+                _("Amount & dates"),
                 {"fields": (("issue_date", "due_date"), "amount_total")},
             )
         else:
             amount = (
-                _("金额与日期"),
+                _("Amount & dates"),
                 {
                     "fields": (
                         ("issue_date", "due_date"),
@@ -269,14 +269,14 @@ class ARInvoiceAdmin(CompactHelpTextMixin, admin.ModelAdmin):
                 },
             )
         tail = (
-            (_("备注"), {"fields": ("remark",)}),
-            (_("可见范围"), {"fields": ("visibility_groups",)}),
+            (_("Notes"), {"fields": ("remark",)}),
+            (_("Visibility"), {"fields": ("visibility_groups",)}),
         )
         if obj is None:
             return (main, amount) + tail
         audit = (
-            _("审计"),
-            {"fields": (("created_by", "created_at"), "updated_at")},
+            (_("Audit"),
+            {"fields": (("created_by", "created_at"), "updated_at")}),
         )
         return (main, amount) + tail + (audit,)
 
@@ -303,7 +303,7 @@ class ARInvoiceAdmin(CompactHelpTextMixin, admin.ModelAdmin):
             kwargs["queryset"] = base.filter(pk__in=ids)
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
-    @admin.display(description=_("未收余额"))
+    @admin.display(description=_("Open balance (AR)"))
     def display_balance(self, obj):
         if obj.pk:
             return obj.balance_unpaid
@@ -381,12 +381,12 @@ class APInvoiceAdmin(CompactHelpTextMixin, admin.ModelAdmin):
         )
         if obj is None:
             amount = (
-                _("金额与日期"),
+                _("Amount & dates"),
                 {"fields": (("issue_date", "due_date"), "amount_total")},
             )
         else:
             amount = (
-                _("金额与日期"),
+                _("Amount & dates"),
                 {
                     "fields": (
                         ("issue_date", "due_date"),
@@ -396,14 +396,14 @@ class APInvoiceAdmin(CompactHelpTextMixin, admin.ModelAdmin):
                 },
             )
         tail = (
-            (_("备注"), {"fields": ("remark",)}),
-            (_("可见范围"), {"fields": ("visibility_groups",)}),
+            (_("Notes"), {"fields": ("remark",)}),
+            (_("Visibility"), {"fields": ("visibility_groups",)}),
         )
         if obj is None:
             return (main, amount) + tail
         audit = (
-            _("审计"),
-            {"fields": (("created_by", "created_at"), "updated_at")},
+            (_("Audit"),
+            {"fields": (("created_by", "created_at"), "updated_at")}),
         )
         return (main, amount) + tail + (audit,)
 
@@ -430,7 +430,7 @@ class APInvoiceAdmin(CompactHelpTextMixin, admin.ModelAdmin):
             kwargs["queryset"] = base.filter(pk__in=ids)
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
-    @admin.display(description=_("未付余额"))
+    @admin.display(description=_("Open balance (AP)"))
     def display_balance(self, obj):
         if obj.pk:
             return obj.balance_unpaid
@@ -477,7 +477,7 @@ class TagAdmin(CompactHelpTextMixin, admin.ModelAdmin):
 class TransactionCategoryListFilter(admin.SimpleListFilter):
     """列表筛选项：仅显示与当前收入/支出页一致的科目。"""
 
-    title = _("科目")
+    title = _("Category")
     parameter_name = "category"
 
     def lookups(self, request, model_admin):
@@ -548,7 +548,7 @@ class BaseProxyTransactionAdmin(CompactHelpTextMixin, ImportExportModelAdmin):
         "is_reconciled",
     )
 
-    @admin.display(description=_("标签"))
+    @admin.display(description=_("Tags"))
     def display_tags(self, obj):
         names = list(obj.tags.values_list("name", flat=True)[:8])
         return ", ".join(names) if names else "—"
@@ -561,16 +561,16 @@ class BaseProxyTransactionAdmin(CompactHelpTextMixin, ImportExportModelAdmin):
     def get_fieldsets(self, request, obj=None):
         if self.fixed_type == TransactionType.INCOME:
             hint = _(
-                "登记实际收款。核销应收账款请在「应收账单」中关联本笔收入，勿在本页维护。"
+                "Record the cash receipt here. Link AR invoices on the AR invoice page, not on this form."
             )
         else:
             hint = _(
-                "登记实际付款。核销应付账款请在「应付账单」中关联本笔支出，勿在本页维护。"
+                "Record the cash payment here. Link AP invoices on the AP invoice page, not on this form."
             )
         main = (None, {"fields": self._main_fieldset_fields, "description": hint})
         if obj is None:
             return (main,)
-        return (main, (_("审计"), {"fields": ("created_by", "created_at", "updated_at")}))
+        return (main, (_("Audit"), {"fields": ("created_by", "created_at", "updated_at")}))
 
     def get_inlines(self, request, obj=None):
         """新增页只录主表；附件在保存后的编辑页上传。"""
@@ -704,14 +704,14 @@ class BaseProxyTransactionAdmin(CompactHelpTextMixin, ImportExportModelAdmin):
             changes={"before": snap},
         )
 
-    @admin.action(description=_("将选中记录标记为已对账"))
+    @admin.action(description=_("Mark selected as reconciled"))
     def mark_reconciled(self, request, queryset):
         ids = list(queryset.values_list("pk", flat=True))
         updated = queryset.update(is_reconciled=True)
         log_bulk_reconcile(request, transaction_ids=ids)
         self.message_user(
             request,
-            _("已标记 %(count)s 条为已对账。") % {"count": updated},
+            _("Marked %(count)s row(s) as reconciled.") % {"count": updated},
             messages.SUCCESS,
         )
 
@@ -754,10 +754,10 @@ class ReconciliationVarianceAdmin(CompactHelpTextMixin, admin.ModelAdmin):
             },
         ),
         (
-            _("调整流水"),
+            _("Adjusting entry"),
             {"fields": ("adjustment_category", "adjustment_transaction", "is_resolved")},
         ),
-        (_("审计"), {"fields": ("created_by", "created_at")}),
+        (_("Audit"), {"fields": ("created_by", "created_at")}),
     )
 
     def save_model(self, request, obj, form, change):
@@ -765,7 +765,7 @@ class ReconciliationVarianceAdmin(CompactHelpTextMixin, admin.ModelAdmin):
             obj.created_by = request.user
         super().save_model(request, obj, form, change)
 
-    @admin.action(description=_("生成调整流水并完成对账关联"))
+    @admin.action(description=_("Create adjusting entry and link reconciliation"))
     def action_create_adjustment(self, request, queryset):
         created = 0
         for var in queryset.filter(adjustment_transaction__isnull=True):
@@ -775,21 +775,21 @@ class ReconciliationVarianceAdmin(CompactHelpTextMixin, admin.ModelAdmin):
             except ValidationError as exc:
                 self.message_user(
                     request,
-                    _("差异 #%(id)s: %(err)s") % {"id": var.pk, "err": exc},
+                    _("Variance #%(id)s: %(err)s") % {"id": var.pk, "err": exc},
                     messages.ERROR,
                 )
         if created:
             self.message_user(
                 request,
-                _("已为 %(n)s 条差异生成调整流水。") % {"n": created},
+                _("Created adjusting entries for %(n) variance(s).") % {"n": created},
                 messages.SUCCESS,
             )
 
-    @admin.action(description=_("标记为已处理（不生成流水）"))
+    @admin.action(description=_("Mark resolved (no entry)"))
     def action_mark_resolved(self, request, queryset):
         for var in queryset.filter(is_resolved=False):
             resolve_without_adjustment(var)
-        self.message_user(request, _("已标记为已处理。"), messages.SUCCESS)
+        self.message_user(request, _("Marked as resolved."), messages.SUCCESS)
 
     def has_add_permission(self, request):
         return request.user.has_perm("finance.add_reconciliationvariance")
@@ -911,23 +911,23 @@ class BankStatementLineAdmin(CompactHelpTextMixin, admin.ModelAdmin):
         elif prev_tx_id and not obj.matched_transaction_id:
             clear_match(obj)
 
-    @admin.action(description=_("自动匹配选中明细"))
+    @admin.action(description=_("Auto-match selected lines"))
     def action_auto_match(self, request, queryset):
         result = auto_match_lines(queryset, request.user)
         self.message_user(
             request,
-            _("自动匹配成功 %(m)s 条；无候选 %(n)s 条；多候选 %(a)s 条。")
+            _("Auto-matched %(m)s; no candidate %(n)s; ambiguous %(a)s.")
             % {"m": result.matched, "n": result.no_candidate, "a": result.ambiguous},
             messages.SUCCESS if result.matched else messages.INFO,
         )
 
-    @admin.action(description=_("标记为忽略（不参与对账）"))
+    @admin.action(description=_("Mark ignored (skip reconciliation)"))
     def action_mark_ignored(self, request, queryset):
         for line in queryset:
             mark_ignored(line)
-        self.message_user(request, _("已标记为忽略。"), messages.SUCCESS)
+        self.message_user(request, _("Marked as ignored."), messages.SUCCESS)
 
-    @admin.action(description=_("登记为「有账未记账」差异"))
+    @admin.action(description=_("Register as bank-only variance"))
     def action_register_unrecorded_bank(self, request, queryset):
         created = 0
         for line in queryset.filter(match_status=BankLineMatchStatus.UNMATCHED):
@@ -942,11 +942,11 @@ class BankStatementLineAdmin(CompactHelpTextMixin, admin.ModelAdmin):
             created += 1
         self.message_user(
             request,
-            _("已登记 %(n)s 条差异，请在「对账差异」中指定科目并生成调整流水。") % {"n": created},
+            _("Registered %(n) variance(s). Set category under Reconciliation variances and create entries.") % {"n": created},
             messages.SUCCESS if created else messages.INFO,
         )
 
-    @admin.action(description=_("清除匹配"))
+    @admin.action(description=_("Clear match"))
     def action_clear_match(self, request, queryset):
         for line in queryset:
             if line.match_status == BankLineMatchStatus.MATCHED:
@@ -954,7 +954,7 @@ class BankStatementLineAdmin(CompactHelpTextMixin, admin.ModelAdmin):
             elif line.match_status == BankLineMatchStatus.IGNORED:
                 line.match_status = BankLineMatchStatus.UNMATCHED
                 line.save(update_fields=["match_status"])
-        self.message_user(request, _("已清除匹配。"), messages.SUCCESS)
+        self.message_user(request, _("Match cleared."), messages.SUCCESS)
 
     def has_change_permission(self, request, obj=None):
         return request.user.has_perm("finance.change_bankstatementline")
@@ -992,7 +992,7 @@ class BankStatementBatchAdmin(CompactHelpTextMixin, admin.ModelAdmin):
     inlines = (BankStatementLineInline,)
     actions = ("action_auto_match_batch",)
 
-    @admin.display(description=_("对账进度"))
+    @admin.display(description=_("Reconciliation progress"))
     def display_match_progress(self, obj):
         if not obj.pk:
             return "—"
@@ -1002,7 +1002,7 @@ class BankStatementBatchAdmin(CompactHelpTextMixin, admin.ModelAdmin):
         matched = obj.lines.filter(match_status=BankLineMatchStatus.MATCHED).count()
         return f"{matched}/{total}"
 
-    @admin.action(description=_("对本批次未匹配明细执行自动匹配"))
+    @admin.action(description=_("Auto-match unmatched lines in this batch"))
     def action_auto_match_batch(self, request, queryset):
         total_matched = 0
         for batch in queryset:
@@ -1010,7 +1010,7 @@ class BankStatementBatchAdmin(CompactHelpTextMixin, admin.ModelAdmin):
             total_matched += result.matched
         self.message_user(
             request,
-            _("共自动匹配 %(n)s 条。") % {"n": total_matched},
+            _("Auto-matched %(n) line(s) in total.") % {"n": total_matched},
             messages.SUCCESS if total_matched else messages.INFO,
         )
 
@@ -1031,7 +1031,7 @@ class BankStatementBatchAdmin(CompactHelpTextMixin, admin.ModelAdmin):
         return (
             (None, {"fields": ("account_name", "source", "file")}),
             (
-                _("导入结果"),
+                _("Import result"),
                 {
                     "fields": (
                         "status",
@@ -1075,17 +1075,17 @@ class BankStatementBatchAdmin(CompactHelpTextMixin, admin.ModelAdmin):
             if result.imported:
                 self.message_user(
                     request,
-                    _("成功导入 %(n)s 条账单明细。") % {"n": result.imported},
+                    _("Imported %(n) bank line(s).") % {"n": result.imported},
                     messages.SUCCESS,
                 )
             if result.errors:
                 self.message_user(
                     request,
-                    _("有 %(n)s 行解析失败，详见错误日志。") % {"n": len(result.errors)},
+                    _("%(n) row(s) failed to parse. See error log.") % {"n": len(result.errors)},
                     messages.WARNING,
                 )
             if not result.imported and not result.errors:
-                self.message_user(request, _("未解析到有效数据行。"), messages.ERROR)
+                self.message_user(request, _("No valid data rows found."), messages.ERROR)
 
     def get_readonly_fields(self, request, obj=None):
         ro = list(self.readonly_fields)

@@ -1,0 +1,2091 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-01 10:20-0700\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: zh-hans\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: apps/accounts/admin.py:50 templates/admin/finance/reports/cash_flow.html:57
+msgid "Account"
+msgstr "账号信息"
+
+#: apps/accounts/admin.py:54
+msgid "Personal info"
+msgstr "个人信息"
+
+#: apps/accounts/admin.py:58 apps/finance/models.py:304
+msgid "Status"
+msgstr "状态"
+
+#: apps/accounts/admin.py:70 apps/accounts/admin.py:100
+msgid "Roles & permissions"
+msgstr "角色与权限"
+
+#: apps/accounts/admin.py:80
+msgid "Important dates"
+msgstr "重要日期"
+
+#: apps/accounts/admin.py:125
+msgid "Roles"
+msgstr "角色"
+
+#: apps/accounts/admin.py:165
+msgid "Password"
+msgstr "密码"
+
+#: apps/accounts/admin.py:170 templates/admin/simpleui_index_source.html:239
+#: templates/admin/simpleui_index_source.html:300
+msgid "Change password"
+msgstr "修改密码"
+
+#: apps/accounts/admin.py:182
+#, python-format
+msgid "User created. Initial password sent to %(email)s."
+msgstr "用户已创建，初始密码已发送至 %(email)s。"
+
+#: apps/accounts/admin.py:187
+#, python-format
+msgid "User created but email failed: %(err)s"
+msgstr "用户已创建，但发送邮件失败：%(err)s"
+
+#: apps/accounts/admin.py:199
+#, python-format
+msgid "%(name)s object with primary key %(key)r does not exist."
+msgstr ""
+
+#: apps/accounts/admin.py:213
+msgid "Password changed successfully."
+msgstr "密码修改成功。"
+
+#: apps/accounts/admin.py:235
+#, python-format
+msgid "Change password: %s"
+msgstr "修改密码: %s"
+
+#: apps/accounts/forms.py:15 apps/accounts/models.py:37
+#: apps/finance/models.py:71
+msgid "Email"
+msgstr "邮箱"
+
+#: apps/accounts/forms.py:55
+msgid "Enter a valid email address."
+msgstr "请输入有效邮箱。"
+
+#: apps/accounts/mail.py:11
+msgid "Your Claa Finance account is ready"
+msgstr "【财务管理】您的账户已开通"
+
+#: apps/accounts/mail.py:13
+#, python-format
+msgid ""
+"Hello,\n"
+"\n"
+"An administrator created a back-office account for you.\n"
+"\n"
+"Sign-in URL: %(login_url)s\n"
+"Email: %(email)s\n"
+"Initial password: %(password)s\n"
+"\n"
+"Change your password after first sign-in. Do not share the initial password.\n"
+msgstr ""
+"您好，\n"
+"\n"
+"管理员已在系统中为您开通后台账号。\n"
+"\n"
+"登录地址：%(login_url)s\n"
+"登录账号（邮箱）：%(email)s\n"
+"初始密码：%(password)s\n"
+"\n"
+"请首次登录后立即修改密码；初始密码请勿转发他人。\n"
+
+#: apps/accounts/models.py:11
+msgid "Email address is required"
+msgstr "必须提供电子邮箱地址"
+
+#: apps/accounts/models.py:29
+msgid "Superuser must have is_staff=True"
+msgstr "超级用户必须 is_staff=True"
+
+#: apps/accounts/models.py:31
+msgid "Superuser must have is_superuser=True"
+msgstr "超级用户必须 is_superuser=True"
+
+#: apps/accounts/models.py:39
+msgid "Must change password on first login"
+msgstr "首次登录须修改密码"
+
+#: apps/accounts/models.py:42
+msgid ""
+"True when an admin creates the user; cleared after the user changes their "
+"password."
+msgstr "由管理员新建用户时为 True；用户自行修改密码成功后清除。"
+
+#: apps/accounts/models.py:52 apps/audit/models.py:20
+msgid "User"
+msgstr "用户"
+
+#: apps/accounts/models.py:53 config/simpleui_menus.py:164
+msgid "Users"
+msgstr "用户"
+
+#: apps/admin_form_utils.py:29
+msgid "e.g. Main checking, Petty cash"
+msgstr "如：工商银行基本户、库存现金"
+
+#: apps/admin_form_utils.py:30
+msgid "Memo (optional)"
+msgstr "摘要或备注，选填"
+
+#: apps/admin_form_utils.py:31
+msgid "Notes (optional)"
+msgstr "备注，选填"
+
+#: apps/admin_form_utils.py:32
+msgid "Document no. (unique)"
+msgstr "单号，需唯一"
+
+#: apps/admin_form_utils.py:33
+msgid "Title (optional)"
+msgstr "摘要，选填"
+
+#: apps/admin_form_utils.py:62
+msgid "Transaction date"
+msgstr "选择交易日期"
+
+#: apps/audit/models.py:12
+msgid "Create"
+msgstr "创建"
+
+#: apps/audit/models.py:13
+msgid "Update"
+msgstr "修改"
+
+#: apps/audit/models.py:14
+msgid "Delete"
+msgstr "删除"
+
+#: apps/audit/models.py:15
+msgid "Bulk reconcile"
+msgstr "批量对账"
+
+#: apps/audit/models.py:17
+msgid "Timestamp"
+msgstr "时间"
+
+#: apps/audit/models.py:26
+msgid "Action"
+msgstr "动作"
+
+#: apps/audit/models.py:33
+msgid "Content type"
+msgstr "对象类型"
+
+#: apps/audit/models.py:38
+msgid "Object ID"
+msgstr "对象主键"
+
+#: apps/audit/models.py:40
+msgid "Object summary"
+msgstr "对象摘要"
+
+#: apps/audit/models.py:41
+msgid "Changes"
+msgstr "变更详情"
+
+#: apps/audit/models.py:42
+msgid "IP address"
+msgstr "IP"
+
+#: apps/audit/models.py:45 apps/audit/models.py:46
+#: config/simpleui_menus.py:152
+msgid "Audit log"
+msgstr "操作日志"
+
+#: apps/finance/admin.py:84
+msgid "Receipt allocation"
+msgstr "收款核销"
+
+#: apps/finance/admin.py:85
+msgid "Receipt allocations (linked income entries)"
+msgstr "收款核销（关联收入流水）"
+
+#: apps/finance/admin.py:108
+msgid "Payment allocation"
+msgstr "付款核销"
+
+#: apps/finance/admin.py:109
+msgid "Payment allocations (linked expense entries)"
+msgstr "付款核销（关联支出流水）"
+
+#: apps/finance/admin.py:157
+msgid "Contact & billing"
+msgstr "联系与开票"
+
+#: apps/finance/admin.py:166 apps/finance/admin.py:272
+#: apps/finance/admin.py:399
+msgid "Notes"
+msgstr "备注"
+
+#: apps/finance/admin.py:167 apps/finance/admin.py:198
+#: apps/finance/admin.py:273 apps/finance/admin.py:400
+msgid "Visibility"
+msgstr "可见范围"
+
+#: apps/finance/admin.py:257 apps/finance/admin.py:262
+#: apps/finance/admin.py:384 apps/finance/admin.py:389
+msgid "Amount & dates"
+msgstr "金额与日期"
+
+#: apps/finance/admin.py:278 apps/finance/admin.py:405
+#: apps/finance/admin.py:573 apps/finance/admin.py:760
+#: config/simpleui_menus.py:148 config/simpleui_menus.py:192
+msgid "Audit"
+msgstr "审计中心"
+
+#: apps/finance/admin.py:306
+msgid "Open balance (AR)"
+msgstr "未收余额"
+
+#: apps/finance/admin.py:433
+msgid "Open balance (AP)"
+msgstr "未付余额"
+
+#: apps/finance/admin.py:480 apps/finance/models.py:153
+#: apps/finance/resources.py:74
+#: templates/admin/finance/_category_share_table.html:5
+#: templates/admin/finance/reports/balance_sheet.html:71
+#: templates/admin/finance/reports/balance_sheet.html:106
+#: templates/admin/finance/reports/balance_sheet.html:130
+#: templates/admin/finance/reports/cash_flow_forecast.html:81
+#: templates/admin/finance/reports/profit_loss.html:76
+#: templates/admin/finance/reports/profit_loss.html:106
+#: templates/admin/finance/reports/profit_loss_expense.html:23
+#: templates/admin/finance/reports/profit_loss_income.html:23
+msgid "Category"
+msgstr "科目"
+
+#: apps/finance/admin.py:551 apps/finance/models.py:183
+#: apps/finance/resources.py:79 config/simpleui_menus.py:92
+msgid "Tags"
+msgstr "流水标签"
+
+#: apps/finance/admin.py:564
+msgid ""
+"Record the cash receipt here. Link AR invoices on the AR invoice page, not "
+"on this form."
+msgstr "登记实际收款。核销应收账款请在「应收账单」中关联本笔收入，勿在本页维护。"
+
+#: apps/finance/admin.py:568
+msgid ""
+"Record the cash payment here. Link AP invoices on the AP invoice page, not "
+"on this form."
+msgstr "登记实际付款。核销应付账款请在「应付账单」中关联本笔支出，勿在本页维护。"
+
+#: apps/finance/admin.py:707
+msgid "Mark selected as reconciled"
+msgstr "将选中记录标记为已对账"
+
+#: apps/finance/admin.py:714
+#, python-format
+msgid "Marked %(count)s row(s) as reconciled."
+msgstr "已标记 %(count)s 条为已对账。"
+
+#: apps/finance/admin.py:757
+msgid "Adjusting entry"
+msgstr "调整流水"
+
+#: apps/finance/admin.py:768
+msgid "Create adjusting entry and link reconciliation"
+msgstr "生成调整流水并完成对账关联"
+
+#: apps/finance/admin.py:778
+#, python-format
+msgid "Variance #%(id)s: %(err)s"
+msgstr "差异 #%(id)s: %(err)s"
+
+#: apps/finance/admin.py:784
+msgid "Created adjusting entries for %(n) variance(s)."
+msgstr "已为 %(n)s 条差异生成调整流水。"
+
+#: apps/finance/admin.py:788
+msgid "Mark resolved (no entry)"
+msgstr "标记为已处理（不生成流水）"
+
+#: apps/finance/admin.py:792
+msgid "Marked as resolved."
+msgstr "已标记为已处理。"
+
+#: apps/finance/admin.py:914
+msgid "Auto-match selected lines"
+msgstr "自动匹配选中明细"
+
+#: apps/finance/admin.py:919
+#, python-format
+msgid "Auto-matched %(m)s; no candidate %(n)s; ambiguous %(a)s."
+msgstr "自动匹配成功 %(m)s 条；无候选 %(n)s 条；多候选 %(a)s 条。"
+
+#: apps/finance/admin.py:924
+msgid "Mark ignored (skip reconciliation)"
+msgstr "标记为忽略（不参与对账）"
+
+#: apps/finance/admin.py:928
+msgid "Marked as ignored."
+msgstr "已标记为忽略。"
+
+#: apps/finance/admin.py:930
+msgid "Register as bank-only variance"
+msgstr "登记为「有账未记账」差异"
+
+#: apps/finance/admin.py:945
+msgid ""
+"Registered %(n) variance(s). Set category under Reconciliation variances and"
+" create entries."
+msgstr "已登记 %(n)s 条差异，请在「对账差异」中指定科目并生成调整流水。"
+
+#: apps/finance/admin.py:949
+msgid "Clear match"
+msgstr "清除匹配"
+
+#: apps/finance/admin.py:957
+msgid "Match cleared."
+msgstr "已清除匹配。"
+
+#: apps/finance/admin.py:995
+msgid "Reconciliation progress"
+msgstr "对账进度"
+
+#: apps/finance/admin.py:1005
+msgid "Auto-match unmatched lines in this batch"
+msgstr "对本批次未匹配明细执行自动匹配"
+
+#: apps/finance/admin.py:1013
+msgid "Auto-matched %(n) line(s) in total."
+msgstr "共自动匹配 %(n)s 条。"
+
+#: apps/finance/admin.py:1034
+msgid "Import result"
+msgstr "导入结果"
+
+#: apps/finance/admin.py:1078
+msgid "Imported %(n) bank line(s)."
+msgstr "成功导入 %(n)s 条账单明细。"
+
+#: apps/finance/admin.py:1084
+msgid "%(n) row(s) failed to parse. See error log."
+msgstr "有 %(n)s 行解析失败，详见错误日志。"
+
+#: apps/finance/admin.py:1088
+msgid "No valid data rows found."
+msgstr "未解析到有效数据行。"
+
+#: apps/finance/bank_import.py:160
+msgid "Unrecognized file encoding. Save CSV as UTF-8 or GBK."
+msgstr "无法识别文件编码，请使用 UTF-8 或 GBK 保存 CSV。"
+
+#: apps/finance/bank_import.py:168
+msgid "CSV file is empty."
+msgstr "CSV 文件为空。"
+
+#: apps/finance/bank_import.py:173
+msgid ""
+"No date column found. Headers should include date fields (e.g. 交易日期 / Date)."
+msgstr "未识别到日期列，请确保表头包含「交易日期」「日期」等字段。"
+
+#: apps/finance/bank_import.py:178
+msgid ""
+"No amount column found. Headers should include amount / income / expense."
+msgstr "未识别到金额列，请确保表头包含「金额」「收入」「支出」等字段。"
+
+#: apps/finance/bank_import.py:189
+#, python-format
+msgid "Row %(row)s: invalid date “%(raw)s”"
+msgstr "第 %(row)s 行: 日期无效「%(raw)s」"
+
+#: apps/finance/bank_import.py:208
+#, python-format
+msgid "Row %(row)s: amount missing or invalid"
+msgstr "第 %(row)s 行: 金额无效或为空"
+
+#: apps/finance/bank_import.py:224
+#, python-format
+msgid "Row %(row)s: zero amount, skipped"
+msgstr "第 %(row)s 行: 金额为 0，已跳过"
+
+#: apps/finance/bank_import.py:230
+#, python-format
+msgid "Row %(row)s: cannot determine income vs expense"
+msgstr "第 %(row)s 行: 无法判断收支方向"
+
+#: apps/finance/bank_variance.py:42
+msgid "Cannot determine account name. Link an import batch or bank line."
+msgstr "无法确定账户名称，请关联导入批次或银行明细。"
+
+#: apps/finance/bank_variance.py:55
+msgid "An adjusting entry already exists for this variance."
+msgstr "该差异已生成过调整流水。"
+
+#: apps/finance/bank_variance.py:58
+msgid "Select an adjustment category."
+msgstr "请选择调整科目。"
+
+#: apps/finance/bank_variance.py:63
+#, python-format
+msgid "Category type “%(kind)s” does not match required direction."
+msgstr "科目类型为「%(kind)s」，与所需收支方向不一致。"
+
+#: apps/finance/bank_variance.py:76
+#, python-format
+msgid "[Reconciliation adjustment] %(kind)s"
+msgstr "[对账调整] %(kind)s"
+
+#: apps/finance/bank_variance.py:81
+#, python-format
+msgid "Bank reference: %(ref)s"
+msgstr "银行流水号:%(ref)s"
+
+#: apps/finance/models.py:12 apps/finance/models.py:17
+#: apps/finance/resources.py:128 templates/admin/finance/dashboard.html:37
+#: templates/admin/finance/dashboard.html:49
+#: templates/admin/finance/reports/profit_loss.html:134
+#: templates/admin/finance/reports/profit_loss_projects.html:19
+msgid "Income"
+msgstr "收入"
+
+#: apps/finance/models.py:13 apps/finance/models.py:18
+#: apps/finance/resources.py:128 templates/admin/finance/dashboard.html:39
+#: templates/admin/finance/dashboard.html:50
+#: templates/admin/finance/reports/profit_loss.html:135
+#: templates/admin/finance/reports/profit_loss_projects.html:20
+msgid "Expense"
+msgstr "支出"
+
+#: apps/finance/models.py:22 apps/finance/models.py:61
+msgid "Name"
+msgstr "名称"
+
+#: apps/finance/models.py:24 apps/finance/models.py:63
+#: templates/admin/finance/reports/cash_flow_forecast.html:119
+#: templates/admin/finance/reports/cash_flow_forecast_details.html:18
+msgid "Type"
+msgstr "类型"
+
+#: apps/finance/models.py:29
+msgid "Sort Order"
+msgstr ""
+
+#: apps/finance/models.py:30 apps/finance/models.py:74
+#: apps/finance/models.py:104
+msgid "Active"
+msgstr "启用"
+
+#: apps/finance/models.py:31 apps/finance/models.py:85
+#: apps/finance/models.py:116 apps/finance/models.py:132
+#: apps/finance/models.py:197 apps/finance/models.py:330
+#: apps/finance/models.py:414 apps/finance/models.py:550
+#: apps/finance/models.py:637
+msgid "Created At"
+msgstr ""
+
+#: apps/finance/models.py:34
+msgid "Account Category"
+msgstr ""
+
+#: apps/finance/models.py:35
+msgid "Account Categories"
+msgstr ""
+
+#: apps/finance/models.py:38
+msgid "Backup and restore database"
+msgstr "备份与还原数据库"
+
+#: apps/finance/models.py:52 apps/finance/models.py:283
+msgid "Customer"
+msgstr "客户"
+
+#: apps/finance/models.py:53 apps/finance/models.py:496
+msgid "Vendor"
+msgstr "供应商"
+
+#: apps/finance/models.py:54
+msgid "Customer and Vendor"
+msgstr "客户与供应商"
+
+#: apps/finance/models.py:60
+msgid "Unit Code"
+msgstr ""
+
+#: apps/finance/models.py:68
+msgid "Tax ID / Unified Social Credit Code"
+msgstr ""
+
+#: apps/finance/models.py:69
+msgid "Contact Name"
+msgstr ""
+
+#: apps/finance/models.py:70
+msgid "Phone"
+msgstr ""
+
+#: apps/finance/models.py:72
+msgid "Address"
+msgstr ""
+
+#: apps/finance/models.py:73 apps/finance/models.py:105
+#: apps/finance/models.py:310 apps/finance/models.py:413
+#: apps/finance/models.py:530 apps/finance/models.py:636
+msgid "Remark"
+msgstr ""
+
+#: apps/finance/models.py:79 apps/finance/models.py:110
+#: apps/finance/models.py:315 apps/finance/models.py:535
+msgid "Visible Groups"
+msgstr ""
+
+#: apps/finance/models.py:81
+msgid ""
+"If empty, visible to all users who can view counterparties; if set, only "
+"users in selected groups can view."
+msgstr ""
+
+#: apps/finance/models.py:88 apps/finance/models.py:175
+#: templates/admin/finance/reports/cash_flow_forecast.html:121
+#: templates/admin/finance/reports/cash_flow_forecast_details.html:20
+msgid "Counterparty"
+msgstr ""
+
+#: apps/finance/models.py:89 config/simpleui_menus.py:98
+msgid "Counterparties"
+msgstr "往来单位"
+
+#: apps/finance/models.py:92
+msgid "Can view all counterparties (ignore visibility groups)"
+msgstr ""
+
+#: apps/finance/models.py:102
+msgid "Project Code"
+msgstr ""
+
+#: apps/finance/models.py:103
+msgid "Project Name"
+msgstr ""
+
+#: apps/finance/models.py:112
+msgid ""
+"If empty, visible to all users who can view projects; if set, only users in "
+"selected groups can view."
+msgstr ""
+
+#: apps/finance/models.py:119 apps/finance/models.py:167
+#: templates/admin/finance/dashboard.html:20
+#: templates/admin/finance/reports/balance_sheet.html:21
+#: templates/admin/finance/reports/cash_flow.html:21
+#: templates/admin/finance/reports/profit_loss.html:24
+#: templates/admin/finance/reports/profit_loss.html:133
+#: templates/admin/finance/reports/profit_loss_projects.html:18
+msgid "Project"
+msgstr "项目"
+
+#: apps/finance/models.py:120 config/simpleui_menus.py:86
+msgid "Projects"
+msgstr "项目"
+
+#: apps/finance/models.py:123
+msgid "Can view all projects (ignore visibility groups)"
+msgstr ""
+
+#: apps/finance/models.py:131
+msgid "Tag"
+msgstr ""
+
+#: apps/finance/models.py:135
+msgid "Transaction Tag"
+msgstr ""
+
+#: apps/finance/models.py:136
+msgid "Transaction Tags"
+msgstr ""
+
+#: apps/finance/models.py:144
+msgid "Date"
+msgstr "日期"
+
+#: apps/finance/models.py:146
+msgid "Transaction Type"
+msgstr ""
+
+#: apps/finance/models.py:158 apps/finance/models.py:786
+#: templates/admin/finance/_category_share_table.html:7
+#: templates/admin/finance/reports/balance_sheet.html:73
+#: templates/admin/finance/reports/balance_sheet.html:108
+#: templates/admin/finance/reports/balance_sheet.html:132
+#: templates/admin/finance/reports/profit_loss.html:77
+#: templates/admin/finance/reports/profit_loss.html:107
+#: templates/admin/finance/reports/profit_loss_expense.html:24
+#: templates/admin/finance/reports/profit_loss_income.html:24
+msgid "Amount"
+msgstr "金额"
+
+#: apps/finance/models.py:161
+msgid "Positive amount in base currency"
+msgstr ""
+
+#: apps/finance/models.py:163 apps/finance/models.py:727
+msgid "Account Name"
+msgstr ""
+
+#: apps/finance/models.py:164
+msgid "Description / Note"
+msgstr ""
+
+#: apps/finance/models.py:187
+msgid "Reconciled"
+msgstr ""
+
+#: apps/finance/models.py:190 apps/finance/models.py:323
+#: apps/finance/models.py:417 apps/finance/models.py:543
+#: apps/finance/models.py:640
+msgid "Created By"
+msgstr ""
+
+#: apps/finance/models.py:198 apps/finance/models.py:331
+#: apps/finance/models.py:551
+msgid "Updated At"
+msgstr ""
+
+#: apps/finance/models.py:201 apps/finance/models.py:244
+msgid "Transaction"
+msgstr ""
+
+#: apps/finance/models.py:202 config/simpleui_menus.py:58
+#: config/simpleui_menus.py:189
+msgid "Transactions"
+msgstr "日常记账"
+
+#: apps/finance/models.py:207
+msgid ""
+"Can view all finance transactions (ignore project/counterparty visibility)"
+msgstr ""
+
+#: apps/finance/models.py:233
+msgid "The selected category type must match the transaction type."
+msgstr ""
+
+#: apps/finance/models.py:236
+msgid "Amount must be greater than 0."
+msgstr ""
+
+#: apps/finance/models.py:248
+msgid "File"
+msgstr ""
+
+#: apps/finance/models.py:249
+msgid "Caption"
+msgstr ""
+
+#: apps/finance/models.py:250
+msgid "Uploaded At"
+msgstr ""
+
+#: apps/finance/models.py:253
+msgid "Uploaded By"
+msgstr ""
+
+#: apps/finance/models.py:261
+msgid "Transaction Attachment"
+msgstr ""
+
+#: apps/finance/models.py:262
+msgid "Transaction Attachments"
+msgstr ""
+
+#: apps/finance/models.py:270 apps/finance/models.py:476
+#: apps/finance/models.py:483
+msgid "Draft"
+msgstr ""
+
+#: apps/finance/models.py:271 apps/finance/models.py:484
+msgid "Open"
+msgstr ""
+
+#: apps/finance/models.py:272 apps/finance/models.py:485
+msgid "Partially Paid"
+msgstr ""
+
+#: apps/finance/models.py:273 apps/finance/models.py:486
+msgid "Paid"
+msgstr ""
+
+#: apps/finance/models.py:274 apps/finance/models.py:487
+msgid "Void"
+msgstr ""
+
+#: apps/finance/models.py:280
+msgid "AR Invoice Number"
+msgstr ""
+
+#: apps/finance/models.py:287 apps/finance/models.py:500
+msgid "Title"
+msgstr ""
+
+#: apps/finance/models.py:288 apps/finance/models.py:501
+msgid "Issue Date"
+msgstr ""
+
+#: apps/finance/models.py:290 apps/finance/models.py:503
+msgid "Due Date"
+msgstr ""
+
+#: apps/finance/models.py:295
+msgid "Total Amount Receivable"
+msgstr ""
+
+#: apps/finance/models.py:297
+msgid "Amount Received"
+msgstr ""
+
+#: apps/finance/models.py:301 apps/finance/models.py:514
+msgid ""
+"Automatically summarized from payment allocations; do not edit manually."
+msgstr ""
+
+#: apps/finance/models.py:317
+msgid ""
+"If empty, visible to all users who can view AR invoices; if set, only users "
+"in selected groups can view."
+msgstr ""
+
+#: apps/finance/models.py:334 apps/finance/models.py:402
+msgid "AR Invoice"
+msgstr ""
+
+#: apps/finance/models.py:335
+msgid "AR Invoices"
+msgstr ""
+
+#: apps/finance/models.py:338
+msgid "Can view all AR invoices (ignore visibility groups)"
+msgstr ""
+
+#: apps/finance/models.py:379
+msgid ""
+"AR invoices can only be linked to counterparties of type Customer or "
+"Customer and Vendor."
+msgstr ""
+
+#: apps/finance/models.py:389
+msgid "Amount received cannot exceed total receivable."
+msgstr ""
+
+#: apps/finance/models.py:408
+msgid "Receipt Transaction"
+msgstr ""
+
+#: apps/finance/models.py:412 apps/finance/models.py:635
+msgid "Allocation Amount"
+msgstr ""
+
+#: apps/finance/models.py:426
+msgid "AR Payment Allocation"
+msgstr ""
+
+#: apps/finance/models.py:427
+msgid "AR Payment Allocations"
+msgstr ""
+
+#: apps/finance/models.py:441 apps/finance/models.py:664
+msgid "allocation"
+msgstr ""
+
+#: apps/finance/models.py:448
+msgid "Only income transactions can be allocated to AR invoices."
+msgstr ""
+
+#: apps/finance/models.py:455
+msgid "Transaction counterparty must match the AR invoice customer."
+msgstr ""
+
+#: apps/finance/models.py:463 apps/finance/models.py:691
+msgid "Total allocations cannot exceed invoice amount."
+msgstr ""
+
+#: apps/finance/models.py:471 apps/finance/models.py:699
+msgid "Total allocated amount exceeds the transaction amount."
+msgstr ""
+
+#: apps/finance/models.py:477
+msgid "Pending Approval"
+msgstr ""
+
+#: apps/finance/models.py:478
+msgid "Approved"
+msgstr ""
+
+#: apps/finance/models.py:479
+msgid "Rejected"
+msgstr ""
+
+#: apps/finance/models.py:493
+msgid "AP Invoice Number"
+msgstr ""
+
+#: apps/finance/models.py:508
+msgid "Total Amount Payable"
+msgstr ""
+
+#: apps/finance/models.py:510
+msgid "Amount Paid"
+msgstr ""
+
+#: apps/finance/models.py:517
+msgid "Approval Status"
+msgstr ""
+
+#: apps/finance/models.py:524
+msgid "Payment Status"
+msgstr ""
+
+#: apps/finance/models.py:537
+msgid ""
+"If empty, visible to all users who can view AP invoices; if set, only users "
+"in selected groups can view."
+msgstr ""
+
+#: apps/finance/models.py:554 apps/finance/models.py:625
+msgid "AP Invoice"
+msgstr ""
+
+#: apps/finance/models.py:555
+msgid "AP Invoices"
+msgstr ""
+
+#: apps/finance/models.py:558
+msgid "Can view all AP invoices (ignore visibility groups)"
+msgstr ""
+
+#: apps/finance/models.py:559
+msgid "Can approve AP invoices"
+msgstr ""
+
+#: apps/finance/models.py:602
+msgid ""
+"AP invoices can only be linked to counterparties of type Vendor or Customer "
+"and Vendor."
+msgstr ""
+
+#: apps/finance/models.py:612
+msgid "Amount paid cannot exceed total payable."
+msgstr ""
+
+#: apps/finance/models.py:631
+msgid "Payment Transaction"
+msgstr ""
+
+#: apps/finance/models.py:649
+msgid "AP Payment Allocation"
+msgstr ""
+
+#: apps/finance/models.py:650
+msgid "AP Payment Allocations"
+msgstr ""
+
+#: apps/finance/models.py:671
+msgid "Only approved AP invoices can receive payment allocations."
+msgstr ""
+
+#: apps/finance/models.py:676
+msgid "Only expense transactions can be allocated to AP invoices."
+msgstr ""
+
+#: apps/finance/models.py:683
+msgid "Transaction counterparty must match the AP invoice vendor."
+msgstr ""
+
+#: apps/finance/models.py:704
+msgid "Bank CSV"
+msgstr ""
+
+#: apps/finance/models.py:705
+msgid "Alipay Statement"
+msgstr ""
+
+#: apps/finance/models.py:706
+msgid "WeChat Pay Statement"
+msgstr ""
+
+#: apps/finance/models.py:707 apps/finance/models.py:824
+msgid "Other"
+msgstr ""
+
+#: apps/finance/models.py:711
+msgid "Pending Import"
+msgstr ""
+
+#: apps/finance/models.py:712
+msgid "Import Successful"
+msgstr ""
+
+#: apps/finance/models.py:713
+msgid "Partially Successful"
+msgstr ""
+
+#: apps/finance/models.py:714
+msgid "Import Failed"
+msgstr ""
+
+#: apps/finance/models.py:718
+msgid "Unmatched"
+msgstr ""
+
+#: apps/finance/models.py:719
+msgid "Matched"
+msgstr ""
+
+#: apps/finance/models.py:720
+msgid "Ignored"
+msgstr ""
+
+#: apps/finance/models.py:729
+msgid "Must match the account name on system transactions for reconciliation."
+msgstr ""
+
+#: apps/finance/models.py:732
+msgid "Source"
+msgstr ""
+
+#: apps/finance/models.py:738
+msgid "Statement File"
+msgstr ""
+
+#: apps/finance/models.py:740
+msgid "Import Status"
+msgstr ""
+
+#: apps/finance/models.py:746
+msgid "Total Rows"
+msgstr ""
+
+#: apps/finance/models.py:747
+msgid "Imported Rows"
+msgstr ""
+
+#: apps/finance/models.py:748
+msgid "Failed Rows"
+msgstr ""
+
+#: apps/finance/models.py:749
+msgid "Error Log"
+msgstr ""
+
+#: apps/finance/models.py:752
+msgid "Imported By"
+msgstr ""
+
+#: apps/finance/models.py:759
+msgid "Imported At"
+msgstr ""
+
+#: apps/finance/models.py:762
+msgid "Bank Statement Import"
+msgstr ""
+
+#: apps/finance/models.py:763
+msgid "Bank Statement Imports"
+msgstr ""
+
+#: apps/finance/models.py:775 apps/finance/models.py:832
+msgid "Import Batch"
+msgstr ""
+
+#: apps/finance/models.py:779
+msgid "Transaction Date"
+msgstr ""
+
+#: apps/finance/models.py:781
+msgid "Direction"
+msgstr ""
+
+#: apps/finance/models.py:787
+msgid "Description"
+msgstr ""
+
+#: apps/finance/models.py:788
+msgid "Reference Number"
+msgstr ""
+
+#: apps/finance/models.py:789
+msgid "Counterparty Name"
+msgstr ""
+
+#: apps/finance/models.py:790
+msgid "Source Row Number"
+msgstr ""
+
+#: apps/finance/models.py:792
+msgid "Match Status"
+msgstr ""
+
+#: apps/finance/models.py:800
+msgid "Matched Transaction"
+msgstr ""
+
+#: apps/finance/models.py:808 apps/finance/models.py:840
+msgid "Bank Statement Line"
+msgstr ""
+
+#: apps/finance/models.py:809
+msgid "Bank Statement Lines"
+msgstr ""
+
+#: apps/finance/models.py:820
+msgid "Bank Fee"
+msgstr ""
+
+#: apps/finance/models.py:821
+msgid "Rounding Difference"
+msgstr ""
+
+#: apps/finance/models.py:822
+msgid "Unrecorded in Books (bank has, system does not)"
+msgstr ""
+
+#: apps/finance/models.py:823
+msgid "Unrecorded in Bank (system has, bank does not)"
+msgstr ""
+
+#: apps/finance/models.py:848
+msgid "System Transaction"
+msgstr ""
+
+#: apps/finance/models.py:855
+msgid "Variance Type"
+msgstr ""
+
+#: apps/finance/models.py:861
+msgid "Variance Amount"
+msgstr ""
+
+#: apps/finance/models.py:864
+msgid "Positive amount representing the scale of adjustment or explanation."
+msgstr ""
+
+#: apps/finance/models.py:866
+msgid "Note"
+msgstr ""
+
+#: apps/finance/models.py:869
+msgid "Adjustment Category"
+msgstr ""
+
+#: apps/finance/models.py:874
+msgid ""
+"Category used when generating an adjustment transaction; required if "
+"creating one."
+msgstr ""
+
+#: apps/finance/models.py:878
+msgid "Adjustment Transaction"
+msgstr ""
+
+#: apps/finance/models.py:885
+msgid "Resolved"
+msgstr ""
+
+#: apps/finance/models.py:888
+msgid "Recorded By"
+msgstr ""
+
+#: apps/finance/models.py:895
+msgid "Recorded At"
+msgstr ""
+
+#: apps/finance/models.py:898
+msgid "Reconciliation Variance"
+msgstr ""
+
+#: apps/finance/models.py:899
+msgid "Reconciliation Variances"
+msgstr ""
+
+#: apps/finance/models.py:908
+msgid ""
+"At least one of import batch, bank line, or system transaction is required."
+msgstr ""
+
+#: apps/finance/models.py:910
+msgid "Variance amount must be greater than 0."
+msgstr ""
+
+#: apps/finance/models.py:914
+msgid "Bank line does not belong to the selected import batch."
+msgstr ""
+
+#: apps/finance/models.py:928
+msgid "Income Transaction"
+msgstr ""
+
+#: apps/finance/models.py:929
+msgid "Income Transactions"
+msgstr ""
+
+#: apps/finance/models.py:935
+msgid "Expense Transaction"
+msgstr ""
+
+#: apps/finance/models.py:936
+msgid "Expense Transactions"
+msgstr ""
+
+#: apps/finance/resources.py:55
+msgid "Transaction type is required"
+msgstr ""
+
+#: apps/finance/resources.py:62
+#, python-format
+msgid "Unrecognized transaction type: %(raw)s"
+msgstr ""
+
+#: apps/finance/resources.py:75
+msgid "Project code"
+msgstr ""
+
+#: apps/finance/resources.py:77
+msgid "Counterparty code"
+msgstr ""
+
+#: apps/finance/resources.py:130
+#, python-format
+msgid "Row %(row)s: type does not match this list (%(label)s)."
+msgstr ""
+
+#: apps/finance/resources.py:139
+msgid "Category name is required"
+msgstr ""
+
+#: apps/finance/resources.py:146
+#, python-format
+msgid "Row %(row)s: no active category “%(name)s” for type %(kind)s"
+msgstr ""
+
+#: apps/finance/resources.py:153
+msgid "Amount is required"
+msgstr ""
+
+#: apps/finance/resources.py:158
+#, python-format
+msgid "Invalid amount: %(raw)s"
+msgstr ""
+
+#: apps/finance/resources.py:161
+msgid "Amount must be greater than zero"
+msgstr ""
+
+#: apps/finance/resources.py:173
+#, python-format
+msgid "Row %(row)s: unknown active project code “%(code)s”"
+msgstr ""
+
+#: apps/finance/resources.py:186
+#, python-format
+msgid "Row %(row)s: unknown active counterparty code “%(code)s”"
+msgstr ""
+
+#: apps/finance/resources.py:203
+#, python-format
+msgid "Row %(row)s: unknown tag “%(name)s”. Create it in admin first."
+msgstr ""
+
+#: apps/finance/resources.py:222
+msgid "Date is required"
+msgstr ""
+
+#: apps/finance/resources.py:228
+#, python-format
+msgid "Invalid date: %(raw)s"
+msgstr ""
+
+#: apps/finance/resources.py:233
+msgid "Account name is required"
+msgstr ""
+
+#: apps/finance/views.py:80
+msgid "The uploaded file is not a valid SQLite database."
+msgstr "上传的文件不是有效的 SQLite 数据库。"
+
+#: apps/finance/views.py:99 config/simpleui_menus.py:26
+#: templates/admin/finance/dashboard.html:31
+#: templates/admin/finance/reports/balance_sheet.html:6
+#: templates/admin/finance/reports/balance_sheet_cash.html:6
+#: templates/admin/finance/reports/cash_flow.html:6
+#: templates/admin/finance/reports/cash_flow_forecast.html:6
+#: templates/admin/finance/reports/cash_flow_forecast_details.html:6
+#: templates/admin/finance/reports/index.html:6
+#: templates/admin/finance/reports/index.html:10
+#: templates/admin/finance/reports/profit_loss.html:6
+#: templates/admin/finance/reports/profit_loss_expense.html:6
+#: templates/admin/finance/reports/profit_loss_income.html:6
+#: templates/admin/finance/reports/profit_loss_projects.html:6
+msgid "Report center"
+msgstr "报表中心"
+
+#: apps/finance/views.py:150 config/simpleui_menus.py:32
+#: templates/admin/finance/reports/index.html:16
+#: templates/admin/finance/reports/profit_loss.html:7
+#: templates/admin/finance/reports/profit_loss.html:11
+#: templates/admin/finance/reports/profit_loss_expense.html:7
+#: templates/admin/finance/reports/profit_loss_income.html:7
+#: templates/admin/finance/reports/profit_loss_projects.html:7
+msgid "Profit & loss"
+msgstr "损益表"
+
+#: apps/finance/views.py:235 config/simpleui_menus.py:38
+#: templates/admin/finance/reports/cash_flow.html:7
+#: templates/admin/finance/reports/cash_flow.html:11
+#: templates/admin/finance/reports/index.html:22
+msgid "Cash flow statement"
+msgstr "现金流量表"
+
+#: apps/finance/views.py:269 config/simpleui_menus.py:44
+#: templates/admin/finance/reports/balance_sheet.html:7
+#: templates/admin/finance/reports/balance_sheet.html:11
+#: templates/admin/finance/reports/balance_sheet_cash.html:7
+#: templates/admin/finance/reports/index.html:28
+msgid "Balance sheet"
+msgstr "资产负债表"
+
+#: apps/finance/views.py:308
+msgid "Balance sheet · cash detail"
+msgstr ""
+
+#: apps/finance/views.py:344 config/simpleui_menus.py:50
+#: templates/admin/finance/reports/cash_flow_forecast.html:7
+#: templates/admin/finance/reports/cash_flow_forecast.html:11
+#: templates/admin/finance/reports/cash_flow_forecast_details.html:7
+#: templates/admin/finance/reports/index.html:34
+msgid "Cash flow forecast"
+msgstr "现金流预测"
+
+#: apps/finance/views.py:382
+msgid "Cash flow forecast · invoice details"
+msgstr ""
+
+#: apps/finance/views.py:415 config/simpleui_menus.py:14
+#: templates/admin/finance/dashboard.html:6
+#: templates/admin/finance/dashboard.html:10
+#: templates/admin/finance/reports/index.html:41
+msgid "Finance dashboard"
+msgstr "财务看板"
+
+#: apps/finance/views.py:462
+msgid ""
+"PostgreSQL is in use. Use pg_dump/pg_restore on the server for backups."
+msgstr "当前使用 PostgreSQL，请在服务器上使用 pg_dump / pg_restore 管理备份。"
+
+#: apps/finance/views.py:475
+#, python-format
+msgid "Database backed up: %(name)s"
+msgstr "数据库已备份：%(name)s"
+
+#: apps/finance/views.py:481
+msgid "Check the confirmation box before restoring the database."
+msgstr "请勾选确认后再还原数据库。"
+
+#: apps/finance/views.py:500
+msgid "Select a backup file or upload a .sqlite3 file."
+msgstr "请选择备份文件或上传 .sqlite3 文件。"
+
+#: apps/finance/views.py:511
+msgid ""
+"Database restored. Refresh the page or restart the service if data looks "
+"stale."
+msgstr "数据库已还原。若页面数据未更新，请刷新或重启服务。"
+
+#: apps/finance/views.py:515
+msgid "Unknown action."
+msgstr "未知操作。"
+
+#: apps/finance/views.py:523 config/simpleui_menus.py:176
+#: templates/admin/finance/system_settings.html:7
+#: templates/admin/finance/system_settings.html:12
+msgid "System settings"
+msgstr "系统设置"
+
+#: config/settings/base.py:196 config/urls.py:29
+msgid "Dashboard"
+msgstr "工作台"
+
+#: config/simpleui_menus.py:10 config/simpleui_menus.py:187
+msgid "Overview"
+msgstr "财务概览"
+
+#: config/simpleui_menus.py:22 config/simpleui_menus.py:188
+msgid "Reports"
+msgstr "财务报表"
+
+#: config/simpleui_menus.py:62
+msgid "Income entries"
+msgstr "收入明细"
+
+#: config/simpleui_menus.py:68
+msgid "Expense entries"
+msgstr "支出明细"
+
+#: config/simpleui_menus.py:76 config/simpleui_menus.py:193
+msgid "Master data"
+msgstr "基础资料"
+
+#: config/simpleui_menus.py:80
+msgid "Categories"
+msgstr "科目分类"
+
+#: config/simpleui_menus.py:106 config/simpleui_menus.py:190
+msgid "AR / AP"
+msgstr "应收应付"
+
+#: config/simpleui_menus.py:110
+msgid "AR invoices"
+msgstr "应收账单"
+
+#: config/simpleui_menus.py:116
+msgid "AP invoices"
+msgstr "应付账单"
+
+#: config/simpleui_menus.py:124 config/simpleui_menus.py:191
+msgid "Bank reconciliation"
+msgstr "银行对账"
+
+#: config/simpleui_menus.py:128
+msgid "Bank statement import"
+msgstr "银行账单导入"
+
+#: config/simpleui_menus.py:134
+msgid "Bank statement lines"
+msgstr "银行账单明细"
+
+#: config/simpleui_menus.py:140
+msgid "Reconciliation variances"
+msgstr "对账差异"
+
+#: config/simpleui_menus.py:160 config/simpleui_menus.py:194
+msgid "System"
+msgstr "系统管理"
+
+#: config/simpleui_menus.py:170
+msgid "Groups"
+msgstr "用户组"
+
+#: config/urls.py:27
+msgid "Claa Finance"
+msgstr "轻量财务管理系统"
+
+#: config/urls.py:28
+msgid "Finance Admin"
+msgstr "财务管理"
+
+#: templates/admin/auth/user/add_form.html:6
+msgid "After you enter an email and password, you can edit more user options."
+msgstr "输入用户名和密码后，你将能够编辑更多的用户选项。"
+
+#: templates/admin/auth/user/add_form.html:8
+msgid "Enter a username and password."
+msgstr ""
+
+#: templates/admin/base_site.html:4
+msgid "Django site admin"
+msgstr ""
+
+#: templates/admin/base_site.html:13
+msgid "Django administration"
+msgstr ""
+
+#: templates/admin/change_form.html:37
+msgid "Back"
+msgstr "返回"
+
+#: templates/admin/change_form.html:45 templates/admin/change_form.html:52
+msgid "History"
+msgstr ""
+
+#: templates/admin/change_form.html:57
+msgid "View on site"
+msgstr ""
+
+#: templates/admin/change_form.html:73
+msgid "Please correct the error below."
+msgstr ""
+
+#: templates/admin/change_form.html:73
+msgid "Please correct the errors below."
+msgstr ""
+
+#: templates/admin/finance/_category_share_table.html:6
+msgid "Share"
+msgstr "占比"
+
+#: templates/admin/finance/_category_share_table.html:25
+#: templates/admin/finance/dashboard.html:77
+#: templates/admin/finance/reports/balance_sheet_cash.html:36
+#: templates/admin/finance/reports/cash_flow.html:72
+#: templates/admin/finance/reports/profit_loss.html:64
+#: templates/admin/finance/reports/profit_loss.html:65
+#: templates/admin/finance/reports/profit_loss.html:66
+#: templates/admin/finance/reports/profit_loss_expense.html:34
+#: templates/admin/finance/reports/profit_loss_income.html:34
+#: templates/admin/finance/reports/profit_loss_projects.html:33
+msgid "No data"
+msgstr "无数据"
+
+#: templates/admin/finance/_report_pagination.html:4
+msgid "Pagination"
+msgstr "分页"
+
+#: templates/admin/finance/_report_pagination.html:6
+msgid "Previous"
+msgstr "上一页"
+
+#: templates/admin/finance/_report_pagination.html:9
+#, python-format
+msgid ""
+"\n"
+"    Page %(page)s of %(total)s (%(count)s rows)\n"
+"    "
+msgstr ""
+
+#: templates/admin/finance/_report_pagination.html:14
+msgid "Next"
+msgstr "下一页"
+
+#: templates/admin/finance/dashboard.html:5
+#: templates/admin/finance/reports/balance_sheet.html:5
+#: templates/admin/finance/reports/balance_sheet_cash.html:5
+#: templates/admin/finance/reports/cash_flow.html:5
+#: templates/admin/finance/reports/cash_flow_forecast.html:5
+#: templates/admin/finance/reports/cash_flow_forecast_details.html:5
+#: templates/admin/finance/reports/index.html:5
+#: templates/admin/finance/reports/profit_loss.html:5
+#: templates/admin/finance/reports/profit_loss_expense.html:5
+#: templates/admin/finance/reports/profit_loss_income.html:5
+#: templates/admin/finance/reports/profit_loss_projects.html:5
+#: templates/admin/finance/system_settings.html:6
+#: templates/admin/simpleui_index_source.html:294
+msgid "Home"
+msgstr "首页"
+
+#: templates/admin/finance/dashboard.html:11
+msgid "Summary over visible transactions; default last 6 months."
+msgstr "按可见流水范围汇总；默认展示近 6 个月。"
+
+#: templates/admin/finance/dashboard.html:14
+#: templates/admin/finance/reports/cash_flow.html:15
+#: templates/admin/finance/reports/profit_loss.html:18
+msgid "Start date"
+msgstr "起始日期"
+
+#: templates/admin/finance/dashboard.html:17
+#: templates/admin/finance/reports/cash_flow.html:18
+#: templates/admin/finance/reports/profit_loss.html:21
+msgid "End date"
+msgstr "截止日期"
+
+#: templates/admin/finance/dashboard.html:22
+#: templates/admin/finance/reports/balance_sheet.html:23
+#: templates/admin/finance/reports/cash_flow.html:23
+msgid "All"
+msgstr "全部"
+
+#: templates/admin/finance/dashboard.html:30
+#: templates/admin/finance/reports/balance_sheet.html:33
+#: templates/admin/finance/reports/cash_flow.html:34
+#: templates/admin/finance/reports/cash_flow.html:39
+#: templates/admin/finance/reports/cash_flow_forecast.html:24
+#: templates/admin/finance/reports/profit_loss.html:37
+#: templates/admin/finance/reports/profit_loss.html:42
+msgid "Apply"
+msgstr "查询"
+
+#: templates/admin/finance/dashboard.html:35
+#: templates/admin/finance/reports/cash_flow.html:44
+#: templates/admin/finance/reports/profit_loss.html:47
+msgid "Period"
+msgstr "期间"
+
+#: templates/admin/finance/dashboard.html:41
+#: templates/admin/finance/dashboard.html:51
+#: templates/admin/finance/reports/balance_sheet_cash.html:26
+#: templates/admin/finance/transaction/change_list.html:19
+msgid "Balance"
+msgstr "结余"
+
+#: templates/admin/finance/dashboard.html:44
+msgid "Income & expense trend (monthly)"
+msgstr "收支趋势（按月）"
+
+#: templates/admin/finance/dashboard.html:48
+msgid "Month"
+msgstr "月份"
+
+#: templates/admin/finance/dashboard.html:84
+#: templates/admin/finance/reports/profit_loss.html:57
+#: templates/admin/finance/reports/profit_loss_income.html:12
+msgid "Income by category"
+msgstr "收入分类占比"
+
+#: templates/admin/finance/dashboard.html:88
+#: templates/admin/finance/reports/profit_loss.html:58
+#: templates/admin/finance/reports/profit_loss_expense.html:12
+msgid "Expense by category"
+msgstr "支出分类占比"
+
+#: templates/admin/finance/reports/balance_sheet.html:13
+msgid ""
+"Lightweight view: cash is cumulative net inflow per account name; AR/AP are "
+"open invoice balances; equity is cumulative net from entries. Assets, "
+"liabilities, and equity each have a tab."
+msgstr ""
+
+#: templates/admin/finance/reports/balance_sheet.html:18
+msgid "As of date"
+msgstr "截至日期"
+
+#: templates/admin/finance/reports/balance_sheet.html:29
+#: templates/admin/finance/reports/cash_flow.html:29
+#: templates/admin/finance/reports/profit_loss.html:32
+msgid "No projects defined yet"
+msgstr ""
+
+#: templates/admin/finance/reports/balance_sheet.html:36
+#: templates/admin/finance/reports/cash_flow.html:36
+#: templates/admin/finance/reports/profit_loss.html:39
+msgid "Projects are maintained under"
+msgstr ""
+
+#: templates/admin/finance/reports/balance_sheet.html:36
+#: templates/admin/finance/reports/cash_flow.html:36
+#: templates/admin/finance/reports/profit_loss.html:39
+msgid "Master data → Projects"
+msgstr ""
+
+#: templates/admin/finance/reports/balance_sheet.html:36
+msgid "."
+msgstr ""
+
+#: templates/admin/finance/reports/balance_sheet.html:38
+msgid ""
+"Project filter applies to cash and cumulative net from entries only; AR/AP "
+"are not split by project."
+msgstr ""
+
+#: templates/admin/finance/reports/balance_sheet.html:43
+#: templates/admin/finance/reports/balance_sheet_cash.html:16
+msgid "As of"
+msgstr "截至"
+
+#: templates/admin/finance/reports/balance_sheet.html:45
+#: templates/admin/finance/reports/balance_sheet.html:94
+msgid "Total assets"
+msgstr "资产合计"
+
+#: templates/admin/finance/reports/balance_sheet.html:47
+#: templates/admin/finance/reports/balance_sheet.html:118
+msgid "Total liabilities"
+msgstr "负债合计"
+
+#: templates/admin/finance/reports/balance_sheet.html:49
+#: templates/admin/finance/reports/balance_sheet.html:142
+msgid "Total equity"
+msgstr "权益合计"
+
+#: templates/admin/finance/reports/balance_sheet.html:52
+msgid "Balance gap"
+msgstr "平衡差额"
+
+#: templates/admin/finance/reports/balance_sheet.html:56
+#: templates/admin/finance/reports/cash_flow_forecast.html:37
+msgid "Report sections"
+msgstr "报表分区"
+
+#: templates/admin/finance/reports/balance_sheet.html:57
+msgid "Assets"
+msgstr "资产"
+
+#: templates/admin/finance/reports/balance_sheet.html:58
+msgid "Liabilities"
+msgstr "负债"
+
+#: templates/admin/finance/reports/balance_sheet.html:59
+msgid "Equity"
+msgstr "权益"
+
+#: templates/admin/finance/reports/balance_sheet.html:63
+msgid ""
+"Summary rows (fixed count). Columns: category, detail drill-down (cash by "
+"account), amount."
+msgstr ""
+
+#: templates/admin/finance/reports/balance_sheet.html:72
+#: templates/admin/finance/reports/balance_sheet.html:107
+#: templates/admin/finance/reports/balance_sheet.html:131
+msgid "Details"
+msgstr "明细"
+
+#: templates/admin/finance/reports/balance_sheet.html:78
+msgid "Cash and equivalents"
+msgstr "货币资金"
+
+#: templates/admin/finance/reports/balance_sheet.html:81
+msgid "View account detail"
+msgstr "查看账户明细"
+
+#: templates/admin/finance/reports/balance_sheet.html:83
+msgid "No account detail"
+msgstr "无账户明细"
+
+#: templates/admin/finance/reports/balance_sheet.html:89
+msgid "Accounts receivable (open)"
+msgstr "应收账款（未收）"
+
+#: templates/admin/finance/reports/balance_sheet.html:113
+msgid "Accounts payable (open)"
+msgstr "应付账款（未付）"
+
+#: templates/admin/finance/reports/balance_sheet.html:137
+msgid "Retained earnings (cumulative net)"
+msgstr "留存收益（流水累计净利）"
+
+#: templates/admin/finance/reports/balance_sheet.html:151
+#: templates/admin/finance/reports/cash_flow.html:87
+#: templates/admin/finance/reports/cash_flow_forecast.html:141
+#: templates/admin/finance/reports/profit_loss.html:155
+msgid "Back to report list"
+msgstr "返回报表列表"
+
+#: templates/admin/finance/reports/balance_sheet_cash.html:8
+#: templates/admin/finance/reports/balance_sheet_cash.html:12
+msgid "Cash detail"
+msgstr ""
+
+#: templates/admin/finance/reports/balance_sheet_cash.html:13
+#, python-format
+msgid ""
+"Cumulative net inflow per account name as of %(as_of)s; paginated because "
+"row count varies."
+msgstr ""
+
+#: templates/admin/finance/reports/balance_sheet_cash.html:18
+msgid "Total cash"
+msgstr ""
+
+#: templates/admin/finance/reports/balance_sheet_cash.html:25
+msgid "Account name"
+msgstr ""
+
+#: templates/admin/finance/reports/balance_sheet_cash.html:40
+#: templates/admin/finance/reports/cash_flow.html:76
+#: templates/admin/finance/reports/profit_loss.html:70
+#: templates/admin/finance/reports/profit_loss.html:91
+#: templates/admin/finance/reports/profit_loss.html:100
+#: templates/admin/finance/reports/profit_loss.html:121
+#: templates/admin/finance/reports/profit_loss_expense.html:16
+#: templates/admin/finance/reports/profit_loss_expense.html:38
+#: templates/admin/finance/reports/profit_loss_income.html:16
+#: templates/admin/finance/reports/profit_loss_income.html:38
+msgid "Total"
+msgstr ""
+
+#: templates/admin/finance/reports/balance_sheet_cash.html:50
+msgid "Back to balance sheet"
+msgstr ""
+
+#: templates/admin/finance/reports/cash_flow.html:12
+msgid ""
+"Lightweight: income/expense entries treated as operating cash; no "
+"investing/financing split."
+msgstr ""
+
+#: templates/admin/finance/reports/cash_flow.html:36
+#: templates/admin/finance/reports/profit_loss.html:39
+msgid "; without projects, reports use the all-projects scope."
+msgstr ""
+
+#: templates/admin/finance/reports/cash_flow.html:46
+msgid "Cash inflow"
+msgstr "现金流入"
+
+#: templates/admin/finance/reports/cash_flow.html:48
+msgid "Cash outflow"
+msgstr "现金流出"
+
+#: templates/admin/finance/reports/cash_flow.html:50
+msgid "Net operating cash flow"
+msgstr "经营活动净现金流"
+
+#: templates/admin/finance/reports/cash_flow.html:53
+msgid "By account (account name)"
+msgstr "按账户（账户名称）"
+
+#: templates/admin/finance/reports/cash_flow.html:58
+msgid "Inflow"
+msgstr "流入"
+
+#: templates/admin/finance/reports/cash_flow.html:59
+msgid "Outflow"
+msgstr "流出"
+
+#: templates/admin/finance/reports/cash_flow.html:60
+#: templates/admin/finance/reports/cash_flow_forecast.html:50
+msgid "Net"
+msgstr "净额"
+
+#: templates/admin/finance/reports/cash_flow_forecast.html:13
+msgid ""
+"Open AR/AP balances by due date. Three tabs; invoice details are paginated "
+"separately."
+msgstr ""
+
+#: templates/admin/finance/reports/cash_flow_forecast.html:18
+msgid "Forecast from"
+msgstr "预测起始"
+
+#: templates/admin/finance/reports/cash_flow_forecast.html:21
+msgid "Forecast to"
+msgstr "预测截止"
+
+#: templates/admin/finance/reports/cash_flow_forecast.html:28
+msgid "Forecast period"
+msgstr "预测区间"
+
+#: templates/admin/finance/reports/cash_flow_forecast.html:30
+msgid "Total expected receipts"
+msgstr "预计收款合计"
+
+#: templates/admin/finance/reports/cash_flow_forecast.html:32
+msgid "Total expected payments"
+msgstr "预计付款合计"
+
+#: templates/admin/finance/reports/cash_flow_forecast.html:34
+msgid "Expected net cash flow"
+msgstr ""
+
+#: templates/admin/finance/reports/cash_flow_forecast.html:38
+msgid "By due date in range"
+msgstr "区间内按到期日"
+
+#: templates/admin/finance/reports/cash_flow_forecast.html:39
+msgid "Overdue and other"
+msgstr "已逾期与其他"
+
+#: templates/admin/finance/reports/cash_flow_forecast.html:40
+#: templates/admin/finance/reports/cash_flow_forecast_details.html:8
+#: templates/admin/finance/reports/cash_flow_forecast_details.html:12
+msgid "Invoice details"
+msgstr ""
+
+#: templates/admin/finance/reports/cash_flow_forecast.html:47
+#: templates/admin/finance/reports/cash_flow_forecast.html:122
+#: templates/admin/finance/reports/cash_flow_forecast_details.html:21
+msgid "Due date"
+msgstr "到期日"
+
+#: templates/admin/finance/reports/cash_flow_forecast.html:48
+#: templates/admin/finance/reports/cash_flow_forecast.html:82
+msgid "Expected receipts"
+msgstr ""
+
+#: templates/admin/finance/reports/cash_flow_forecast.html:49
+#: templates/admin/finance/reports/cash_flow_forecast.html:83
+msgid "Expected payments"
+msgstr ""
+
+#: templates/admin/finance/reports/cash_flow_forecast.html:62
+msgid "No invoices due in range"
+msgstr "区间内无到期账单"
+
+#: templates/admin/finance/reports/cash_flow_forecast.html:67
+msgid "Subtotal in range"
+msgstr "区间内小计"
+
+#: templates/admin/finance/reports/cash_flow_forecast.html:89
+msgid "Overdue (before forecast start)"
+msgstr "已逾期（到期日早于预测起始）"
+
+#: templates/admin/finance/reports/cash_flow_forecast.html:96
+msgid "No due date"
+msgstr "未设到期日"
+
+#: templates/admin/finance/reports/cash_flow_forecast.html:103
+msgid "Due after forecast end"
+msgstr "到期日晚于预测截止"
+
+#: templates/admin/finance/reports/cash_flow_forecast.html:109
+msgid "No overdue or other items."
+msgstr "无已逾期或其他项。"
+
+#: templates/admin/finance/reports/cash_flow_forecast.html:120
+#: templates/admin/finance/reports/cash_flow_forecast_details.html:19
+msgid "Document no."
+msgstr "单号"
+
+#: templates/admin/finance/reports/cash_flow_forecast.html:123
+#: templates/admin/finance/reports/cash_flow_forecast_details.html:22
+msgid "Open balance"
+msgstr "未结余额"
+
+#: templates/admin/finance/reports/cash_flow_forecast.html:130
+msgid "View open invoice details"
+msgstr "查看未结清账单明细"
+
+#: templates/admin/finance/reports/cash_flow_forecast.html:134
+#: templates/admin/finance/reports/cash_flow_forecast_details.html:35
+msgid "No open invoices"
+msgstr "无未结清账单"
+
+#: templates/admin/finance/reports/cash_flow_forecast_details.html:13
+#, python-format
+msgid ""
+"Open AR/AP invoices from %(date_from)s through %(date_to)s; paginated "
+"because row count varies."
+msgstr ""
+
+#: templates/admin/finance/reports/cash_flow_forecast_details.html:28
+msgid "Accounts receivable"
+msgstr "应收"
+
+#: templates/admin/finance/reports/cash_flow_forecast_details.html:28
+msgid "Accounts payable"
+msgstr "应付"
+
+#: templates/admin/finance/reports/cash_flow_forecast_details.html:43
+msgid "Back to cash flow forecast"
+msgstr "返回现金流预测"
+
+#: templates/admin/finance/reports/index.html:11
+msgid "Open a report below or use the Reports menu on the left."
+msgstr "选择下方报表进入查询；也可在左侧「财务报表」菜单中直接打开。"
+
+#: templates/admin/finance/reports/index.html:17
+msgid "Summarize income and expense by period, category, and project."
+msgstr ""
+
+#: templates/admin/finance/reports/index.html:18
+#: templates/admin/finance/reports/index.html:24
+#: templates/admin/finance/reports/index.html:30
+#: templates/admin/finance/reports/index.html:36
+msgid "Open report"
+msgstr "打开报表"
+
+#: templates/admin/finance/reports/index.html:23
+msgid "Operating cash inflows, outflows, and net by account."
+msgstr ""
+
+#: templates/admin/finance/reports/index.html:29
+msgid "Cash, AR, AP, and cumulative surplus (lightweight)."
+msgstr ""
+
+#: templates/admin/finance/reports/index.html:35
+msgid "Expected receipts and payments by invoice due dates."
+msgstr ""
+
+#: templates/admin/finance/reports/index.html:42
+msgid "Income/expense trend and category share"
+msgstr ""
+
+#: templates/admin/finance/reports/profit_loss.html:13
+msgid ""
+"Management P&L from entries. Variable row counts per tab (income, expense, "
+"by project)."
+msgstr ""
+
+#: templates/admin/finance/reports/profit_loss.html:26
+msgid "All (including by project)"
+msgstr ""
+
+#: templates/admin/finance/reports/profit_loss.html:49
+#: templates/admin/finance/transaction/change_list.html:11
+#: templates/admin/finance/transaction/change_list.html:15
+msgid "Total income"
+msgstr "总收入"
+
+#: templates/admin/finance/reports/profit_loss.html:51
+#: templates/admin/finance/transaction/change_list.html:13
+#: templates/admin/finance/transaction/change_list.html:17
+msgid "Total expense"
+msgstr "总支出"
+
+#: templates/admin/finance/reports/profit_loss.html:53
+#: templates/admin/finance/reports/profit_loss.html:136
+#: templates/admin/finance/reports/profit_loss_projects.html:21
+msgid "Net profit"
+msgstr "净利润"
+
+#: templates/admin/finance/reports/profit_loss.html:56
+msgid "Categories and projects"
+msgstr ""
+
+#: templates/admin/finance/reports/profit_loss.html:60
+#: templates/admin/finance/reports/profit_loss_projects.html:8
+#: templates/admin/finance/reports/profit_loss_projects.html:12
+msgid "By project"
+msgstr "分项目汇总"
+
+#: templates/admin/finance/reports/profit_loss_expense.html:8
+msgid "Expense details"
+msgstr "支出明细"
+
+#: templates/admin/finance/reports/profit_loss_expense.html:13
+#: templates/admin/finance/reports/profit_loss_income.html:13
+#, python-format
+msgid ""
+"Period %(date_from)s — %(date_to)s; paginated because category row count "
+"varies."
+msgstr ""
+
+#: templates/admin/finance/reports/profit_loss_expense.html:48
+#: templates/admin/finance/reports/profit_loss_income.html:48
+#: templates/admin/finance/reports/profit_loss_projects.html:41
+msgid "Back to profit & loss"
+msgstr "返回损益表"
+
+#: templates/admin/finance/reports/profit_loss_income.html:8
+msgid "Income details"
+msgstr "收入明细"
+
+#: templates/admin/finance/reports/profit_loss_projects.html:13
+#, python-format
+msgid ""
+"Period %(date_from)s — %(date_to)s; paginated because project row count "
+"varies."
+msgstr ""
+
+#: templates/admin/finance/system_settings.html:23
+msgid "Database"
+msgstr ""
+
+#: templates/admin/finance/system_settings.html:26
+#, python-format
+msgid ""
+"Database file: <code>%(db)s</code>. Backups are stored under "
+"<code>backups/</code>. Restore replaces all data — back up first."
+msgstr ""
+
+#: templates/admin/finance/system_settings.html:33
+msgid "Back up database now"
+msgstr "一键备份数据库"
+
+#: templates/admin/finance/system_settings.html:37
+msgid "Restore database"
+msgstr ""
+
+#: templates/admin/finance/system_settings.html:44
+msgid "Restore from backup"
+msgstr "从已有备份还原"
+
+#: templates/admin/finance/system_settings.html:46
+msgid "— Select —"
+msgstr "— 请选择 —"
+
+#: templates/admin/finance/system_settings.html:52
+msgid "Or upload a .sqlite3 backup copied from another machine:"
+msgstr ""
+
+#: templates/admin/finance/system_settings.html:54
+msgid "No local backups yet. Upload a .sqlite3 file:"
+msgstr ""
+
+#: templates/admin/finance/system_settings.html:58
+msgid "Upload backup file"
+msgstr "上传备份文件"
+
+#: templates/admin/finance/system_settings.html:65
+msgid "I confirm restore will replace all data in the current database"
+msgstr "我确认：还原将覆盖当前数据库中的全部数据"
+
+#: templates/admin/finance/system_settings.html:69
+msgid "Restore database now"
+msgstr "一键还原数据库"
+
+#: templates/admin/finance/system_settings.html:73
+msgid "Backup files"
+msgstr "备份文件"
+
+#: templates/admin/finance/system_settings.html:77
+msgid "Time"
+msgstr "时间"
+
+#: templates/admin/finance/system_settings.html:78
+msgid "File name"
+msgstr "文件名"
+
+#: templates/admin/finance/system_settings.html:79
+msgid "Size"
+msgstr "大小"
+
+#: templates/admin/finance/system_settings.html:90
+msgid "Download"
+msgstr "下载"
+
+#: templates/admin/finance/system_settings.html:100
+msgid ""
+"PostgreSQL is in use. Use pg_dump, pg_restore, or your cloud console for "
+"backup/restore."
+msgstr ""
+
+#: templates/admin/finance/transaction/change_list.html:8
+msgid "Summary for current filter"
+msgstr "当前筛选汇总"
+
+#: templates/admin/includes/language_switcher.html:5
+msgid "Language"
+msgstr "语言"
+
+#: templates/admin/search_form.html:155 templates/admin/search_form.html:195
+msgid "Search"
+msgstr "搜索"
+
+#: templates/admin/search_form.html:158
+#, python-format
+msgid "%(counter)s result"
+msgid_plural "%(counter)s results"
+msgstr[0] ""
+msgstr[1] ""
+
+#: templates/admin/search_form.html:158
+#, python-format
+msgid "%(full_result_count)s total"
+msgstr ""
+
+#: templates/admin/search_form.html:158
+msgid "Show all"
+msgstr ""
+
+#: templates/admin/simpleui_index_source.html:164
+#: templates/admin/simpleui_index_source.html:165
+msgid "Documentation"
+msgstr "文档"
+
+#: templates/admin/simpleui_index_source.html:301
+msgid "Log out"
+msgstr "退出"
+
+#: templates/admin/simpleui_index_source.html:302
+msgid "Yes"
+msgstr "是"
+
+#: templates/admin/simpleui_index_source.html:303
+msgid "No"
+msgstr "否"
+
+#: templates/admin/simpleui_index_source.html:304
+msgid "Are you sure?"
+msgstr "确定吗？"

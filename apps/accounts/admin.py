@@ -47,15 +47,15 @@ class CustomUserAdmin(CompactHelpTextMixin, BaseUserAdmin):
 
     fieldsets = (
         (
-            _("账号信息"),
+            _("Account"),
             {"classes": ("accounts-card", "accounts-two-cols"), "fields": ("email", "password_actions")},
         ),
         (
-            _("个人信息"),
+            _("Personal info"),
             {"classes": ("accounts-card", "accounts-two-cols"), "fields": ("first_name", "last_name")},
         ),
         (
-            _("状态"),
+            _("Status"),
             {
                 "classes": ("accounts-card", "accounts-status-card"),
                 "fields": (
@@ -67,7 +67,7 @@ class CustomUserAdmin(CompactHelpTextMixin, BaseUserAdmin):
             },
         ),
         (
-            _("角色与权限"),
+            _("Roles & permissions"),
             {
                 "classes": ("accounts-card", "accounts-permission-card"),
                 "fields": (
@@ -77,7 +77,7 @@ class CustomUserAdmin(CompactHelpTextMixin, BaseUserAdmin):
             },
         ),
         (
-            _("重要日期"),
+            _("Important dates"),
             {"classes": ("accounts-card", "accounts-two-cols"), "fields": ("last_login", "date_joined")},
         ),
     )
@@ -97,7 +97,7 @@ class CustomUserAdmin(CompactHelpTextMixin, BaseUserAdmin):
             },
         ),
         (
-            _("角色与权限"),
+            _("Roles & permissions"),
             {
                 "classes": ("accounts-card", "accounts-permission-card"),
                 "fields": ("groups", "user_permissions"),
@@ -122,7 +122,7 @@ class CustomUserAdmin(CompactHelpTextMixin, BaseUserAdmin):
                     },
                 ),
                 (
-                    _("角色"),
+                    _("Roles"),
                     {
                         "classes": ("accounts-card", "accounts-permission-card"),
                         "fields": ("groups",),
@@ -162,12 +162,12 @@ class CustomUserAdmin(CompactHelpTextMixin, BaseUserAdmin):
             kwargs["form"] = EmailUserChangeForm
         return ModelAdmin.get_form(self, request, obj, **kwargs)
 
-    @admin.display(description=_("密码"))
+    @admin.display(description=_("Password"))
     def password_actions(self, obj):
         if not obj or not obj.pk:
             return "—"
         url = reverse("admin:auth_user_password_change", args=(obj.pk,))
-        return format_html('<a class="button accounts-password-button" href="{}">修改密码</a>', url)
+        return format_html('<a class="button accounts-password-button" href="{}">' + str(_("Change password")) + '</a>', url)
 
     def save_model(self, request, obj, form, change):
         if not change:
@@ -179,12 +179,12 @@ class CustomUserAdmin(CompactHelpTextMixin, BaseUserAdmin):
                 send_initial_password_email(user=obj, raw_password=raw, request=request)
                 messages.success(
                     request,
-                    _("用户已创建，初始密码已发送至 %(email)s。") % {"email": obj.email},
+                    _("User created. Initial password sent to %(email)s.") % {"email": obj.email},
                 )
             except Exception as exc:
                 messages.warning(
                     request,
-                    _("用户已创建，但发送邮件失败：%(err)s") % {"err": exc},
+                    _("User created but email failed: %(err)s") % {"err": exc},
                 )
         else:
             super().save_model(request, obj, form, change)
@@ -232,7 +232,7 @@ class CustomUserAdmin(CompactHelpTextMixin, BaseUserAdmin):
         from django.contrib.admin.options import IS_POPUP_VAR
 
         context = {
-            "title": _("修改密码: %s") % escape(user.get_username()),
+            "title": _("Change password: %s") % escape(user.get_username()),
             "adminForm": admin_form,
             "form_url": form_url,
             "form": form,

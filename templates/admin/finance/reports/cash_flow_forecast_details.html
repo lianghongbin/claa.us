@@ -2,37 +2,37 @@
 {% load i18n %}
 {% block finance_breadcrumbs %}
 <div class="breadcrumbs finance-breadcrumbs">
-  <a href="{% url 'admin:index' %}">{% trans "首页" %}</a>
-  &rsaquo; <a href="{% url 'finance:reports_index' %}">{% trans "报表中心" %}</a>
-  &rsaquo; <a href="{% url 'finance:cash_flow_forecast' %}?{{ filter_query }}">{% trans "现金流预测" %}</a>
-  &rsaquo; {% trans "账单明细" %}
+  <a href="{% url 'admin:index' %}">{% trans "Home" %}</a>
+  &rsaquo; <a href="{% url 'finance:reports_index' %}">{% trans "Report center" %}</a>
+  &rsaquo; <a href="{% url 'finance:cash_flow_forecast' %}?{{ filter_query }}">{% trans "Cash flow forecast" %}</a>
+  &rsaquo; {% trans "Invoice details" %}
 </div>
 {% endblock %}
 {% block finance_content %}
-<h1>{% trans "账单明细" %}</h1>
-<p class="help">{% blocktrans with date_from=report.date_from date_to=report.date_to %}预测区间 {{ date_from }} — {{ date_to }} 内全部未结清应收/应付账单；行数随账单数量变化，故单独分页展示。{% endblocktrans %}</p>
+<h1>{% trans "Invoice details" %}</h1>
+<p class="help">{% blocktrans with date_from=report.date_from date_to=report.date_to %}Open AR/AP invoices from {{ date_from }} through {{ date_to }}; paginated because row count varies.{% endblocktrans %}</p>
 
 <table class="finance-table finance-table--fixed-cols finance-table--5col-invoice-detail">
   <thead>
     <tr>
-      <th>{% trans "类型" %}</th>
-      <th>{% trans "单号" %}</th>
-      <th>{% trans "往来单位" %}</th>
-      <th>{% trans "到期日" %}</th>
-      <th class="num">{% trans "未结余额" %}</th>
+      <th>{% trans "Type" %}</th>
+      <th>{% trans "Document no." %}</th>
+      <th>{% trans "Counterparty" %}</th>
+      <th>{% trans "Due date" %}</th>
+      <th class="num">{% trans "Open balance" %}</th>
     </tr>
   </thead>
   <tbody>
     {% for row in page_obj %}
     <tr>
-      <td>{% if row.kind == "ar" %}{% trans "应收" %}{% else %}{% trans "应付" %}{% endif %}</td>
+      <td>{% if row.kind == "ar" %}{% trans "Accounts receivable" %}{% else %}{% trans "Accounts payable" %}{% endif %}</td>
       <td>{{ row.number }}</td>
       <td>{{ row.counterparty_name }}</td>
       <td>{% if row.due_date %}{{ row.due_date }}{% else %}—{% endif %}</td>
       <td class="num">{{ row.amount }}</td>
     </tr>
     {% empty %}
-    <tr class="finance-table__empty-row"><td colspan="5">{% trans "无未结清账单" %}</td></tr>
+    <tr class="finance-table__empty-row"><td colspan="5">{% trans "No open invoices" %}</td></tr>
     {% endfor %}
   </tbody>
 </table>
@@ -40,6 +40,6 @@
 {% include "admin/finance/_report_pagination.html" with page_obj=page_obj filter_query=filter_query %}
 
 <p class="finance-footer-link">
-  <a href="{% url 'finance:cash_flow_forecast' %}?{{ filter_query }}">{% trans "返回现金流预测" %}</a>
+  <a href="{% url 'finance:cash_flow_forecast' %}?{{ filter_query }}">{% trans "Back to cash flow forecast" %}</a>
 </p>
 {% endblock %}

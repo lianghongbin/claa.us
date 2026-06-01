@@ -12,7 +12,7 @@ class EmailAdminAuthenticationForm(AdminAuthenticationForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields["username"].label = _("邮箱")
+        self.fields["username"].label = _("Email")
 
 
 class ClearMustChangePasswordForm(AdminPasswordChangeForm):
@@ -52,7 +52,7 @@ class StaffUserAddFormSuperuser(StaffUserAddForm):
     def clean_email(self):
         email = User.objects.normalize_email(self.cleaned_data.get("email", ""))
         if not email:
-            raise forms.ValidationError(_("请输入有效邮箱。"))
+            raise forms.ValidationError(_("Enter a valid email address."))
         return email
 
 

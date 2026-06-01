@@ -60,11 +60,13 @@ MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "config.middleware.AdminFinanceStaticNoCacheMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.locale.LocaleMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "apps.accounts.middleware.SessionInactivityMiddleware",
     "apps.accounts.middleware.ForcePasswordChangeMiddleware",
+    "config.middleware.RefreshSimpleuiMenusMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
@@ -80,6 +82,7 @@ TEMPLATES = [
             "context_processors": [
                 "django.template.context_processors.debug",
                 "django.template.context_processors.request",
+                "django.template.context_processors.i18n",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
                 "config.context_processors.finance_asset_version",
@@ -126,10 +129,18 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-LANGUAGE_CODE = "zh-hans"
-# 业务记账与报表默认按洛杉矶时间（与运营地一致）
+from django.utils.translation import gettext_lazy as _
+
+LANGUAGE_CODE = "en"
+LANGUAGES = [
+    ("en", "English"),
+    ("zh-hans", "简体中文"),
+]
+LOCALE_PATHS = [BASE_DIR / "locale"]
+# Business reporting uses Los Angeles time.
 TIME_ZONE = "America/Los_Angeles"
 USE_I18N = True
+USE_L10N = True
 USE_TZ = True
 
 STATIC_URL = "static/"
@@ -182,7 +193,7 @@ from config.simpleui_menus import SIMPLEUI_MENU_DISPLAY, get_simpleui_menus
 SIMPLEUI_HOME_INFO = False
 SIMPLEUI_ANALYSIS = False
 SIMPLEUI_DEFAULT_THEME = "admin.lte.css"
-SIMPLEUI_HOME_TITLE = "工作台"
+SIMPLEUI_HOME_TITLE = _("Dashboard")
 SIMPLEUI_HOME_ICON = "el-icon-s-home"
 SIMPLEUI_DEFAULT_ICON = False
 
@@ -193,16 +204,16 @@ SIMPLEUI_CONFIG = {
     "menus": get_simpleui_menus(),
 }
 
-# 备用：菜单名 / 模型名 → 图标（自定义 menus 已在各项上指定 icon）
+# Fallback icons by menu label (menus already set icon per item).
 SIMPLEUI_ICON = {
-    "财务概览": "fas fa-chart-pie",
-    "财务报表": "fas fa-chart-bar",
-    "日常记账": "fas fa-book",
-    "基础资料": "fas fa-database",
-    "应收应付": "fas fa-handshake",
-    "银行对账": "fas fa-university",
-    "审计中心": "fas fa-clipboard-list",
-    "系统管理": "fas fa-cogs",
+    "Overview": "fas fa-chart-pie",
+    "Reports": "fas fa-chart-bar",
+    "Transactions": "fas fa-book",
+    "Master data": "fas fa-database",
+    "AR / AP": "fas fa-handshake",
+    "Bank reconciliation": "fas fa-university",
+    "Audit": "fas fa-clipboard-list",
+    "System": "fas fa-cogs",
 }
 
 # Python 3.14+：修复 Django 5.0 BaseContext.__copy__ 与 copy(super()) 不兼容（3.11 不加载）

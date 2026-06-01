@@ -2,9 +2,9 @@
 <table class="finance-table finance-table--fixed-cols finance-table--3col-category-share">
   <thead>
     <tr>
-      <th>{% trans "科目" %}</th>
-      <th>{% trans "占比" %}</th>
-      <th class="num">{% trans "金额" %}</th>
+      <th>{% trans "Category" %}</th>
+      <th>{% trans "Share" %}</th>
+      <th class="num">{% trans "Amount" %}</th>
     </tr>
   </thead>
   <tbody>
@@ -22,7 +22,7 @@
       <td class="num">{{ row.total }}</td>
     </tr>
     {% empty %}
-    <tr class="finance-table__empty-row"><td colspan="3">{% trans "无数据" %}</td></tr>
+    <tr class="finance-table__empty-row"><td colspan="3">{% trans "No data" %}</td></tr>
     {% endfor %}
   </tbody>
 </table>
