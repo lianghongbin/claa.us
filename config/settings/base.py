@@ -193,8 +193,10 @@ else:
 from config.simpleui_menus import SIMPLEUI_MENU_DISPLAY, get_simpleui_menus
 
 SIMPLEUI_HOME_INFO = False
+SIMPLEUI_HOME_QUICK = False
 SIMPLEUI_ANALYSIS = False
 SIMPLEUI_DEFAULT_THEME = "admin.lte.css"
+SIMPLEUI_HOME_PAGE = "/admin/finance/dashboard/?home=1"
 SIMPLEUI_HOME_TITLE = _("Dashboard")
 SIMPLEUI_HOME_ICON = "el-icon-s-home"
 SIMPLEUI_DEFAULT_ICON = False

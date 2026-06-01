@@ -1,0 +1,141 @@
+/* Finance dashboard: KPI cards + Chart.js layout */
+
+body.finance-page.finance-dashboard--home #content {
+  margin: 0;
+  border-radius: 0;
+}
+
+body.finance-page.finance-dashboard--home .finance-page-body {
+  padding: 16px 20px 20px;
+}
+
+.finance-dashboard__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.finance-dashboard__header h1 {
+  margin: 0 0 4px;
+}
+
+.finance-dashboard__filter {
+  margin-bottom: 12px;
+}
+
+.finance-dashboard__period {
+  margin: 0 0 16px;
+  font-size: 13px;
+  color: #606266;
+}
+
+.finance-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 960px) {
+  .finance-kpi-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.finance-kpi {
+  padding: 14px 16px;
+  border-radius: 8px;
+  border: 1px solid #ebeef5;
+  background: #fafbfc;
+}
+
+.finance-kpi__label {
+  display: block;
+  font-size: 12px;
+  color: #909399;
+  margin-bottom: 6px;
+}
+
+.finance-kpi__value {
+  display: block;
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: #303133;
+}
+
+.finance-kpi--income .finance-kpi__value {
+  color: #1a7f37;
+}
+
+.finance-kpi--expense .finance-kpi__value {
+  color: #cf222e;
+}
+
+.finance-kpi--net .finance-kpi__value {
+  color: #0969da;
+}
+
+.finance-chart-panel {
+  margin-bottom: 20px;
+  padding: 16px;
+  border: 1px solid #ebeef5;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.finance-chart-panel h2 {
+  margin: 0 0 12px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #303133;
+}
+
+.finance-chart-panel--wide .finance-chart-wrap {
+  min-height: 280px;
+}
+
+.finance-chart-wrap {
+  position: relative;
+  width: 100%;
+}
+
+.finance-chart-wrap--donut {
+  min-height: 240px;
+  max-width: 320px;
+  margin: 0 auto;
+}
+
+.finance-chart-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+@media (max-width: 900px) {
+  .finance-chart-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.finance-dashboard__details {
+  margin-top: 8px;
+  padding: 12px 16px;
+  border: 1px solid #ebeef5;
+  border-radius: 8px;
+  background: #fafbfc;
+}
+
+.finance-dashboard__details summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: #303133;
+  margin-bottom: 8px;
+}
+
+.finance-dashboard__details[open] summary {
+  margin-bottom: 12px;
+}

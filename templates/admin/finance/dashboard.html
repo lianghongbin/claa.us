@@ -1,16 +1,29 @@
 {% extends "admin/finance/base_page.html" %}
-{% load i18n %}
+{% load i18n static %}
+{% block bodyclass %}{{ block.super }}{% if is_home_embed %} finance-dashboard--home{% endif %}{% endblock %}
+{% block extrastyle %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'admin/finance/finance_dashboard.css' %}?v=20260601-1">
+{% endblock %}
 {% block finance_breadcrumbs %}
+{% if not is_home_embed %}
 <div class="breadcrumbs finance-breadcrumbs">
   <a href="{% url 'admin:index' %}">{% trans "Home" %}</a>
   &rsaquo; {% trans "Finance dashboard" %}
 </div>
+{% endif %}
 {% endblock %}
 {% block finance_content %}
-<h1>{% trans "Finance dashboard" %}</h1>
-<p class="help">{% trans "Summary over visible transactions; default last 6 months." %}</p>
+<header class="finance-dashboard__header">
+  <div>
+    <h1>{% trans "Finance dashboard" %}</h1>
+    <p class="help">{% trans "Summary over visible transactions; default last 6 months." %}</p>
+  </div>
+  <a class="button" href="{% url 'finance:reports_index' %}">{% trans "Report center" %}</a>
+</header>
 
-<form method="get" class="finance-filter">
+<form method="get" class="finance-filter finance-dashboard__filter">
+  {% if is_home_embed %}<input type="hidden" name="home" value="1">{% endif %}
   <label>{% trans "Start date" %}
     <input type="date" name="date_from" value="{{ filter_date_from }}" required>
   </label>
@@ -27,66 +40,89 @@
       {% endfor %}
     </select>
   </label>
-  <button type="submit" class="button">{% trans "Apply" %}</button>
-  <a href="{% url 'finance:reports_index' %}">{% trans "Report center" %}</a>
+  <button type="submit" class="button default">{% trans "Apply" %}</button>
 </form>
 
-<div class="finance-summary">
-  <strong>{% trans "Period" %}：</strong>{{ dashboard.date_from }} — {{ dashboard.date_to }}
-  &nbsp;|&nbsp;
-  <strong>{% trans "Income" %}：</strong><span class="text-income">{{ dashboard.total_income }}</span>
-  &nbsp;|&nbsp;
-  <strong>{% trans "Expense" %}：</strong><span class="text-expense">{{ dashboard.total_expense }}</span>
-  &nbsp;|&nbsp;
-  <strong>{% trans "Balance" %}：</strong><strong>{{ dashboard.net_profit }}</strong>
+<p class="finance-dashboard__period">
+  <strong>{% trans "Period" %}:</strong> {{ dashboard.date_from }} — {{ dashboard.date_to }}
+</p>
+
+<div class="finance-kpi-grid">
+  <article class="finance-kpi finance-kpi--income">
+    <span class="finance-kpi__label">{% trans "Income" %}</span>
+    <span class="finance-kpi__value">{{ dashboard.total_income }}</span>
+  </article>
+  <article class="finance-kpi finance-kpi--expense">
+    <span class="finance-kpi__label">{% trans "Expense" %}</span>
+    <span class="finance-kpi__value">{{ dashboard.total_expense }}</span>
+  </article>
+  <article class="finance-kpi finance-kpi--net">
+    <span class="finance-kpi__label">{% trans "Net profit" %}</span>
+    <span class="finance-kpi__value">{{ dashboard.net_profit }}</span>
+  </article>
+  <article class="finance-kpi finance-kpi--margin">
+    <span class="finance-kpi__label">{% trans "Profit margin" %}</span>
+    <span class="finance-kpi__value">{% if dashboard.profit_margin_pct is not None %}{{ dashboard.profit_margin_pct }}%{% else %}—{% endif %}</span>
+  </article>
 </div>
 
-<h2>{% trans "Income & expense trend (monthly)" %}</h2>
-<table class="finance-table finance-table--fixed-cols finance-table--4col-cash-account">
-  <thead>
-    <tr>
-      <th style="width: 100px;">{% trans "Month" %}</th>
-      <th>{% trans "Income" %}</th>
-      <th>{% trans "Expense" %}</th>
-      <th class="num" style="width: 100px;">{% trans "Balance" %}</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for row in dashboard.monthly_trends %}
-    <tr>
-      <td>{{ row.label }}</td>
-      <td>
-        <div class="finance-bar-cell">
-          <div class="finance-bar-track finance-bar-track--income">
-            <div class="finance-bar-fill finance-bar-fill--income" style="width: {% widthratio row.income max_monthly 100 %}%; min-width: {% if row.income %}2px{% else %}0{% endif %};"></div>
-          </div>
-          <span class="finance-bar-value text-income">{{ row.income }}</span>
-        </div>
-      </td>
-      <td>
-        <div class="finance-bar-cell">
-          <div class="finance-bar-track finance-bar-track--expense">
-            <div class="finance-bar-fill finance-bar-fill--expense" style="width: {% widthratio row.expense max_monthly 100 %}%; min-width: {% if row.expense %}2px{% else %}0{% endif %};"></div>
-          </div>
-          <span class="finance-bar-value text-expense">{{ row.expense }}</span>
-        </div>
-      </td>
-      <td class="num">{{ row.net }}</td>
-    </tr>
-    {% empty %}
-    <tr class="finance-table__empty-row"><td colspan="4">{% trans "No data" %}</td></tr>
-    {% endfor %}
-  </tbody>
-</table>
+<section class="finance-chart-panel finance-chart-panel--wide">
+  <h2>{% trans "Income & expense trend (monthly)" %}</h2>
+  <div class="finance-chart-wrap">
+    <canvas id="finance-trend-chart" height="120" aria-label="{% trans 'Income and expense trend chart' %}"></canvas>
+  </div>
+</section>
 
-<div class="finance-columns">
-  <section>
+<div class="finance-chart-row">
+  <section class="finance-chart-panel">
     <h2>{% trans "Income by category" %}</h2>
-    {% include "admin/finance/_category_share_table.html" with rows=dashboard.income_by_category bar_color="#2da44e" %}
+    <div class="finance-chart-wrap finance-chart-wrap--donut">
+      <canvas id="finance-income-pie-chart" aria-label="{% trans 'Income by category chart' %}"></canvas>
+    </div>
   </section>
-  <section>
+  <section class="finance-chart-panel">
     <h2>{% trans "Expense by category" %}</h2>
-    {% include "admin/finance/_category_share_table.html" with rows=dashboard.expense_by_category bar_color="#cf222e" %}
+    <div class="finance-chart-wrap finance-chart-wrap--donut">
+      <canvas id="finance-expense-pie-chart" aria-label="{% trans 'Expense by category chart' %}"></canvas>
+    </div>
   </section>
 </div>
+
+<details class="finance-dashboard__details">
+  <summary>{% trans "Monthly detail table" %}</summary>
+  <table class="finance-table finance-table--fixed-cols finance-table--4col-cash-account">
+    <thead>
+      <tr>
+        <th>{% trans "Month" %}</th>
+        <th class="num">{% trans "Income" %}</th>
+        <th class="num">{% trans "Expense" %}</th>
+        <th class="num">{% trans "Balance" %}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in dashboard.monthly_trends %}
+      <tr>
+        <td>{{ row.label }}</td>
+        <td class="num text-income">{{ row.income }}</td>
+        <td class="num text-expense">{{ row.expense }}</td>
+        <td class="num">{{ row.net }}</td>
+      </tr>
+      {% empty %}
+      <tr class="finance-table__empty-row"><td colspan="4">{% trans "No data" %}</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</details>
+
+{{ chart_data|json_script:"finance-dashboard-chart-data" }}
+<script src="{% static 'admin/finance/chart.umd.min.js' %}?v=20260601-1"></script>
+<script>
+  window.FINANCE_DASHBOARD_I18N = {
+    income: "{% trans 'Income' %}",
+    expense: "{% trans 'Expense' %}",
+    net: "{% trans 'Net profit' %}",
+    noData: "{% trans 'No data' %}"
+  };
+</script>
+<script src="{% static 'admin/finance/dashboard_charts.js' %}?v=20260601-1"></script>
 {% endblock %}

@@ -9,7 +9,7 @@ def finance_asset_version(request):
     return {
         "FINANCE_ASSET_VERSION": os.getenv(
             "FINANCE_ASSET_VERSION",
-            "20260601-i18n3",
+            "20260601-dashboard2",
         ),
     }
 

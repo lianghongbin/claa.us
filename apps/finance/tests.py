@@ -826,6 +826,11 @@ class FinanceDashboardTests(TestCase):
         )
         self.assertEqual(dash.income_by_category[0].total, Decimal("600.00"))
         self.assertEqual(dash.expense_by_category[0].total, Decimal("250.00"))
+        self.assertEqual(dash.profit_margin_pct, Decimal("75.00"))
+        payload = dash.chart_payload()
+        self.assertEqual(len(payload["trend"]["labels"]), len(dash.monthly_trends))
+        self.assertEqual(payload["trend"]["income"][0], 1000.0)
+        self.assertEqual(len(payload["income_by_category"]["labels"]), 2)
 
 
 class TransactionCategoryFilterTests(TestCase):

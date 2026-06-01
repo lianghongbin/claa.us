@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-01 10:20-0700\n"
+"POT-Creation-Date: 2026-06-01 12:03-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -84,11 +84,11 @@ msgstr "邮箱"
 msgid "Enter a valid email address."
 msgstr "请输入有效邮箱。"
 
-#: apps/accounts/mail.py:11
+#: apps/accounts/mail.py:9
 msgid "Your Claa Finance account is ready"
 msgstr "【财务管理】您的账户已开通"
 
-#: apps/accounts/mail.py:13
+#: apps/accounts/mail.py:11
 #, python-format
 msgid ""
 "Hello,\n"
@@ -457,16 +457,18 @@ msgid "Bank reference: %(ref)s"
 msgstr "银行流水号:%(ref)s"
 
 #: apps/finance/models.py:12 apps/finance/models.py:17
-#: apps/finance/resources.py:128 templates/admin/finance/dashboard.html:37
-#: templates/admin/finance/dashboard.html:49
+#: apps/finance/resources.py:128 templates/admin/finance/dashboard.html:52
+#: templates/admin/finance/dashboard.html:97
+#: templates/admin/finance/dashboard.html:121
 #: templates/admin/finance/reports/profit_loss.html:134
 #: templates/admin/finance/reports/profit_loss_projects.html:19
 msgid "Income"
 msgstr "收入"
 
 #: apps/finance/models.py:13 apps/finance/models.py:18
-#: apps/finance/resources.py:128 templates/admin/finance/dashboard.html:39
-#: templates/admin/finance/dashboard.html:50
+#: apps/finance/resources.py:128 templates/admin/finance/dashboard.html:56
+#: templates/admin/finance/dashboard.html:98
+#: templates/admin/finance/dashboard.html:122
 #: templates/admin/finance/reports/profit_loss.html:135
 #: templates/admin/finance/reports/profit_loss_projects.html:20
 msgid "Expense"
@@ -589,7 +591,7 @@ msgid ""
 msgstr "不选则所有可查看项目的用户均可见；选择后仅所选分组内的用户可见。"
 
 #: apps/finance/models.py:119 apps/finance/models.py:167
-#: templates/admin/finance/dashboard.html:20
+#: templates/admin/finance/dashboard.html:33
 #: templates/admin/finance/reports/balance_sheet.html:21
 #: templates/admin/finance/reports/cash_flow.html:21
 #: templates/admin/finance/reports/profit_loss.html:24
@@ -1225,7 +1227,7 @@ msgid "The uploaded file is not a valid SQLite database."
 msgstr "上传的文件不是有效的 SQLite 数据库。"
 
 #: apps/finance/views.py:99 config/simpleui_menus.py:26
-#: templates/admin/finance/dashboard.html:31
+#: templates/admin/finance/dashboard.html:22
 #: templates/admin/finance/reports/balance_sheet.html:6
 #: templates/admin/finance/reports/balance_sheet_cash.html:6
 #: templates/admin/finance/reports/cash_flow.html:6
@@ -1282,47 +1284,47 @@ msgid "Cash flow forecast · invoice details"
 msgstr "现金流预测 · 账单明细"
 
 #: apps/finance/views.py:415 config/simpleui_menus.py:14
-#: templates/admin/finance/dashboard.html:6
-#: templates/admin/finance/dashboard.html:10
+#: templates/admin/finance/dashboard.html:12
+#: templates/admin/finance/dashboard.html:19
 #: templates/admin/finance/reports/index.html:41
 msgid "Finance dashboard"
 msgstr "财务看板"
 
-#: apps/finance/views.py:462
+#: apps/finance/views.py:463
 msgid ""
 "PostgreSQL is in use. Use pg_dump/pg_restore on the server for backups."
 msgstr "当前使用 PostgreSQL，请在服务器上使用 pg_dump / pg_restore 管理备份。"
 
-#: apps/finance/views.py:475
+#: apps/finance/views.py:476
 #, python-format
 msgid "Database backed up: %(name)s"
 msgstr "数据库已备份：%(name)s"
 
-#: apps/finance/views.py:481
+#: apps/finance/views.py:482
 msgid "Check the confirmation box before restoring the database."
 msgstr "请勾选确认后再还原数据库。"
 
-#: apps/finance/views.py:500
+#: apps/finance/views.py:501
 msgid "Select a backup file or upload a .sqlite3 file."
 msgstr "请选择备份文件或上传 .sqlite3 文件。"
 
-#: apps/finance/views.py:511
+#: apps/finance/views.py:512
 msgid ""
 "Database restored. Refresh the page or restart the service if data looks "
 "stale."
 msgstr "数据库已还原。若页面数据未更新，请刷新或重启服务。"
 
-#: apps/finance/views.py:515
+#: apps/finance/views.py:516
 msgid "Unknown action."
 msgstr "未知操作。"
 
-#: apps/finance/views.py:523 config/simpleui_menus.py:176
+#: apps/finance/views.py:524 config/simpleui_menus.py:176
 #: templates/admin/finance/system_settings.html:7
 #: templates/admin/finance/system_settings.html:12
 msgid "System settings"
 msgstr "系统设置"
 
-#: config/settings/base.py:196 config/urls.py:29
+#: config/settings/base.py:200 config/urls.py:29
 msgid "Dashboard"
 msgstr "工作台"
 
@@ -1435,7 +1437,8 @@ msgid "Share"
 msgstr "占比"
 
 #: templates/admin/finance/_category_share_table.html:25
-#: templates/admin/finance/dashboard.html:77
+#: templates/admin/finance/dashboard.html:111
+#: templates/admin/finance/dashboard.html:124
 #: templates/admin/finance/reports/balance_sheet_cash.html:36
 #: templates/admin/finance/reports/cash_flow.html:72
 #: templates/admin/finance/reports/profit_loss.html:64
@@ -1470,7 +1473,7 @@ msgstr ""
 msgid "Next"
 msgstr "下一页"
 
-#: templates/admin/finance/dashboard.html:5
+#: templates/admin/finance/dashboard.html:11
 #: templates/admin/finance/reports/balance_sheet.html:5
 #: templates/admin/finance/reports/balance_sheet_cash.html:5
 #: templates/admin/finance/reports/cash_flow.html:5
@@ -1486,29 +1489,29 @@ msgstr "下一页"
 msgid "Home"
 msgstr "首页"
 
-#: templates/admin/finance/dashboard.html:11
+#: templates/admin/finance/dashboard.html:20
 msgid "Summary over visible transactions; default last 6 months."
 msgstr "按可见流水范围汇总；默认展示近 6 个月。"
 
-#: templates/admin/finance/dashboard.html:14
+#: templates/admin/finance/dashboard.html:27
 #: templates/admin/finance/reports/cash_flow.html:15
 #: templates/admin/finance/reports/profit_loss.html:18
 msgid "Start date"
 msgstr "起始日期"
 
-#: templates/admin/finance/dashboard.html:17
+#: templates/admin/finance/dashboard.html:30
 #: templates/admin/finance/reports/cash_flow.html:18
 #: templates/admin/finance/reports/profit_loss.html:21
 msgid "End date"
 msgstr "截止日期"
 
-#: templates/admin/finance/dashboard.html:22
+#: templates/admin/finance/dashboard.html:35
 #: templates/admin/finance/reports/balance_sheet.html:23
 #: templates/admin/finance/reports/cash_flow.html:23
 msgid "All"
 msgstr "全部"
 
-#: templates/admin/finance/dashboard.html:30
+#: templates/admin/finance/dashboard.html:43
 #: templates/admin/finance/reports/balance_sheet.html:33
 #: templates/admin/finance/reports/cash_flow.html:34
 #: templates/admin/finance/reports/cash_flow.html:39
@@ -1518,38 +1521,71 @@ msgstr "全部"
 msgid "Apply"
 msgstr "查询"
 
-#: templates/admin/finance/dashboard.html:35
+#: templates/admin/finance/dashboard.html:47
 #: templates/admin/finance/reports/cash_flow.html:44
 #: templates/admin/finance/reports/profit_loss.html:47
 msgid "Period"
 msgstr "期间"
 
-#: templates/admin/finance/dashboard.html:41
-#: templates/admin/finance/dashboard.html:51
-#: templates/admin/finance/reports/balance_sheet_cash.html:26
-#: templates/admin/finance/transaction/change_list.html:19
-msgid "Balance"
-msgstr "结余"
+#: templates/admin/finance/dashboard.html:60
+#: templates/admin/finance/dashboard.html:123
+#: templates/admin/finance/reports/profit_loss.html:53
+#: templates/admin/finance/reports/profit_loss.html:136
+#: templates/admin/finance/reports/profit_loss_projects.html:21
+msgid "Net profit"
+msgstr "净利润"
 
-#: templates/admin/finance/dashboard.html:44
+#: templates/admin/finance/dashboard.html:64
+msgid "Profit margin"
+msgstr "利润率"
+
+#: templates/admin/finance/dashboard.html:70
 msgid "Income & expense trend (monthly)"
 msgstr "收支趋势（按月）"
 
-#: templates/admin/finance/dashboard.html:48
-msgid "Month"
-msgstr "月份"
+#: templates/admin/finance/dashboard.html:72
+#, fuzzy
+#| msgid "Income & expense trend (monthly)"
+msgid "Income and expense trend chart"
+msgstr "收支趋势（按月）"
 
-#: templates/admin/finance/dashboard.html:84
+#: templates/admin/finance/dashboard.html:78
 #: templates/admin/finance/reports/profit_loss.html:57
 #: templates/admin/finance/reports/profit_loss_income.html:12
 msgid "Income by category"
 msgstr "收入分类占比"
 
-#: templates/admin/finance/dashboard.html:88
+#: templates/admin/finance/dashboard.html:80
+#, fuzzy
+#| msgid "Income by category"
+msgid "Income by category chart"
+msgstr "收入分类占比"
+
+#: templates/admin/finance/dashboard.html:84
 #: templates/admin/finance/reports/profit_loss.html:58
 #: templates/admin/finance/reports/profit_loss_expense.html:12
 msgid "Expense by category"
 msgstr "支出分类占比"
+
+#: templates/admin/finance/dashboard.html:86
+#, fuzzy
+#| msgid "Expense by category"
+msgid "Expense by category chart"
+msgstr "支出分类占比"
+
+#: templates/admin/finance/dashboard.html:92
+msgid "Monthly detail table"
+msgstr "月度明细表"
+
+#: templates/admin/finance/dashboard.html:96
+msgid "Month"
+msgstr "月份"
+
+#: templates/admin/finance/dashboard.html:99
+#: templates/admin/finance/reports/balance_sheet_cash.html:26
+#: templates/admin/finance/transaction/change_list.html:19
+msgid "Balance"
+msgstr "结余"
 
 #: templates/admin/finance/reports/balance_sheet.html:13
 msgid ""
@@ -1925,12 +1961,6 @@ msgstr "总收入"
 #: templates/admin/finance/transaction/change_list.html:17
 msgid "Total expense"
 msgstr "总支出"
-
-#: templates/admin/finance/reports/profit_loss.html:53
-#: templates/admin/finance/reports/profit_loss.html:136
-#: templates/admin/finance/reports/profit_loss_projects.html:21
-msgid "Net profit"
-msgstr "净利润"
 
 #: templates/admin/finance/reports/profit_loss.html:56
 msgid "Categories and projects"

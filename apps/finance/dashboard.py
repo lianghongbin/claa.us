@@ -5,8 +5,11 @@ from dataclasses import dataclass, field
 from datetime import date
 from decimal import Decimal
 
+import json
+
 from django.db.models import Sum
 from django.db.models.functions import TruncMonth
+from django.utils.translation import get_language
 
 from apps.finance.models import TransactionType
 from apps.finance.reports import _base_transactions
@@ -57,9 +60,44 @@ class FinanceDashboard:
         )
         return peak if peak > 0 else Decimal("1")
 
+    @property
+    def profit_margin_pct(self) -> Decimal | None:
+        if self.total_income <= 0:
+            return None
+        return (self.net_profit / self.total_income * Decimal("100")).quantize(
+            Decimal("0.01")
+        )
+
+    def chart_payload(self) -> dict:
+        """JSON-serializable figures for Chart.js on the dashboard."""
+
+        def _category_slice(rows: list[CategoryShareRow]) -> dict:
+            return {
+                "labels": [r.category_name for r in rows],
+                "values": [float(r.total) for r in rows],
+                "shares": [float(r.share_pct) for r in rows],
+            }
+
+        return {
+            "trend": {
+                "labels": [r.label for r in self.monthly_trends],
+                "income": [float(r.income) for r in self.monthly_trends],
+                "expense": [float(r.expense) for r in self.monthly_trends],
+                "net": [float(r.net) for r in self.monthly_trends],
+            },
+            "income_by_category": _category_slice(self.income_by_category),
+            "expense_by_category": _category_slice(self.expense_by_category),
+        }
+
+    def chart_payload_json(self) -> str:
+        return json.dumps(self.chart_payload())
+
 
 def _month_label(d: date) -> str:
-    return f"{d.year}年{d.month}月"
+    lang = (get_language() or "en").lower()
+    if lang.startswith("zh"):
+        return f"{d.year}年{d.month}月"
+    return d.strftime("%b %Y")
 
 
 def _iter_month_starts(date_from: date, date_to: date):

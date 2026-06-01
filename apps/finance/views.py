@@ -405,7 +405,7 @@ def finance_dashboard(request):
         date_to=date_to,
         project_id=project_id,
     )
-    max_monthly = int(dashboard.max_monthly_value) or 1
+    is_home_embed = request.GET.get("home") == "1"
 
     return render(
         request,
@@ -414,11 +414,12 @@ def finance_dashboard(request):
             **admin.site.each_context(request),
             "title": _("Finance dashboard"),
             "dashboard": dashboard,
-            "max_monthly": max_monthly,
+            "chart_data": dashboard.chart_payload(),
             "projects": projects,
             "selected_project_id": project_id,
             "filter_date_from": date_from.isoformat(),
             "filter_date_to": date_to.isoformat(),
+            "is_home_embed": is_home_embed,
         },
     )
 

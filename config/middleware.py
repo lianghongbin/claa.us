@@ -16,7 +16,7 @@ class AdminFinanceStaticNoCacheMiddleware:
         path = request.path
         if path.startswith("/static/admin/finance/") or path.startswith(
             "/static/admin/simpleui-x/js/menu.js"
-        ):
+        ) or "dashboard_charts.js" in path or "finance_dashboard.css" in path or "chart.umd.min.js" in path:
             response["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"
             response["Pragma"] = "no-cache"
         return response
