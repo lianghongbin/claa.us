@@ -64,7 +64,7 @@ msgstr "用户已创建，但发送邮件失败：%(err)s"
 #: apps/accounts/admin.py:199
 #, python-format
 msgid "%(name)s object with primary key %(key)r does not exist."
-msgstr ""
+msgstr "主键为 %(key)r 的 %(name)s 对象不存在。"
 
 #: apps/accounts/admin.py:213
 msgid "Password changed successfully."
@@ -484,7 +484,7 @@ msgstr "类型"
 
 #: apps/finance/models.py:29
 msgid "Sort Order"
-msgstr ""
+msgstr "排序"
 
 #: apps/finance/models.py:30 apps/finance/models.py:74
 #: apps/finance/models.py:104
@@ -497,15 +497,15 @@ msgstr "启用"
 #: apps/finance/models.py:414 apps/finance/models.py:550
 #: apps/finance/models.py:637
 msgid "Created At"
-msgstr ""
+msgstr "创建时间"
 
 #: apps/finance/models.py:34
 msgid "Account Category"
-msgstr ""
+msgstr "科目分类"
 
 #: apps/finance/models.py:35
 msgid "Account Categories"
-msgstr ""
+msgstr "科目分类"
 
 #: apps/finance/models.py:38
 msgid "Backup and restore database"
@@ -525,46 +525,46 @@ msgstr "客户与供应商"
 
 #: apps/finance/models.py:60
 msgid "Unit Code"
-msgstr ""
+msgstr "单位编码"
 
 #: apps/finance/models.py:68
 msgid "Tax ID / Unified Social Credit Code"
-msgstr ""
+msgstr "税号/统一社会信用代码"
 
 #: apps/finance/models.py:69
 msgid "Contact Name"
-msgstr ""
+msgstr "联系人"
 
 #: apps/finance/models.py:70
 msgid "Phone"
-msgstr ""
+msgstr "电话"
 
 #: apps/finance/models.py:72
 msgid "Address"
-msgstr ""
+msgstr "地址"
 
 #: apps/finance/models.py:73 apps/finance/models.py:105
 #: apps/finance/models.py:310 apps/finance/models.py:413
 #: apps/finance/models.py:530 apps/finance/models.py:636
 msgid "Remark"
-msgstr ""
+msgstr "备注"
 
 #: apps/finance/models.py:79 apps/finance/models.py:110
 #: apps/finance/models.py:315 apps/finance/models.py:535
 msgid "Visible Groups"
-msgstr ""
+msgstr "可见分组"
 
 #: apps/finance/models.py:81
 msgid ""
 "If empty, visible to all users who can view counterparties; if set, only "
 "users in selected groups can view."
-msgstr ""
+msgstr "不选则所有可查看往来单位的用户均可见；选择后仅所选分组内的用户可见。"
 
 #: apps/finance/models.py:88 apps/finance/models.py:175
 #: templates/admin/finance/reports/cash_flow_forecast.html:121
 #: templates/admin/finance/reports/cash_flow_forecast_details.html:20
 msgid "Counterparty"
-msgstr ""
+msgstr "往来单位"
 
 #: apps/finance/models.py:89 config/simpleui_menus.py:98
 msgid "Counterparties"
@@ -572,21 +572,21 @@ msgstr "往来单位"
 
 #: apps/finance/models.py:92
 msgid "Can view all counterparties (ignore visibility groups)"
-msgstr ""
+msgstr "可查看全部往来单位（忽略可见分组）"
 
 #: apps/finance/models.py:102
 msgid "Project Code"
-msgstr ""
+msgstr "项目编码"
 
 #: apps/finance/models.py:103
 msgid "Project Name"
-msgstr ""
+msgstr "项目名称"
 
 #: apps/finance/models.py:112
 msgid ""
 "If empty, visible to all users who can view projects; if set, only users in "
 "selected groups can view."
-msgstr ""
+msgstr "不选则所有可查看项目的用户均可见；选择后仅所选分组内的用户可见。"
 
 #: apps/finance/models.py:119 apps/finance/models.py:167
 #: templates/admin/finance/dashboard.html:20
@@ -604,19 +604,19 @@ msgstr "项目"
 
 #: apps/finance/models.py:123
 msgid "Can view all projects (ignore visibility groups)"
-msgstr ""
+msgstr "可查看全部项目（忽略可见分组）"
 
 #: apps/finance/models.py:131
 msgid "Tag"
-msgstr ""
+msgstr "标签"
 
 #: apps/finance/models.py:135
 msgid "Transaction Tag"
-msgstr ""
+msgstr "流水标签"
 
 #: apps/finance/models.py:136
 msgid "Transaction Tags"
-msgstr ""
+msgstr "流水标签"
 
 #: apps/finance/models.py:144
 msgid "Date"
@@ -624,7 +624,7 @@ msgstr "日期"
 
 #: apps/finance/models.py:146
 msgid "Transaction Type"
-msgstr ""
+msgstr "收支类型"
 
 #: apps/finance/models.py:158 apps/finance/models.py:786
 #: templates/admin/finance/_category_share_table.html:7
@@ -640,34 +640,34 @@ msgstr "金额"
 
 #: apps/finance/models.py:161
 msgid "Positive amount in base currency"
-msgstr ""
+msgstr "正数，单位与记账本位币一致"
 
 #: apps/finance/models.py:163 apps/finance/models.py:727
 msgid "Account Name"
-msgstr ""
+msgstr "账户名称"
 
 #: apps/finance/models.py:164
 msgid "Description / Note"
-msgstr ""
+msgstr "摘要/备注"
 
 #: apps/finance/models.py:187
 msgid "Reconciled"
-msgstr ""
+msgstr "已对账"
 
 #: apps/finance/models.py:190 apps/finance/models.py:323
 #: apps/finance/models.py:417 apps/finance/models.py:543
 #: apps/finance/models.py:640
 msgid "Created By"
-msgstr ""
+msgstr "创建人"
 
 #: apps/finance/models.py:198 apps/finance/models.py:331
 #: apps/finance/models.py:551
 msgid "Updated At"
-msgstr ""
+msgstr "更新时间"
 
 #: apps/finance/models.py:201 apps/finance/models.py:244
 msgid "Transaction"
-msgstr ""
+msgstr "收支明细"
 
 #: apps/finance/models.py:202 config/simpleui_menus.py:58
 #: config/simpleui_menus.py:189
@@ -677,548 +677,548 @@ msgstr "日常记账"
 #: apps/finance/models.py:207
 msgid ""
 "Can view all finance transactions (ignore project/counterparty visibility)"
-msgstr ""
+msgstr "可查看全部财务流水（忽略项目/往来可见范围）"
 
 #: apps/finance/models.py:233
 msgid "The selected category type must match the transaction type."
-msgstr ""
+msgstr "所选科目类型必须与收支类型一致。"
 
 #: apps/finance/models.py:236
 msgid "Amount must be greater than 0."
-msgstr ""
+msgstr "金额必须大于 0。"
 
 #: apps/finance/models.py:248
 msgid "File"
-msgstr ""
+msgstr "文件"
 
 #: apps/finance/models.py:249
 msgid "Caption"
-msgstr ""
+msgstr "说明"
 
 #: apps/finance/models.py:250
 msgid "Uploaded At"
-msgstr ""
+msgstr "上传时间"
 
 #: apps/finance/models.py:253
 msgid "Uploaded By"
-msgstr ""
+msgstr "上传人"
 
 #: apps/finance/models.py:261
 msgid "Transaction Attachment"
-msgstr ""
+msgstr "流水附件"
 
 #: apps/finance/models.py:262
 msgid "Transaction Attachments"
-msgstr ""
+msgstr "流水附件"
 
 #: apps/finance/models.py:270 apps/finance/models.py:476
 #: apps/finance/models.py:483
 msgid "Draft"
-msgstr ""
+msgstr "草稿"
 
 #: apps/finance/models.py:271 apps/finance/models.py:484
 msgid "Open"
-msgstr ""
+msgstr "未结清"
 
 #: apps/finance/models.py:272 apps/finance/models.py:485
 msgid "Partially Paid"
-msgstr ""
+msgstr "部分结清"
 
 #: apps/finance/models.py:273 apps/finance/models.py:486
 msgid "Paid"
-msgstr ""
+msgstr "已结清"
 
 #: apps/finance/models.py:274 apps/finance/models.py:487
 msgid "Void"
-msgstr ""
+msgstr "作废"
 
 #: apps/finance/models.py:280
 msgid "AR Invoice Number"
-msgstr ""
+msgstr "应收账单编号"
 
 #: apps/finance/models.py:287 apps/finance/models.py:500
 msgid "Title"
-msgstr ""
+msgstr "标题"
 
 #: apps/finance/models.py:288 apps/finance/models.py:501
 msgid "Issue Date"
-msgstr ""
+msgstr "开票日期"
 
 #: apps/finance/models.py:290 apps/finance/models.py:503
 msgid "Due Date"
-msgstr ""
+msgstr "到期日"
 
 #: apps/finance/models.py:295
 msgid "Total Amount Receivable"
-msgstr ""
+msgstr "应收总额"
 
 #: apps/finance/models.py:297
 msgid "Amount Received"
-msgstr ""
+msgstr "已收金额"
 
 #: apps/finance/models.py:301 apps/finance/models.py:514
 msgid ""
 "Automatically summarized from payment allocations; do not edit manually."
-msgstr ""
+msgstr "由收款/付款分配自动汇总；请勿手工修改。"
 
 #: apps/finance/models.py:317
 msgid ""
 "If empty, visible to all users who can view AR invoices; if set, only users "
 "in selected groups can view."
-msgstr ""
+msgstr "不选则所有可查看应收账单的用户均可见；选择后仅所选分组内的用户可见。"
 
 #: apps/finance/models.py:334 apps/finance/models.py:402
 msgid "AR Invoice"
-msgstr ""
+msgstr "应收账单"
 
 #: apps/finance/models.py:335
 msgid "AR Invoices"
-msgstr ""
+msgstr "应收账单"
 
 #: apps/finance/models.py:338
 msgid "Can view all AR invoices (ignore visibility groups)"
-msgstr ""
+msgstr "可查看全部应收账单（忽略可见分组）"
 
 #: apps/finance/models.py:379
 msgid ""
 "AR invoices can only be linked to counterparties of type Customer or "
 "Customer and Vendor."
-msgstr ""
+msgstr "应收账单只能关联类型为「客户」或「客户兼供应商」的往来单位。"
 
 #: apps/finance/models.py:389
 msgid "Amount received cannot exceed total receivable."
-msgstr ""
+msgstr "已收金额不能超过应收总额。"
 
 #: apps/finance/models.py:408
 msgid "Receipt Transaction"
-msgstr ""
+msgstr "收款流水"
 
 #: apps/finance/models.py:412 apps/finance/models.py:635
 msgid "Allocation Amount"
-msgstr ""
+msgstr "分配金额"
 
 #: apps/finance/models.py:426
 msgid "AR Payment Allocation"
-msgstr ""
+msgstr "应收收款分配"
 
 #: apps/finance/models.py:427
 msgid "AR Payment Allocations"
-msgstr ""
+msgstr "应收收款分配"
 
 #: apps/finance/models.py:441 apps/finance/models.py:664
 msgid "allocation"
-msgstr ""
+msgstr "分配"
 
 #: apps/finance/models.py:448
 msgid "Only income transactions can be allocated to AR invoices."
-msgstr ""
+msgstr "仅可将收入流水分配至应收账单。"
 
 #: apps/finance/models.py:455
 msgid "Transaction counterparty must match the AR invoice customer."
-msgstr ""
+msgstr "流水往来单位必须与应收账单客户一致。"
 
 #: apps/finance/models.py:463 apps/finance/models.py:691
 msgid "Total allocations cannot exceed invoice amount."
-msgstr ""
+msgstr "分配总额不能超过账单金额。"
 
 #: apps/finance/models.py:471 apps/finance/models.py:699
 msgid "Total allocated amount exceeds the transaction amount."
-msgstr ""
+msgstr "已分配总额超过流水金额。"
 
 #: apps/finance/models.py:477
 msgid "Pending Approval"
-msgstr ""
+msgstr "待审批"
 
 #: apps/finance/models.py:478
 msgid "Approved"
-msgstr ""
+msgstr "已批准"
 
 #: apps/finance/models.py:479
 msgid "Rejected"
-msgstr ""
+msgstr "已驳回"
 
 #: apps/finance/models.py:493
 msgid "AP Invoice Number"
-msgstr ""
+msgstr "应付账单编号"
 
 #: apps/finance/models.py:508
 msgid "Total Amount Payable"
-msgstr ""
+msgstr "应付总额"
 
 #: apps/finance/models.py:510
 msgid "Amount Paid"
-msgstr ""
+msgstr "已付金额"
 
 #: apps/finance/models.py:517
 msgid "Approval Status"
-msgstr ""
+msgstr "审批状态"
 
 #: apps/finance/models.py:524
 msgid "Payment Status"
-msgstr ""
+msgstr "付款状态"
 
 #: apps/finance/models.py:537
 msgid ""
 "If empty, visible to all users who can view AP invoices; if set, only users "
 "in selected groups can view."
-msgstr ""
+msgstr "不选则所有可查看应付账单的用户均可见；选择后仅所选分组内的用户可见。"
 
 #: apps/finance/models.py:554 apps/finance/models.py:625
 msgid "AP Invoice"
-msgstr ""
+msgstr "应付账单"
 
 #: apps/finance/models.py:555
 msgid "AP Invoices"
-msgstr ""
+msgstr "应付账单"
 
 #: apps/finance/models.py:558
 msgid "Can view all AP invoices (ignore visibility groups)"
-msgstr ""
+msgstr "可查看全部应付账单（忽略可见分组）"
 
 #: apps/finance/models.py:559
 msgid "Can approve AP invoices"
-msgstr ""
+msgstr "可审批应付账单"
 
 #: apps/finance/models.py:602
 msgid ""
 "AP invoices can only be linked to counterparties of type Vendor or Customer "
 "and Vendor."
-msgstr ""
+msgstr "应付账单只能关联类型为「供应商」或「客户兼供应商」的往来单位。"
 
 #: apps/finance/models.py:612
 msgid "Amount paid cannot exceed total payable."
-msgstr ""
+msgstr "已付金额不能超过应付总额。"
 
 #: apps/finance/models.py:631
 msgid "Payment Transaction"
-msgstr ""
+msgstr "付款流水"
 
 #: apps/finance/models.py:649
 msgid "AP Payment Allocation"
-msgstr ""
+msgstr "应付付款分配"
 
 #: apps/finance/models.py:650
 msgid "AP Payment Allocations"
-msgstr ""
+msgstr "应付付款分配"
 
 #: apps/finance/models.py:671
 msgid "Only approved AP invoices can receive payment allocations."
-msgstr ""
+msgstr "仅已批准的应付账单可接收付款分配。"
 
 #: apps/finance/models.py:676
 msgid "Only expense transactions can be allocated to AP invoices."
-msgstr ""
+msgstr "仅可将支出流水分配至应付账单。"
 
 #: apps/finance/models.py:683
 msgid "Transaction counterparty must match the AP invoice vendor."
-msgstr ""
+msgstr "流水往来单位必须与应付账单供应商一致。"
 
 #: apps/finance/models.py:704
 msgid "Bank CSV"
-msgstr ""
+msgstr "银行 CSV"
 
 #: apps/finance/models.py:705
 msgid "Alipay Statement"
-msgstr ""
+msgstr "支付宝账单"
 
 #: apps/finance/models.py:706
 msgid "WeChat Pay Statement"
-msgstr ""
+msgstr "微信支付账单"
 
 #: apps/finance/models.py:707 apps/finance/models.py:824
 msgid "Other"
-msgstr ""
+msgstr "其他"
 
 #: apps/finance/models.py:711
 msgid "Pending Import"
-msgstr ""
+msgstr "待导入"
 
 #: apps/finance/models.py:712
 msgid "Import Successful"
-msgstr ""
+msgstr "导入成功"
 
 #: apps/finance/models.py:713
 msgid "Partially Successful"
-msgstr ""
+msgstr "部分成功"
 
 #: apps/finance/models.py:714
 msgid "Import Failed"
-msgstr ""
+msgstr "导入失败"
 
 #: apps/finance/models.py:718
 msgid "Unmatched"
-msgstr ""
+msgstr "未匹配"
 
 #: apps/finance/models.py:719
 msgid "Matched"
-msgstr ""
+msgstr "已匹配"
 
 #: apps/finance/models.py:720
 msgid "Ignored"
-msgstr ""
+msgstr "已忽略"
 
 #: apps/finance/models.py:729
 msgid "Must match the account name on system transactions for reconciliation."
-msgstr ""
+msgstr "须与系统流水中的账户名称一致，以便对账。"
 
 #: apps/finance/models.py:732
 msgid "Source"
-msgstr ""
+msgstr "来源"
 
 #: apps/finance/models.py:738
 msgid "Statement File"
-msgstr ""
+msgstr "账单文件"
 
 #: apps/finance/models.py:740
 msgid "Import Status"
-msgstr ""
+msgstr "导入状态"
 
 #: apps/finance/models.py:746
 msgid "Total Rows"
-msgstr ""
+msgstr "总行数"
 
 #: apps/finance/models.py:747
 msgid "Imported Rows"
-msgstr ""
+msgstr "已导入行数"
 
 #: apps/finance/models.py:748
 msgid "Failed Rows"
-msgstr ""
+msgstr "失败行数"
 
 #: apps/finance/models.py:749
 msgid "Error Log"
-msgstr ""
+msgstr "错误日志"
 
 #: apps/finance/models.py:752
 msgid "Imported By"
-msgstr ""
+msgstr "导入人"
 
 #: apps/finance/models.py:759
 msgid "Imported At"
-msgstr ""
+msgstr "导入时间"
 
 #: apps/finance/models.py:762
 msgid "Bank Statement Import"
-msgstr ""
+msgstr "银行账单导入"
 
 #: apps/finance/models.py:763
 msgid "Bank Statement Imports"
-msgstr ""
+msgstr "银行账单导入"
 
 #: apps/finance/models.py:775 apps/finance/models.py:832
 msgid "Import Batch"
-msgstr ""
+msgstr "导入批次"
 
 #: apps/finance/models.py:779
 msgid "Transaction Date"
-msgstr ""
+msgstr "交易日期"
 
 #: apps/finance/models.py:781
 msgid "Direction"
-msgstr ""
+msgstr "方向"
 
 #: apps/finance/models.py:787
 msgid "Description"
-msgstr ""
+msgstr "摘要"
 
 #: apps/finance/models.py:788
 msgid "Reference Number"
-msgstr ""
+msgstr "参考号"
 
 #: apps/finance/models.py:789
 msgid "Counterparty Name"
-msgstr ""
+msgstr "对方户名"
 
 #: apps/finance/models.py:790
 msgid "Source Row Number"
-msgstr ""
+msgstr "源文件行号"
 
 #: apps/finance/models.py:792
 msgid "Match Status"
-msgstr ""
+msgstr "匹配状态"
 
 #: apps/finance/models.py:800
 msgid "Matched Transaction"
-msgstr ""
+msgstr "已匹配流水"
 
 #: apps/finance/models.py:808 apps/finance/models.py:840
 msgid "Bank Statement Line"
-msgstr ""
+msgstr "银行账单明细"
 
 #: apps/finance/models.py:809
 msgid "Bank Statement Lines"
-msgstr ""
+msgstr "银行账单明细"
 
 #: apps/finance/models.py:820
 msgid "Bank Fee"
-msgstr ""
+msgstr "银行手续费"
 
 #: apps/finance/models.py:821
 msgid "Rounding Difference"
-msgstr ""
+msgstr "尾差"
 
 #: apps/finance/models.py:822
 msgid "Unrecorded in Books (bank has, system does not)"
-msgstr ""
+msgstr "账未记（银行有、系统无）"
 
 #: apps/finance/models.py:823
 msgid "Unrecorded in Bank (system has, bank does not)"
-msgstr ""
+msgstr "银行未记（系统有、银行无）"
 
 #: apps/finance/models.py:848
 msgid "System Transaction"
-msgstr ""
+msgstr "系统流水"
 
 #: apps/finance/models.py:855
 msgid "Variance Type"
-msgstr ""
+msgstr "差异类型"
 
 #: apps/finance/models.py:861
 msgid "Variance Amount"
-msgstr ""
+msgstr "差异金额"
 
 #: apps/finance/models.py:864
 msgid "Positive amount representing the scale of adjustment or explanation."
-msgstr ""
+msgstr "正数，表示调整或说明的规模。"
 
 #: apps/finance/models.py:866
 msgid "Note"
-msgstr ""
+msgstr "说明"
 
 #: apps/finance/models.py:869
 msgid "Adjustment Category"
-msgstr ""
+msgstr "调整科目"
 
 #: apps/finance/models.py:874
 msgid ""
 "Category used when generating an adjustment transaction; required if "
 "creating one."
-msgstr ""
+msgstr "生成调整流水时使用的科目；若创建调整流水则必填。"
 
 #: apps/finance/models.py:878
 msgid "Adjustment Transaction"
-msgstr ""
+msgstr "调整流水"
 
 #: apps/finance/models.py:885
 msgid "Resolved"
-msgstr ""
+msgstr "已处理"
 
 #: apps/finance/models.py:888
 msgid "Recorded By"
-msgstr ""
+msgstr "登记人"
 
 #: apps/finance/models.py:895
 msgid "Recorded At"
-msgstr ""
+msgstr "登记时间"
 
 #: apps/finance/models.py:898
 msgid "Reconciliation Variance"
-msgstr ""
+msgstr "对账差异"
 
 #: apps/finance/models.py:899
 msgid "Reconciliation Variances"
-msgstr ""
+msgstr "对账差异"
 
 #: apps/finance/models.py:908
 msgid ""
 "At least one of import batch, bank line, or system transaction is required."
-msgstr ""
+msgstr "导入批次、银行明细、系统流水至少须填写一项。"
 
 #: apps/finance/models.py:910
 msgid "Variance amount must be greater than 0."
-msgstr ""
+msgstr "差异金额必须大于 0。"
 
 #: apps/finance/models.py:914
 msgid "Bank line does not belong to the selected import batch."
-msgstr ""
+msgstr "该银行明细不属于所选导入批次。"
 
 #: apps/finance/models.py:928
 msgid "Income Transaction"
-msgstr ""
+msgstr "收入流水"
 
 #: apps/finance/models.py:929
 msgid "Income Transactions"
-msgstr ""
+msgstr "收入流水"
 
 #: apps/finance/models.py:935
 msgid "Expense Transaction"
-msgstr ""
+msgstr "支出流水"
 
 #: apps/finance/models.py:936
 msgid "Expense Transactions"
-msgstr ""
+msgstr "支出流水"
 
 #: apps/finance/resources.py:55
 msgid "Transaction type is required"
-msgstr ""
+msgstr "须填写收支类型"
 
 #: apps/finance/resources.py:62
 #, python-format
 msgid "Unrecognized transaction type: %(raw)s"
-msgstr ""
+msgstr "无法识别的收支类型：%(raw)s"
 
 #: apps/finance/resources.py:75
 msgid "Project code"
-msgstr ""
+msgstr "项目编码"
 
 #: apps/finance/resources.py:77
 msgid "Counterparty code"
-msgstr ""
+msgstr "往来单位编码"
 
 #: apps/finance/resources.py:130
 #, python-format
 msgid "Row %(row)s: type does not match this list (%(label)s)."
-msgstr ""
+msgstr "第 %(row)s 行：类型与本列表（%(label)s）不符。"
 
 #: apps/finance/resources.py:139
 msgid "Category name is required"
-msgstr ""
+msgstr "须填写科目名称"
 
 #: apps/finance/resources.py:146
 #, python-format
 msgid "Row %(row)s: no active category “%(name)s” for type %(kind)s"
-msgstr ""
+msgstr "第 %(row)s 行：类型 %(kind)s 下无有效科目「%(name)s」"
 
 #: apps/finance/resources.py:153
 msgid "Amount is required"
-msgstr ""
+msgstr "须填写金额"
 
 #: apps/finance/resources.py:158
 #, python-format
 msgid "Invalid amount: %(raw)s"
-msgstr ""
+msgstr "无效金额：%(raw)s"
 
 #: apps/finance/resources.py:161
 msgid "Amount must be greater than zero"
-msgstr ""
+msgstr "金额必须大于零"
 
 #: apps/finance/resources.py:173
 #, python-format
 msgid "Row %(row)s: unknown active project code “%(code)s”"
-msgstr ""
+msgstr "第 %(row)s 行：未知有效项目编码「%(code)s」"
 
 #: apps/finance/resources.py:186
 #, python-format
 msgid "Row %(row)s: unknown active counterparty code “%(code)s”"
-msgstr ""
+msgstr "第 %(row)s 行：未知有效往来单位编码「%(code)s」"
 
 #: apps/finance/resources.py:203
 #, python-format
 msgid "Row %(row)s: unknown tag “%(name)s”. Create it in admin first."
-msgstr ""
+msgstr "第 %(row)s 行：未知标签「%(name)s」，请先在后台创建。"
 
 #: apps/finance/resources.py:222
 msgid "Date is required"
-msgstr ""
+msgstr "须填写日期"
 
 #: apps/finance/resources.py:228
 #, python-format
 msgid "Invalid date: %(raw)s"
-msgstr ""
+msgstr "无效日期：%(raw)s"
 
 #: apps/finance/resources.py:233
 msgid "Account name is required"
-msgstr ""
+msgstr "须填写账户名称"
 
 #: apps/finance/views.py:80
 msgid "The uploaded file is not a valid SQLite database."
@@ -1267,7 +1267,7 @@ msgstr "资产负债表"
 
 #: apps/finance/views.py:308
 msgid "Balance sheet · cash detail"
-msgstr ""
+msgstr "资产负债表 · 货币资金明细"
 
 #: apps/finance/views.py:344 config/simpleui_menus.py:50
 #: templates/admin/finance/reports/cash_flow_forecast.html:7
@@ -1279,7 +1279,7 @@ msgstr "现金流预测"
 
 #: apps/finance/views.py:382
 msgid "Cash flow forecast · invoice details"
-msgstr ""
+msgstr "现金流预测 · 账单明细"
 
 #: apps/finance/views.py:415 config/simpleui_menus.py:14
 #: templates/admin/finance/dashboard.html:6
@@ -1400,15 +1400,15 @@ msgstr "输入用户名和密码后，你将能够编辑更多的用户选项。
 
 #: templates/admin/auth/user/add_form.html:8
 msgid "Enter a username and password."
-msgstr ""
+msgstr "请输入用户名和密码。"
 
 #: templates/admin/base_site.html:4
 msgid "Django site admin"
-msgstr ""
+msgstr "Django 站点管理"
 
 #: templates/admin/base_site.html:13
 msgid "Django administration"
-msgstr ""
+msgstr "Django 管理后台"
 
 #: templates/admin/change_form.html:37
 msgid "Back"
@@ -1416,19 +1416,19 @@ msgstr "返回"
 
 #: templates/admin/change_form.html:45 templates/admin/change_form.html:52
 msgid "History"
-msgstr ""
+msgstr "历史"
 
 #: templates/admin/change_form.html:57
 msgid "View on site"
-msgstr ""
+msgstr "在站点查看"
 
 #: templates/admin/change_form.html:73
 msgid "Please correct the error below."
-msgstr ""
+msgstr "请修正以下错误。"
 
 #: templates/admin/change_form.html:73
 msgid "Please correct the errors below."
-msgstr ""
+msgstr "请修正以下错误。"
 
 #: templates/admin/finance/_category_share_table.html:6
 msgid "Share"
@@ -1462,6 +1462,9 @@ msgid ""
 "    Page %(page)s of %(total)s (%(count)s rows)\n"
 "    "
 msgstr ""
+"\n"
+"    第 %(page)s / %(total)s 页（共 %(count)s 行）\n"
+"    "
 
 #: templates/admin/finance/_report_pagination.html:14
 msgid "Next"
@@ -1553,7 +1556,7 @@ msgid ""
 "Lightweight view: cash is cumulative net inflow per account name; AR/AP are "
 "open invoice balances; equity is cumulative net from entries. Assets, "
 "liabilities, and equity each have a tab."
-msgstr ""
+msgstr "轻量口径：货币资金按账户名称累计净流入；应收/应付为未结清账单余额；权益为流水累计净利。资产、负债、权益各一标签页。"
 
 #: templates/admin/finance/reports/balance_sheet.html:18
 msgid "As of date"
@@ -1563,29 +1566,29 @@ msgstr "截至日期"
 #: templates/admin/finance/reports/cash_flow.html:29
 #: templates/admin/finance/reports/profit_loss.html:32
 msgid "No projects defined yet"
-msgstr ""
+msgstr "尚未定义项目"
 
 #: templates/admin/finance/reports/balance_sheet.html:36
 #: templates/admin/finance/reports/cash_flow.html:36
 #: templates/admin/finance/reports/profit_loss.html:39
 msgid "Projects are maintained under"
-msgstr ""
+msgstr "项目维护入口："
 
 #: templates/admin/finance/reports/balance_sheet.html:36
 #: templates/admin/finance/reports/cash_flow.html:36
 #: templates/admin/finance/reports/profit_loss.html:39
 msgid "Master data → Projects"
-msgstr ""
+msgstr "基础资料 → 项目"
 
 #: templates/admin/finance/reports/balance_sheet.html:36
 msgid "."
-msgstr ""
+msgstr "。"
 
 #: templates/admin/finance/reports/balance_sheet.html:38
 msgid ""
 "Project filter applies to cash and cumulative net from entries only; AR/AP "
 "are not split by project."
-msgstr ""
+msgstr "项目筛选仅作用于货币资金与流水累计净利；应收/应付不按项目拆分。"
 
 #: templates/admin/finance/reports/balance_sheet.html:43
 #: templates/admin/finance/reports/balance_sheet_cash.html:16
@@ -1632,7 +1635,7 @@ msgstr "权益"
 msgid ""
 "Summary rows (fixed count). Columns: category, detail drill-down (cash by "
 "account), amount."
-msgstr ""
+msgstr "汇总行（固定行数）。列：类别、明细下钻（货币资金按账户）、金额。"
 
 #: templates/admin/finance/reports/balance_sheet.html:72
 #: templates/admin/finance/reports/balance_sheet.html:107
@@ -1674,22 +1677,22 @@ msgstr "返回报表列表"
 #: templates/admin/finance/reports/balance_sheet_cash.html:8
 #: templates/admin/finance/reports/balance_sheet_cash.html:12
 msgid "Cash detail"
-msgstr ""
+msgstr "货币资金明细"
 
 #: templates/admin/finance/reports/balance_sheet_cash.html:13
 #, python-format
 msgid ""
 "Cumulative net inflow per account name as of %(as_of)s; paginated because "
 "row count varies."
-msgstr ""
+msgstr "截至 %(as_of)s 各账户名称累计净流入；行数不固定，分页展示。"
 
 #: templates/admin/finance/reports/balance_sheet_cash.html:18
 msgid "Total cash"
-msgstr ""
+msgstr "货币资金合计"
 
 #: templates/admin/finance/reports/balance_sheet_cash.html:25
 msgid "Account name"
-msgstr ""
+msgstr "账户名称"
 
 #: templates/admin/finance/reports/balance_sheet_cash.html:40
 #: templates/admin/finance/reports/cash_flow.html:76
@@ -1702,22 +1705,22 @@ msgstr ""
 #: templates/admin/finance/reports/profit_loss_income.html:16
 #: templates/admin/finance/reports/profit_loss_income.html:38
 msgid "Total"
-msgstr ""
+msgstr "合计"
 
 #: templates/admin/finance/reports/balance_sheet_cash.html:50
 msgid "Back to balance sheet"
-msgstr ""
+msgstr "返回资产负债表"
 
 #: templates/admin/finance/reports/cash_flow.html:12
 msgid ""
 "Lightweight: income/expense entries treated as operating cash; no "
 "investing/financing split."
-msgstr ""
+msgstr "轻量口径：将收入/支出流水视为经营活动现金；不区分投资/筹资活动。"
 
 #: templates/admin/finance/reports/cash_flow.html:36
 #: templates/admin/finance/reports/profit_loss.html:39
 msgid "; without projects, reports use the all-projects scope."
-msgstr ""
+msgstr "；未定义项目时，报表按全部项目范围统计。"
 
 #: templates/admin/finance/reports/cash_flow.html:46
 msgid "Cash inflow"
@@ -1752,7 +1755,7 @@ msgstr "净额"
 msgid ""
 "Open AR/AP balances by due date. Three tabs; invoice details are paginated "
 "separately."
-msgstr ""
+msgstr "按到期日汇总未结清应收/应付余额。三个标签页；账单明细分页展示。"
 
 #: templates/admin/finance/reports/cash_flow_forecast.html:18
 msgid "Forecast from"
@@ -1776,7 +1779,7 @@ msgstr "预计付款合计"
 
 #: templates/admin/finance/reports/cash_flow_forecast.html:34
 msgid "Expected net cash flow"
-msgstr ""
+msgstr "预计净现金流"
 
 #: templates/admin/finance/reports/cash_flow_forecast.html:38
 msgid "By due date in range"
@@ -1790,7 +1793,7 @@ msgstr "已逾期与其他"
 #: templates/admin/finance/reports/cash_flow_forecast_details.html:8
 #: templates/admin/finance/reports/cash_flow_forecast_details.html:12
 msgid "Invoice details"
-msgstr ""
+msgstr "账单明细"
 
 #: templates/admin/finance/reports/cash_flow_forecast.html:47
 #: templates/admin/finance/reports/cash_flow_forecast.html:122
@@ -1801,12 +1804,12 @@ msgstr "到期日"
 #: templates/admin/finance/reports/cash_flow_forecast.html:48
 #: templates/admin/finance/reports/cash_flow_forecast.html:82
 msgid "Expected receipts"
-msgstr ""
+msgstr "预计收款"
 
 #: templates/admin/finance/reports/cash_flow_forecast.html:49
 #: templates/admin/finance/reports/cash_flow_forecast.html:83
 msgid "Expected payments"
-msgstr ""
+msgstr "预计付款"
 
 #: templates/admin/finance/reports/cash_flow_forecast.html:62
 msgid "No invoices due in range"
@@ -1856,7 +1859,7 @@ msgstr "无未结清账单"
 msgid ""
 "Open AR/AP invoices from %(date_from)s through %(date_to)s; paginated "
 "because row count varies."
-msgstr ""
+msgstr "%(date_from)s 至 %(date_to)s 未结清应收/应付账单；行数不固定，分页展示。"
 
 #: templates/admin/finance/reports/cash_flow_forecast_details.html:28
 msgid "Accounts receivable"
@@ -1876,7 +1879,7 @@ msgstr "选择下方报表进入查询；也可在左侧「财务报表」菜单
 
 #: templates/admin/finance/reports/index.html:17
 msgid "Summarize income and expense by period, category, and project."
-msgstr ""
+msgstr "按期间、科目与项目汇总收入与支出，查看净利润。"
 
 #: templates/admin/finance/reports/index.html:18
 #: templates/admin/finance/reports/index.html:24
@@ -1887,29 +1890,29 @@ msgstr "打开报表"
 
 #: templates/admin/finance/reports/index.html:23
 msgid "Operating cash inflows, outflows, and net by account."
-msgstr ""
+msgstr "期间经营现金流入、流出及净额，按账户名称分列。"
 
 #: templates/admin/finance/reports/index.html:29
 msgid "Cash, AR, AP, and cumulative surplus (lightweight)."
-msgstr ""
+msgstr "货币资金、应收、应付与累计盈余（轻量口径）。"
 
 #: templates/admin/finance/reports/index.html:35
 msgid "Expected receipts and payments by invoice due dates."
-msgstr ""
+msgstr "按应收/应付约定到期日汇总预计收付款。"
 
 #: templates/admin/finance/reports/index.html:42
 msgid "Income/expense trend and category share"
-msgstr ""
+msgstr "收支趋势与分类占比"
 
 #: templates/admin/finance/reports/profit_loss.html:13
 msgid ""
 "Management P&L from entries. Variable row counts per tab (income, expense, "
 "by project)."
-msgstr ""
+msgstr "基于流水的管理损益表。各标签页（收入、支出、分项目）行数不固定。"
 
 #: templates/admin/finance/reports/profit_loss.html:26
 msgid "All (including by project)"
-msgstr ""
+msgstr "全部（含分项目）"
 
 #: templates/admin/finance/reports/profit_loss.html:49
 #: templates/admin/finance/transaction/change_list.html:11
@@ -1931,7 +1934,7 @@ msgstr "净利润"
 
 #: templates/admin/finance/reports/profit_loss.html:56
 msgid "Categories and projects"
-msgstr ""
+msgstr "科目与项目"
 
 #: templates/admin/finance/reports/profit_loss.html:60
 #: templates/admin/finance/reports/profit_loss_projects.html:8
@@ -1949,7 +1952,7 @@ msgstr "支出明细"
 msgid ""
 "Period %(date_from)s — %(date_to)s; paginated because category row count "
 "varies."
-msgstr ""
+msgstr "期间 %(date_from)s — %(date_to)s；科目行数不固定，分页展示。"
 
 #: templates/admin/finance/reports/profit_loss_expense.html:48
 #: templates/admin/finance/reports/profit_loss_income.html:48
@@ -1966,11 +1969,11 @@ msgstr "收入明细"
 msgid ""
 "Period %(date_from)s — %(date_to)s; paginated because project row count "
 "varies."
-msgstr ""
+msgstr "期间 %(date_from)s — %(date_to)s；项目行数不固定，分页展示。"
 
 #: templates/admin/finance/system_settings.html:23
 msgid "Database"
-msgstr ""
+msgstr "数据库"
 
 #: templates/admin/finance/system_settings.html:26
 #, python-format
@@ -1978,6 +1981,7 @@ msgid ""
 "Database file: <code>%(db)s</code>. Backups are stored under "
 "<code>backups/</code>. Restore replaces all data — back up first."
 msgstr ""
+"数据库文件：<code>%(db)s</code>。备份保存在 <code>backups/</code> 目录。还原将覆盖全部数据，请先备份。"
 
 #: templates/admin/finance/system_settings.html:33
 msgid "Back up database now"
@@ -1985,7 +1989,7 @@ msgstr "一键备份数据库"
 
 #: templates/admin/finance/system_settings.html:37
 msgid "Restore database"
-msgstr ""
+msgstr "还原数据库"
 
 #: templates/admin/finance/system_settings.html:44
 msgid "Restore from backup"
@@ -1997,11 +2001,11 @@ msgstr "— 请选择 —"
 
 #: templates/admin/finance/system_settings.html:52
 msgid "Or upload a .sqlite3 backup copied from another machine:"
-msgstr ""
+msgstr "或上传从其他机器复制的 .sqlite3 备份："
 
 #: templates/admin/finance/system_settings.html:54
 msgid "No local backups yet. Upload a .sqlite3 file:"
-msgstr ""
+msgstr "尚无本地备份，请上传 .sqlite3 文件："
 
 #: templates/admin/finance/system_settings.html:58
 msgid "Upload backup file"
@@ -2039,7 +2043,7 @@ msgstr "下载"
 msgid ""
 "PostgreSQL is in use. Use pg_dump, pg_restore, or your cloud console for "
 "backup/restore."
-msgstr ""
+msgstr "当前使用 PostgreSQL，请使用 pg_dump、pg_restore 或云控制台进行备份/还原。"
 
 #: templates/admin/finance/transaction/change_list.html:8
 msgid "Summary for current filter"
@@ -2057,17 +2061,17 @@ msgstr "搜索"
 #, python-format
 msgid "%(counter)s result"
 msgid_plural "%(counter)s results"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(counter)s 条结果"
+msgstr[1] "%(counter)s 条结果"
 
 #: templates/admin/search_form.html:158
 #, python-format
 msgid "%(full_result_count)s total"
-msgstr ""
+msgstr "共 %(full_result_count)s 条"
 
 #: templates/admin/search_form.html:158
 msgid "Show all"
-msgstr ""
+msgstr "显示全部"
 
 #: templates/admin/simpleui_index_source.html:164
 #: templates/admin/simpleui_index_source.html:165

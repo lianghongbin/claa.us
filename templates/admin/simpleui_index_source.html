@@ -327,9 +327,9 @@
             src="{% static 'admin/simpleui-x/automatic/dicts.js' %}?_={% get_version %}"></script>
     <script type="text/javascript"
             src="{% static 'admin/simpleui-x/automatic/segment.js' %}?_={% get_version %}"></script>
-    <script type="text/javascript" src="{% static 'admin/simpleui-x/locale/en-us.js' %}?_={% get_version %}"></script>
+    {% get_current_language as SIMPLEUI_LANG %}
     <script type="text/javascript"
-            src="{% static 'admin/simpleui-x/locale/' %}{% get_language %}.js?_={% get_version %}"
+            src="{% static 'admin/simpleui-x/locale/' %}{% if SIMPLEUI_LANG == 'en' %}en-us{% else %}{{ SIMPLEUI_LANG }}{% endif %}.js?_={% get_version %}"
             onerror="localeError()"></script>
     <script type="text/javascript" src="{% static 'admin/simpleui-x/js/cookie.js' %}?_={% get_version %}"></script>
     <script type="text/javascript" src="{% static 'admin/simpleui-x/theme/theme.js' %}?_={% get_version %}"></script>

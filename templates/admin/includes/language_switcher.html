@@ -5,9 +5,8 @@
   <label class="finance-lang-form__label" for="finance-lang-select">{% trans "Language" %}</label>
   <select id="finance-lang-select" name="language" class="finance-lang-form__select" onchange="this.form.submit()">
     {% get_current_language as CURRENT_LANG %}
-    {% get_available_languages as AVAILABLE_LANGUAGES %}
-    {% for lang_code, lang_name in AVAILABLE_LANGUAGES %}
-    <option value="{{ lang_code }}"{% if lang_code == CURRENT_LANG %} selected{% endif %}>{{ lang_name }}</option>
+    {% for lang_code, lang_label in language_switcher_choices %}
+    <option value="{{ lang_code }}"{% if lang_code == CURRENT_LANG %} selected{% endif %}>{{ lang_label }}</option>
     {% endfor %}
   </select>
 </form>

@@ -8,7 +8,7 @@
   "use strict";
 
   var STORAGE_KEY = "finance_menu_storage";
-  var STORAGE_VERSION = "finance-menu-v7";
+  var STORAGE_VERSION = "finance-menu-v8";
   var MAX_CONTENT_TABS = 5;
 
   function tabIdEquals(a, b) {
