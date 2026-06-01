@@ -63,6 +63,7 @@ MIDDLEWARE = [
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "apps.accounts.middleware.SessionInactivityMiddleware",
     "apps.accounts.middleware.ForcePasswordChangeMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
@@ -160,9 +161,10 @@ IMPORT_EXPORT_EXPORT_PERMISSION_CODE = "view"
 LOGIN_REDIRECT_URL = "/admin/"
 LOGIN_URL = "/admin/login/"
 
-# 会话：连续 1 小时无请求则需重新登录（有请求时会刷新计时）
+# 会话：连续 1 小时无服务端请求则需重新登录（见 SessionInactivityMiddleware）
 SESSION_COOKIE_AGE = int(os.getenv("SESSION_COOKIE_AGE", "3600"))
 SESSION_SAVE_EVERY_REQUEST = True
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 SESSION_COOKIE_HTTPONLY = True
 SESSION_COOKIE_SAMESITE = "Lax"
 # HTTPS（Cloudflare Tunnel）下应设为 True，可在 .env 中覆盖

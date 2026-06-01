@@ -2,7 +2,7 @@
 {% load static simpletags %}
 
 {% block index_js %}
-    {# 在 SimpleUI 读取 tabs 之前清掉旧缓存，避免异常 tab 状态导致无法关闭 #}
+    {# 禁止 SimpleUI 把 tabs 写入 sessionStorage（会导致关不掉、状态错乱） #}
     <script type="text/javascript">
     (function () {
       try {
@@ -20,12 +20,32 @@
     <script type="text/javascript" src="{% static 'admin/simpleui-x/js/menu.js' %}?v={{ FINANCE_ASSET_VERSION }}"></script>
     <script type="text/javascript" src="{% static 'admin/simpleui-x/js/index.js' %}?_={% get_version %}"></script>
     <script type="text/javascript" src="{% static 'admin/finance/simpleui_menu.js' %}?v={{ FINANCE_ASSET_VERSION }}"></script>
-    {# 内联兜底：不经过静态文件/CDN 缓存，直接处理标签 × 关闭 #}
     <script type="text/javascript">
     (function () {
       "use strict";
 
-      function closeTabByPaneId(paneId) {
+      function resolvePaneId(tabItem) {
+        if (!tabItem || !window.app || !window.app.tabs) {
+          return null;
+        }
+        var idAttr = tabItem.getAttribute("id") || "";
+        if (idAttr.indexOf("tab-") === 0) {
+          return idAttr.slice(4);
+        }
+        var header = tabItem.closest(".el-tabs__header");
+        if (!header) {
+          return null;
+        }
+        var items = header.querySelectorAll(".el-tabs__item");
+        for (var i = 0; i < items.length; i++) {
+          if (items[i] === tabItem && window.app.tabs[i]) {
+            return String(window.app.tabs[i].id);
+          }
+        }
+        return null;
+      }
+
+      function removeTabFromApp(paneId) {
         var app = window.app;
         if (!app || !app.tabs) {
           return;
@@ -34,27 +54,29 @@
         if (paneId === "0") {
           return;
         }
+
         for (var i = 0; i < app.tabs.length; i++) {
           app.tabs[i].id = String(app.tabs[i].id);
         }
-        var isActive = String(app.tabModel) === paneId;
-        if (!isActive) {
-          app.tabs = app.tabs.filter(function (t) {
-            return String(t.id) !== paneId;
-          });
-          if (typeof app.syncTabs === "function") {
-            app.syncTabs();
+
+        var closingActive = String(app.tabModel) === paneId;
+        if (!closingActive) {
+          for (var j = app.tabs.length - 1; j >= 0; j--) {
+            if (String(app.tabs[j].id) === paneId) {
+              app.tabs.splice(j, 1);
+            }
           }
           if (app.$forceUpdate) {
             app.$forceUpdate();
           }
           return;
         }
+
         var next = "0";
         var nextTab = null;
-        for (var j = 0; j < app.tabs.length; j++) {
-          if (String(app.tabs[j].id) === paneId) {
-            nextTab = app.tabs[j + 1] || app.tabs[j - 1];
+        for (var k = 0; k < app.tabs.length; k++) {
+          if (String(app.tabs[k].id) === paneId) {
+            nextTab = app.tabs[k + 1] || app.tabs[k - 1];
             if (nextTab) {
               next = String(nextTab.id);
               app.menuActive = String(
@@ -69,41 +91,74 @@
           }
         }
         app.tabModel = next;
-        app.tabs = app.tabs.filter(function (t) {
-          return String(t.id) !== paneId;
-        });
-        if (typeof app.syncTabs === "function") {
-          app.syncTabs();
+        for (var m = app.tabs.length - 1; m >= 0; m--) {
+          if (String(app.tabs[m].id) === paneId) {
+            app.tabs.splice(m, 1);
+          }
         }
         if (app.$forceUpdate) {
           app.$forceUpdate();
         }
       }
 
-      function onTabClosePointer(ev) {
-        if (!window.app) {
-          return;
-        }
-        var target = ev.target;
+      function isTabCloseTarget(target) {
         if (!target || !target.closest) {
+          return false;
+        }
+        if (target.classList && target.classList.contains("el-icon-close")) {
+          return true;
+        }
+        if (target.closest(".el-tabs__header .el-icon-close")) {
+          return true;
+        }
+        return false;
+      }
+
+      function onTabCloseEvent(ev) {
+        if (!window.app || window.self !== window.top) {
           return;
         }
-        var closeEl = target.closest(".el-tabs__header .el-icon-close");
-        if (!closeEl) {
+        if (!isTabCloseTarget(ev.target)) {
           return;
         }
-        var tabItem = closeEl.closest(".el-tabs__item");
-        if (!tabItem || !tabItem.id || tabItem.id.indexOf("tab-") !== 0) {
+        var tabItem = ev.target.closest(".el-tabs__item");
+        if (!tabItem || tabItem.classList.contains("is-disabled")) {
+          return;
+        }
+        var paneId = resolvePaneId(tabItem);
+        if (paneId == null) {
           return;
         }
         ev.preventDefault();
         ev.stopPropagation();
         ev.stopImmediatePropagation();
-        closeTabByPaneId(tabItem.id.slice(4));
+        removeTabFromApp(paneId);
       }
 
-      document.addEventListener("mousedown", onTabClosePointer, true);
-      document.addEventListener("click", onTabClosePointer, true);
+      document.addEventListener("mousedown", onTabCloseEvent, true);
+      document.addEventListener("click", onTabCloseEvent, true);
+
+      window.__financeRemoveTab = removeTabFromApp;
+
+      var prevRenderCallback = window.renderCallback;
+      window.renderCallback = function (app) {
+        if (typeof prevRenderCallback === "function") {
+          prevRenderCallback(app);
+        }
+        if (!app) {
+          return;
+        }
+        app.syncTabs = function () {};
+        app.handleTabsEdit = function (targetName, action) {
+          if (action === "remove") {
+            removeTabFromApp(targetName);
+          }
+        };
+        if (app.$options && app.$options.methods) {
+          app.$options.methods.handleTabsEdit = app.handleTabsEdit;
+          app.$options.methods.syncTabs = app.syncTabs;
+        }
+      };
     })();
     </script>
 {% endblock %}

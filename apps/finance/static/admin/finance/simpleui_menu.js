@@ -1,102 +1,18 @@
 /**
  * SimpleUI 后台补丁（财务 claa.us）
  * - 修复 openTab / menuActive
- * - 标签关闭：统一 tab id 为字符串 + 委托点击 × + 修复 handleTabsEdit
+ * - 标签关闭见 templates/admin/index.html 内联脚本（避免 CDN 缓存旧 JS）
  * - 除首页外最多 5 个业务标签
  */
 (function () {
   "use strict";
 
   var STORAGE_KEY = "finance_menu_storage";
-  var STORAGE_VERSION = "finance-menu-v6";
+  var STORAGE_VERSION = "finance-menu-v7";
   var MAX_CONTENT_TABS = 5;
 
   function tabIdEquals(a, b) {
     return String(a) === String(b);
-  }
-
-  function isHomeTabId(id) {
-    return tabIdEquals(id, 0) || tabIdEquals(id, "0");
-  }
-
-  function syncHashFromTab(tab) {
-    if (tab && tab.url && tab.url.indexOf("http") !== 0) {
-      location.hash = "#" + (tab.url || "/");
-    }
-  }
-
-  function normalizeTabsState(app) {
-    if (!app || !app.tabs) {
-      return;
-    }
-    for (var i = 0; i < app.tabs.length; i++) {
-      app.tabs[i].id = String(app.tabs[i].id);
-      if (app.tabs[i].eid != null) {
-        app.tabs[i].eid = String(app.tabs[i].eid);
-      }
-    }
-    if (app.tabModel != null && app.tabModel !== "") {
-      app.tabModel = String(app.tabModel);
-    }
-  }
-
-  function removeTabById(app, targetName) {
-    targetName = String(targetName);
-    if (isHomeTabId(targetName)) {
-      return false;
-    }
-    normalizeTabsState(app);
-    var before = app.tabs.length;
-    app.tabs = app.tabs.filter(function (tab) {
-      return !tabIdEquals(tab.id, targetName);
-    });
-    if (app.tabs.length < before) {
-      if (typeof app.syncTabs === "function") {
-        app.syncTabs();
-      }
-      if (app.$nextTick) {
-        app.$nextTick(function () {
-          app.$forceUpdate();
-        });
-      } else {
-        app.$forceUpdate();
-      }
-      return true;
-    }
-    return false;
-  }
-
-  function closeTab(app, targetName) {
-    if (!app || !app.tabs) {
-      return;
-    }
-    targetName = String(targetName);
-    normalizeTabsState(app);
-
-    var closingActive = tabIdEquals(app.tabModel, targetName);
-    if (!closingActive) {
-      removeTabById(app, targetName);
-      return;
-    }
-
-    var next = "0";
-    var nextTab = null;
-    for (var i = 0; i < app.tabs.length; i++) {
-      if (tabIdEquals(app.tabs[i].id, targetName)) {
-        nextTab = app.tabs[i + 1] || app.tabs[i - 1];
-        if (nextTab) {
-          next = String(nextTab.id);
-          setMenuActive(app, nextTab.index != null ? nextTab.index : nextTab.eid);
-          app.breadcrumbs = nextTab.breadcrumbs;
-          syncHashFromTab(nextTab);
-        }
-        break;
-      }
-    }
-    app.tabModel = next;
-    removeTabById(app, targetName);
-    syncMenuFromActiveTab(app);
-    resetLoadingState(app);
   }
 
   function setMenuActive(app, eid) {
@@ -156,6 +72,21 @@
     }
   }
 
+  function normalizeTabsState(app) {
+    if (!app || !app.tabs) {
+      return;
+    }
+    for (var i = 0; i < app.tabs.length; i++) {
+      app.tabs[i].id = String(app.tabs[i].id);
+      if (app.tabs[i].eid != null) {
+        app.tabs[i].eid = String(app.tabs[i].eid);
+      }
+    }
+    if (app.tabModel != null && app.tabModel !== "") {
+      app.tabModel = String(app.tabModel);
+    }
+  }
+
   function enforceTabLimit(app) {
     if (!app || !app.tabs || app.tabs.length <= 1 + MAX_CONTENT_TABS) {
       return;
@@ -174,9 +105,6 @@
       }
       app.tabs.splice(removeAt, 1);
     }
-    if (typeof app.syncTabs === "function") {
-      app.syncTabs();
-    }
     ensureValidTabModel(app);
   }
 
@@ -190,45 +118,6 @@
     } catch (err) {
       /* ignore */
     }
-  }
-
-  function paneNameFromCloseClick(event) {
-    var closeEl = event.target;
-    if (!closeEl || !closeEl.classList || !closeEl.classList.contains("el-icon-close")) {
-      return null;
-    }
-    var tabItem = closeEl.closest(".el-tabs__item");
-    if (!tabItem || !tabItem.closest(".el-tabs__header")) {
-      return null;
-    }
-    var idAttr = tabItem.getAttribute("id") || "";
-    if (idAttr.indexOf("tab-") !== 0) {
-      return null;
-    }
-    return idAttr.slice(4);
-  }
-
-  function installTabCloseDelegation() {
-    if (window._financeTabCloseDelegation) {
-      return;
-    }
-    document.addEventListener(
-      "click",
-      function (event) {
-        if (!window.app || window.self !== window.top) {
-          return;
-        }
-        var paneName = paneNameFromCloseClick(event);
-        if (paneName == null) {
-          return;
-        }
-        event.stopPropagation();
-        event.preventDefault();
-        closeTab(window.app, paneName);
-      },
-      true
-    );
-    window._financeTabCloseDelegation = true;
   }
 
   function patchOpenTab(app) {
@@ -260,22 +149,6 @@
     app._financeOpenTabPatch = true;
   }
 
-  function patchHandleTabsEdit(app) {
-    if (app._financeTabsEditPatch) {
-      return;
-    }
-    app.handleTabsEdit = function (targetName, action) {
-      if (action !== "remove") {
-        return;
-      }
-      closeTab(this, targetName);
-    };
-    if (app.$options && app.$options.methods) {
-      app.$options.methods.handleTabsEdit = app.handleTabsEdit;
-    }
-    app._financeTabsEditPatch = true;
-  }
-
   function patchTabClick(app) {
     if (app._financeTabClickPatch) {
       return;
@@ -301,11 +174,8 @@
   }
 
   function bootstrap(app) {
-    app.__financeCloseTab = function (targetName) {
-      closeTab(app, targetName);
-    };
+    app.syncTabs = function () {};
     patchOpenTab(app);
-    patchHandleTabsEdit(app);
     patchTabClick(app);
     patchIframeLoad(app);
     normalizeTabsState(app);
@@ -320,7 +190,6 @@
       return;
     }
     clearStaleTabs();
-    installTabCloseDelegation();
     var target = app || window.app;
     if (!target) {
       return;
@@ -357,8 +226,6 @@
       }
     }, 50);
   }
-
-  installTabCloseDelegation();
 
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", waitForApp);

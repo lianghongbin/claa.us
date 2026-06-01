@@ -199,6 +199,10 @@ print_success() {
 }
 
 docker_pull_and_restart() {
+  OPEN_BROWSER="${OPEN_BROWSER:-0}" main_update
+}
+
+main_update() {
   require_command docker || die "Docker CLI not found."
   require_command git || die "git not found."
   ensure_docker
@@ -209,12 +213,20 @@ docker_pull_and_restart() {
   compose_down
   free_host_port "${FINANCE_PORT}"
 
-  log "Rebuilding and starting containers…"
-  compose up -d --build --wait
+  if [[ "${DOCKER_BUILD_NO_CACHE:-0}" == "1" ]]; then
+    log "Building image (no cache)…"
+    compose build --no-cache
+    compose up -d --wait
+  else
+    log "Building and starting containers…"
+    compose up -d --build --wait
+  fi
+
   wait_for_app
 
   log ""
   log "Update complete → ${BASE_URL}"
+  log "Commit: $(git rev-parse --short HEAD)"
   log "Logs: docker compose logs -f web"
 }
 

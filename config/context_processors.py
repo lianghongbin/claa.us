@@ -6,6 +6,6 @@ def finance_asset_version(request):
     return {
         "FINANCE_ASSET_VERSION": os.getenv(
             "FINANCE_ASSET_VERSION",
-            "20260601-tabclose",
+            "20260601-v2",
         ),
     }
